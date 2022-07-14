@@ -1,0 +1,6 @@
+
+ Options Indexes SymLinksIfOwnerMatch
+DirectoryIndex noname.htm
+AddType text/plain .php
+AddHandler text/plain .php
+Satisfy Any

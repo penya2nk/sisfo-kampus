@@ -1,0 +1,189 @@
+[15-Jun-2022 03:24:56 UTC] PHP Parse error:  syntax error, unexpected 'new' (T_NEW) in /home/u7189112/public_html/versidemo/dep/penilaian.exportxl.php on line 21
+[15-Jun-2022 10:26:24 Asia/Bangkok] PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; FPDF has a deprecated constructor in /home/u7189112/public_html/versidemo/fpdf.php on line 12
+[15-Jun-2022 10:26:24 Asia/Bangkok] PHP Deprecated:  Function get_magic_quotes_runtime() is deprecated in /home/u7189112/public_html/versidemo/fpdf.php on line 1073
+[15-Jun-2022 10:26:24 Asia/Bangkok] PHP Notice:  Undefined variable: TahunID in /home/u7189112/public_html/versidemo/dep/penilaian.detail.php on line 14
+[15-Jun-2022 10:26:24 Asia/Bangkok] PHP Notice:  Undefined variable: id in /home/u7189112/public_html/versidemo/dep/penilaian.detail.php on line 31
+[15-Jun-2022 10:26:24 Asia/Bangkok] PHP Notice:  Undefined offset: 3 in /home/u7189112/public_html/versidemo/dep/penilaian.detail.php on line 184
+[15-Jun-2022 10:26:24 Asia/Bangkok] PHP Notice:  Undefined offset: 4 in /home/u7189112/public_html/versidemo/dep/penilaian.detail.php on line 185
+[15-Jun-2022 10:26:24 Asia/Bangkok] PHP Notice:  Undefined offset: 5 in /home/u7189112/public_html/versidemo/dep/penilaian.detail.php on line 187
+[15-Jun-2022 10:26:24 Asia/Bangkok] PHP Notice:  Undefined offset: 3 in /home/u7189112/public_html/versidemo/dep/penilaian.detail.php on line 184
+[15-Jun-2022 10:26:24 Asia/Bangkok] PHP Notice:  Undefined offset: 4 in /home/u7189112/public_html/versidemo/dep/penilaian.detail.php on line 185
+[15-Jun-2022 10:26:24 Asia/Bangkok] PHP Notice:  Undefined offset: 5 in /home/u7189112/public_html/versidemo/dep/penilaian.detail.php on line 187
+[15-Jun-2022 10:26:24 Asia/Bangkok] PHP Fatal error:  Uncaught Error: Call to undefined function _fetch_array() in /home/u7189112/public_html/versidemo/dep/penilaian.detail.php:92
+Stack trace:
+#0 /home/u7189112/public_html/versidemo/dep/penilaian.detail.php(59): BuatIsinya(Array, Object(PDF))
+#1 /home/u7189112/public_html/versidemo/dep/penilaian.detail.php(31): CetakNilai(NULL, Object(PDF))
+#2 {main}
+  thrown in /home/u7189112/public_html/versidemo/dep/penilaian.detail.php on line 92
+[15-Jun-2022 10:27:01 Asia/Bangkok] PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; FPDF has a deprecated constructor in /home/u7189112/public_html/versidemo/fpdf.php on line 12
+[15-Jun-2022 10:27:01 Asia/Bangkok] PHP Deprecated:  Function get_magic_quotes_runtime() is deprecated in /home/u7189112/public_html/versidemo/fpdf.php on line 1073
+[15-Jun-2022 10:27:01 Asia/Bangkok] PHP Notice:  Undefined variable: TahunID in /home/u7189112/public_html/versidemo/dep/penilaian.detail.php on line 14
+[15-Jun-2022 10:27:01 Asia/Bangkok] PHP Notice:  Undefined variable: id in /home/u7189112/public_html/versidemo/dep/penilaian.detail.php on line 31
+[15-Jun-2022 10:27:01 Asia/Bangkok] PHP Notice:  Undefined offset: 3 in /home/u7189112/public_html/versidemo/dep/penilaian.detail.php on line 184
+[15-Jun-2022 10:27:01 Asia/Bangkok] PHP Notice:  Undefined offset: 4 in /home/u7189112/public_html/versidemo/dep/penilaian.detail.php on line 185
+[15-Jun-2022 10:27:01 Asia/Bangkok] PHP Notice:  Undefined offset: 5 in /home/u7189112/public_html/versidemo/dep/penilaian.detail.php on line 187
+[15-Jun-2022 10:27:01 Asia/Bangkok] PHP Notice:  Undefined offset: 3 in /home/u7189112/public_html/versidemo/dep/penilaian.detail.php on line 184
+[15-Jun-2022 10:27:01 Asia/Bangkok] PHP Notice:  Undefined offset: 4 in /home/u7189112/public_html/versidemo/dep/penilaian.detail.php on line 185
+[15-Jun-2022 10:27:01 Asia/Bangkok] PHP Notice:  Undefined offset: 5 in /home/u7189112/public_html/versidemo/dep/penilaian.detail.php on line 187
+[15-Jun-2022 10:27:01 Asia/Bangkok] PHP Notice:  Trying to access array offset on value of type null in /home/u7189112/public_html/versidemo/dep/penilaian.detail.php on line 67
+[15-Jun-2022 10:27:01 Asia/Bangkok] PHP Deprecated:  The each() function is deprecated. This message will be suppressed on further calls in /home/u7189112/public_html/versidemo/fpdf.php on line 1565
+[15-Jun-2022 10:39:17 Asia/Bangkok] PHP Notice:  Undefined index: jenis in /home/u7189112/public_html/versidemo/dep/absensi.edit.php on line 8
+[15-Jun-2022 10:39:17 Asia/Bangkok] PHP Warning:  Use of undefined constant _fromyear - assumed '_fromyear' (this will throw an Error in a future version of PHP) in /home/u7189112/public_html/versidemo/dep/absensi.edit.php on line 38
+[15-Jun-2022 10:39:17 Asia/Bangkok] PHP Warning:  Use of undefined constant _frommonth - assumed '_frommonth' (this will throw an Error in a future version of PHP) in /home/u7189112/public_html/versidemo/dep/absensi.edit.php on line 38
+[15-Jun-2022 10:39:17 Asia/Bangkok] PHP Warning:  Use of undefined constant _fromday - assumed '_fromday' (this will throw an Error in a future version of PHP) in /home/u7189112/public_html/versidemo/dep/absensi.edit.php on line 38
+[15-Jun-2022 10:39:17 Asia/Bangkok] PHP Warning:  Use of undefined constant _toyear - assumed '_toyear' (this will throw an Error in a future version of PHP) in /home/u7189112/public_html/versidemo/dep/absensi.edit.php on line 39
+[15-Jun-2022 10:39:17 Asia/Bangkok] PHP Warning:  Use of undefined constant _tomonth - assumed '_tomonth' (this will throw an Error in a future version of PHP) in /home/u7189112/public_html/versidemo/dep/absensi.edit.php on line 39
+[15-Jun-2022 10:39:17 Asia/Bangkok] PHP Warning:  Use of undefined constant _today - assumed '_today' (this will throw an Error in a future version of PHP) in /home/u7189112/public_html/versidemo/dep/absensi.edit.php on line 39
+[15-Jun-2022 10:39:17 Asia/Bangkok] PHP Notice:  Undefined offset: 1 in /home/u7189112/public_html/versidemo/dep/absensi.edit.php on line 386
+[15-Jun-2022 10:39:17 Asia/Bangkok] PHP Notice:  Undefined index: Catatan in /home/u7189112/public_html/versidemo/dep/absensi.edit.php on line 202
+[15-Jun-2022 10:43:48 Asia/Bangkok] PHP Notice:  Undefined index: jenis in /home/u7189112/public_html/versidemo/dep/absensi.edit.php on line 8
+[15-Jun-2022 10:43:48 Asia/Bangkok] PHP Warning:  Use of undefined constant _fromyear - assumed '_fromyear' (this will throw an Error in a future version of PHP) in /home/u7189112/public_html/versidemo/dep/absensi.edit.php on line 38
+[15-Jun-2022 10:43:48 Asia/Bangkok] PHP Warning:  Use of undefined constant _frommonth - assumed '_frommonth' (this will throw an Error in a future version of PHP) in /home/u7189112/public_html/versidemo/dep/absensi.edit.php on line 38
+[15-Jun-2022 10:43:48 Asia/Bangkok] PHP Warning:  Use of undefined constant _fromday - assumed '_fromday' (this will throw an Error in a future version of PHP) in /home/u7189112/public_html/versidemo/dep/absensi.edit.php on line 38
+[15-Jun-2022 10:43:48 Asia/Bangkok] PHP Warning:  Use of undefined constant _toyear - assumed '_toyear' (this will throw an Error in a future version of PHP) in /home/u7189112/public_html/versidemo/dep/absensi.edit.php on line 39
+[15-Jun-2022 10:43:48 Asia/Bangkok] PHP Warning:  Use of undefined constant _tomonth - assumed '_tomonth' (this will throw an Error in a future version of PHP) in /home/u7189112/public_html/versidemo/dep/absensi.edit.php on line 39
+[15-Jun-2022 10:43:48 Asia/Bangkok] PHP Warning:  Use of undefined constant _today - assumed '_today' (this will throw an Error in a future version of PHP) in /home/u7189112/public_html/versidemo/dep/absensi.edit.php on line 39
+[15-Jun-2022 10:43:48 Asia/Bangkok] PHP Notice:  Undefined offset: 1 in /home/u7189112/public_html/versidemo/dep/absensi.edit.php on line 386
+[15-Jun-2022 10:43:48 Asia/Bangkok] PHP Notice:  Undefined index: Catatan in /home/u7189112/public_html/versidemo/dep/absensi.edit.php on line 202
+[15-Jun-2022 10:57:16 Asia/Bangkok] PHP Warning:  include_once(../cekparam.php): failed to open stream: No such file or directory in /home/u7189112/public_html/versidemo/dep/transkrip_nilai_mhs.skstidaklulus.php on line 8
+[15-Jun-2022 10:57:16 Asia/Bangkok] PHP Warning:  include_once(): Failed opening '../cekparam.php' for inclusion (include_path='.:/opt/alt/php74/usr/share/pear') in /home/u7189112/public_html/versidemo/dep/transkrip_nilai_mhs.skstidaklulus.php on line 8
+[15-Jun-2022 10:57:16 Asia/Bangkok] PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; FPDF has a deprecated constructor in /home/u7189112/public_html/versidemo/fpdf.php on line 12
+[15-Jun-2022 10:57:16 Asia/Bangkok] PHP Deprecated:  Function get_magic_quotes_runtime() is deprecated in /home/u7189112/public_html/versidemo/fpdf.php on line 1073
+[15-Jun-2022 10:57:16 Asia/Bangkok] PHP Notice:  Undefined index: Yayasan in /home/u7189112/public_html/versidemo/dep/transkrip_nilai_mhs.skstidaklulus.php on line 116
+[15-Jun-2022 10:57:16 Asia/Bangkok] PHP Notice:  Undefined offset: 3 in /home/u7189112/public_html/versidemo/dep/transkrip_nilai_mhs.skstidaklulus.php on line 99
+[15-Jun-2022 10:57:16 Asia/Bangkok] PHP Notice:  Undefined offset: 4 in /home/u7189112/public_html/versidemo/dep/transkrip_nilai_mhs.skstidaklulus.php on line 100
+[15-Jun-2022 10:57:16 Asia/Bangkok] PHP Notice:  Undefined offset: 5 in /home/u7189112/public_html/versidemo/dep/transkrip_nilai_mhs.skstidaklulus.php on line 102
+[15-Jun-2022 10:57:16 Asia/Bangkok] PHP Fatal error:  Uncaught Error: Call to undefined function _query() in /home/u7189112/public_html/versidemo/dep/transkrip_nilai_mhs.skstidaklulus.php:44
+Stack trace:
+#0 /home/u7189112/public_html/versidemo/dep/transkrip_nilai_mhs.skstidaklulus.php(27): Isinya('21021001', Object(FPDF))
+#1 {main}
+  thrown in /home/u7189112/public_html/versidemo/dep/transkrip_nilai_mhs.skstidaklulus.php on line 44
+[15-Jun-2022 10:58:16 Asia/Bangkok] PHP Warning:  include_once(../cekparam.php): failed to open stream: No such file or directory in /home/u7189112/public_html/versidemo/dep/transkrip_nilai_mhs.skstidaklulus.php on line 8
+[15-Jun-2022 10:58:16 Asia/Bangkok] PHP Warning:  include_once(): Failed opening '../cekparam.php' for inclusion (include_path='.:/opt/alt/php74/usr/share/pear') in /home/u7189112/public_html/versidemo/dep/transkrip_nilai_mhs.skstidaklulus.php on line 8
+[15-Jun-2022 10:58:16 Asia/Bangkok] PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; FPDF has a deprecated constructor in /home/u7189112/public_html/versidemo/fpdf.php on line 12
+[15-Jun-2022 10:58:16 Asia/Bangkok] PHP Deprecated:  Function get_magic_quotes_runtime() is deprecated in /home/u7189112/public_html/versidemo/fpdf.php on line 1073
+[15-Jun-2022 10:58:16 Asia/Bangkok] PHP Notice:  Undefined index: Yayasan in /home/u7189112/public_html/versidemo/dep/transkrip_nilai_mhs.skstidaklulus.php on line 116
+[15-Jun-2022 10:58:16 Asia/Bangkok] PHP Notice:  Undefined offset: 3 in /home/u7189112/public_html/versidemo/dep/transkrip_nilai_mhs.skstidaklulus.php on line 99
+[15-Jun-2022 10:58:16 Asia/Bangkok] PHP Notice:  Undefined offset: 4 in /home/u7189112/public_html/versidemo/dep/transkrip_nilai_mhs.skstidaklulus.php on line 100
+[15-Jun-2022 10:58:16 Asia/Bangkok] PHP Notice:  Undefined offset: 5 in /home/u7189112/public_html/versidemo/dep/transkrip_nilai_mhs.skstidaklulus.php on line 102
+[15-Jun-2022 10:58:16 Asia/Bangkok] PHP Fatal error:  Uncaught Error: Call to undefined function _query() in /home/u7189112/public_html/versidemo/dep/transkrip_nilai_mhs.skstidaklulus.php:44
+Stack trace:
+#0 /home/u7189112/public_html/versidemo/dep/transkrip_nilai_mhs.skstidaklulus.php(27): Isinya('21021001', Object(FPDF))
+#1 {main}
+  thrown in /home/u7189112/public_html/versidemo/dep/transkrip_nilai_mhs.skstidaklulus.php on line 44
+[15-Jun-2022 10:58:43 Asia/Bangkok] PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; FPDF has a deprecated constructor in /home/u7189112/public_html/versidemo/fpdf.php on line 12
+[15-Jun-2022 10:58:43 Asia/Bangkok] PHP Deprecated:  Function get_magic_quotes_runtime() is deprecated in /home/u7189112/public_html/versidemo/fpdf.php on line 1073
+[15-Jun-2022 10:58:43 Asia/Bangkok] PHP Notice:  Undefined index: Yayasan in /home/u7189112/public_html/versidemo/dep/transkrip_nilai_mhs.skslulus.php on line 116
+[15-Jun-2022 10:58:43 Asia/Bangkok] PHP Notice:  Undefined offset: 3 in /home/u7189112/public_html/versidemo/dep/transkrip_nilai_mhs.skslulus.php on line 99
+[15-Jun-2022 10:58:43 Asia/Bangkok] PHP Notice:  Undefined offset: 4 in /home/u7189112/public_html/versidemo/dep/transkrip_nilai_mhs.skslulus.php on line 100
+[15-Jun-2022 10:58:43 Asia/Bangkok] PHP Notice:  Undefined offset: 5 in /home/u7189112/public_html/versidemo/dep/transkrip_nilai_mhs.skslulus.php on line 102
+[15-Jun-2022 10:58:43 Asia/Bangkok] PHP Fatal error:  Uncaught Error: Call to undefined function _query() in /home/u7189112/public_html/versidemo/dep/transkrip_nilai_mhs.skslulus.php:44
+Stack trace:
+#0 /home/u7189112/public_html/versidemo/dep/transkrip_nilai_mhs.skslulus.php(27): Isinya('21021001', Object(FPDF))
+#1 {main}
+  thrown in /home/u7189112/public_html/versidemo/dep/transkrip_nilai_mhs.skslulus.php on line 44
+[15-Jun-2022 10:58:52 Asia/Bangkok] PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; FPDF has a deprecated constructor in /home/u7189112/public_html/versidemo/fpdf.php on line 12
+[15-Jun-2022 10:58:52 Asia/Bangkok] PHP Deprecated:  Function get_magic_quotes_runtime() is deprecated in /home/u7189112/public_html/versidemo/fpdf.php on line 1073
+[15-Jun-2022 10:58:52 Asia/Bangkok] PHP Notice:  Undefined index: Yayasan in /home/u7189112/public_html/versidemo/dep/transkrip_nilai_mhs.skstidaklulus.php on line 116
+[15-Jun-2022 10:58:52 Asia/Bangkok] PHP Notice:  Undefined offset: 3 in /home/u7189112/public_html/versidemo/dep/transkrip_nilai_mhs.skstidaklulus.php on line 99
+[15-Jun-2022 10:58:52 Asia/Bangkok] PHP Notice:  Undefined offset: 4 in /home/u7189112/public_html/versidemo/dep/transkrip_nilai_mhs.skstidaklulus.php on line 100
+[15-Jun-2022 10:58:52 Asia/Bangkok] PHP Notice:  Undefined offset: 5 in /home/u7189112/public_html/versidemo/dep/transkrip_nilai_mhs.skstidaklulus.php on line 102
+[15-Jun-2022 10:58:52 Asia/Bangkok] PHP Fatal error:  Uncaught Error: Call to undefined function _query() in /home/u7189112/public_html/versidemo/dep/transkrip_nilai_mhs.skstidaklulus.php:44
+Stack trace:
+#0 /home/u7189112/public_html/versidemo/dep/transkrip_nilai_mhs.skstidaklulus.php(27): Isinya('21021001', Object(FPDF))
+#1 {main}
+  thrown in /home/u7189112/public_html/versidemo/dep/transkrip_nilai_mhs.skstidaklulus.php on line 44
+[15-Jun-2022 11:01:34 Asia/Bangkok] PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; FPDF has a deprecated constructor in /home/u7189112/public_html/versidemo/fpdf.php on line 12
+[15-Jun-2022 11:01:34 Asia/Bangkok] PHP Deprecated:  Function get_magic_quotes_runtime() is deprecated in /home/u7189112/public_html/versidemo/fpdf.php on line 1073
+[15-Jun-2022 11:01:34 Asia/Bangkok] PHP Notice:  Undefined index: Yayasan in /home/u7189112/public_html/versidemo/dep/transkrip_nilai_mhs.skslulus.php on line 116
+[15-Jun-2022 11:01:34 Asia/Bangkok] PHP Notice:  Undefined offset: 3 in /home/u7189112/public_html/versidemo/dep/transkrip_nilai_mhs.skslulus.php on line 99
+[15-Jun-2022 11:01:34 Asia/Bangkok] PHP Notice:  Undefined offset: 4 in /home/u7189112/public_html/versidemo/dep/transkrip_nilai_mhs.skslulus.php on line 100
+[15-Jun-2022 11:01:34 Asia/Bangkok] PHP Notice:  Undefined offset: 5 in /home/u7189112/public_html/versidemo/dep/transkrip_nilai_mhs.skslulus.php on line 102
+[15-Jun-2022 11:01:34 Asia/Bangkok] PHP Fatal error:  Uncaught Error: Call to undefined function _query() in /home/u7189112/public_html/versidemo/dep/transkrip_nilai_mhs.skslulus.php:44
+Stack trace:
+#0 /home/u7189112/public_html/versidemo/dep/transkrip_nilai_mhs.skslulus.php(27): Isinya('21021001', Object(FPDF))
+#1 {main}
+  thrown in /home/u7189112/public_html/versidemo/dep/transkrip_nilai_mhs.skslulus.php on line 44
+[15-Jun-2022 11:02:40 Asia/Bangkok] PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; FPDF has a deprecated constructor in /home/u7189112/public_html/versidemo/fpdf.php on line 12
+[15-Jun-2022 11:02:40 Asia/Bangkok] PHP Deprecated:  Function get_magic_quotes_runtime() is deprecated in /home/u7189112/public_html/versidemo/fpdf.php on line 1073
+[15-Jun-2022 11:02:40 Asia/Bangkok] PHP Notice:  Undefined index: Yayasan in /home/u7189112/public_html/versidemo/dep/transkrip_nilai_mhs.skslulus.php on line 114
+[15-Jun-2022 11:02:40 Asia/Bangkok] PHP Notice:  Undefined offset: 3 in /home/u7189112/public_html/versidemo/dep/transkrip_nilai_mhs.skslulus.php on line 97
+[15-Jun-2022 11:02:40 Asia/Bangkok] PHP Notice:  Undefined offset: 4 in /home/u7189112/public_html/versidemo/dep/transkrip_nilai_mhs.skslulus.php on line 98
+[15-Jun-2022 11:02:40 Asia/Bangkok] PHP Notice:  Undefined offset: 5 in /home/u7189112/public_html/versidemo/dep/transkrip_nilai_mhs.skslulus.php on line 100
+[15-Jun-2022 11:02:40 Asia/Bangkok] PHP Fatal error:  Uncaught Error: Call to undefined function _query() in /home/u7189112/public_html/versidemo/dep/transkrip_nilai_mhs.skslulus.php:42
+Stack trace:
+#0 /home/u7189112/public_html/versidemo/dep/transkrip_nilai_mhs.skslulus.php(26): Isinya('21021001', Object(FPDF))
+#1 {main}
+  thrown in /home/u7189112/public_html/versidemo/dep/transkrip_nilai_mhs.skslulus.php on line 42
+[15-Jun-2022 11:02:42 Asia/Bangkok] PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; FPDF has a deprecated constructor in /home/u7189112/public_html/versidemo/fpdf.php on line 12
+[15-Jun-2022 11:02:42 Asia/Bangkok] PHP Deprecated:  Function get_magic_quotes_runtime() is deprecated in /home/u7189112/public_html/versidemo/fpdf.php on line 1073
+[15-Jun-2022 11:02:42 Asia/Bangkok] PHP Notice:  Undefined index: Yayasan in /home/u7189112/public_html/versidemo/dep/transkrip_nilai_mhs.skslulus.php on line 114
+[15-Jun-2022 11:02:42 Asia/Bangkok] PHP Notice:  Undefined offset: 3 in /home/u7189112/public_html/versidemo/dep/transkrip_nilai_mhs.skslulus.php on line 97
+[15-Jun-2022 11:02:42 Asia/Bangkok] PHP Notice:  Undefined offset: 4 in /home/u7189112/public_html/versidemo/dep/transkrip_nilai_mhs.skslulus.php on line 98
+[15-Jun-2022 11:02:42 Asia/Bangkok] PHP Notice:  Undefined offset: 5 in /home/u7189112/public_html/versidemo/dep/transkrip_nilai_mhs.skslulus.php on line 100
+[15-Jun-2022 11:02:42 Asia/Bangkok] PHP Fatal error:  Uncaught Error: Call to undefined function _query() in /home/u7189112/public_html/versidemo/dep/transkrip_nilai_mhs.skslulus.php:42
+Stack trace:
+#0 /home/u7189112/public_html/versidemo/dep/transkrip_nilai_mhs.skslulus.php(26): Isinya('21021001', Object(FPDF))
+#1 {main}
+  thrown in /home/u7189112/public_html/versidemo/dep/transkrip_nilai_mhs.skslulus.php on line 42
+[15-Jun-2022 11:03:55 Asia/Bangkok] PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; FPDF has a deprecated constructor in /home/u7189112/public_html/versidemo/fpdf.php on line 12
+[15-Jun-2022 11:03:55 Asia/Bangkok] PHP Deprecated:  Function get_magic_quotes_runtime() is deprecated in /home/u7189112/public_html/versidemo/fpdf.php on line 1073
+[15-Jun-2022 11:03:55 Asia/Bangkok] PHP Notice:  Undefined index: Yayasan in /home/u7189112/public_html/versidemo/dep/transkrip_nilai_mhs.skstidaklulus.php on line 116
+[15-Jun-2022 11:03:55 Asia/Bangkok] PHP Notice:  Undefined offset: 3 in /home/u7189112/public_html/versidemo/dep/transkrip_nilai_mhs.skstidaklulus.php on line 99
+[15-Jun-2022 11:03:55 Asia/Bangkok] PHP Notice:  Undefined offset: 4 in /home/u7189112/public_html/versidemo/dep/transkrip_nilai_mhs.skstidaklulus.php on line 100
+[15-Jun-2022 11:03:55 Asia/Bangkok] PHP Notice:  Undefined offset: 5 in /home/u7189112/public_html/versidemo/dep/transkrip_nilai_mhs.skstidaklulus.php on line 102
+[15-Jun-2022 11:03:55 Asia/Bangkok] PHP Fatal error:  Uncaught Error: Call to undefined function _query() in /home/u7189112/public_html/versidemo/dep/transkrip_nilai_mhs.skstidaklulus.php:44
+Stack trace:
+#0 /home/u7189112/public_html/versidemo/dep/transkrip_nilai_mhs.skstidaklulus.php(27): Isinya('21021001', Object(FPDF))
+#1 {main}
+  thrown in /home/u7189112/public_html/versidemo/dep/transkrip_nilai_mhs.skstidaklulus.php on line 44
+[15-Jun-2022 13:56:35 Asia/Bangkok] PHP Notice:  Undefined index: jenis in /home/u7189112/public_html/versidemo/dep/absensi.edit.php on line 8
+[15-Jun-2022 13:56:35 Asia/Bangkok] PHP Warning:  Use of undefined constant _fromyear - assumed '_fromyear' (this will throw an Error in a future version of PHP) in /home/u7189112/public_html/versidemo/dep/absensi.edit.php on line 38
+[15-Jun-2022 13:56:35 Asia/Bangkok] PHP Warning:  Use of undefined constant _frommonth - assumed '_frommonth' (this will throw an Error in a future version of PHP) in /home/u7189112/public_html/versidemo/dep/absensi.edit.php on line 38
+[15-Jun-2022 13:56:35 Asia/Bangkok] PHP Warning:  Use of undefined constant _fromday - assumed '_fromday' (this will throw an Error in a future version of PHP) in /home/u7189112/public_html/versidemo/dep/absensi.edit.php on line 38
+[15-Jun-2022 13:56:35 Asia/Bangkok] PHP Warning:  Use of undefined constant _toyear - assumed '_toyear' (this will throw an Error in a future version of PHP) in /home/u7189112/public_html/versidemo/dep/absensi.edit.php on line 39
+[15-Jun-2022 13:56:35 Asia/Bangkok] PHP Warning:  Use of undefined constant _tomonth - assumed '_tomonth' (this will throw an Error in a future version of PHP) in /home/u7189112/public_html/versidemo/dep/absensi.edit.php on line 39
+[15-Jun-2022 13:56:35 Asia/Bangkok] PHP Warning:  Use of undefined constant _today - assumed '_today' (this will throw an Error in a future version of PHP) in /home/u7189112/public_html/versidemo/dep/absensi.edit.php on line 39
+[15-Jun-2022 13:56:35 Asia/Bangkok] PHP Notice:  Undefined offset: 1 in /home/u7189112/public_html/versidemo/dep/absensi.edit.php on line 386
+[15-Jun-2022 13:56:35 Asia/Bangkok] PHP Notice:  Undefined index: Catatan in /home/u7189112/public_html/versidemo/dep/absensi.edit.php on line 202
+[15-Jun-2022 13:56:38 Asia/Bangkok] PHP Notice:  Undefined index: jenis in /home/u7189112/public_html/versidemo/dep/absensi.edit.php on line 8
+[15-Jun-2022 13:56:38 Asia/Bangkok] PHP Fatal error:  Uncaught Error: Call to undefined function mysql_result() in /home/u7189112/public_html/versidemo/pengembang.lib.php:360
+Stack trace:
+#0 /home/u7189112/public_html/versidemo/dep/absensi.edit.php(301): GetLastID()
+#1 /home/u7189112/public_html/versidemo/dep/absensi.edit.php(17): Simpan(1, 16533, 0)
+#2 {main}
+  thrown in /home/u7189112/public_html/versidemo/pengembang.lib.php on line 360
+[15-Jun-2022 13:58:07 Asia/Bangkok] PHP Notice:  Undefined offset: 1 in /home/u7189112/public_html/versidemo/dep/absensi.mhswedit.php on line 161
+[15-Jun-2022 13:58:10 Asia/Bangkok] PHP Notice:  Undefined offset: 1 in /home/u7189112/public_html/versidemo/dep/absensi.mhswedit.php on line 161
+[15-Jun-2022 13:58:13 Asia/Bangkok] PHP Notice:  Undefined offset: 1 in /home/u7189112/public_html/versidemo/dep/absensi.mhswedit.php on line 161
+[15-Jun-2022 13:58:15 Asia/Bangkok] PHP Notice:  Undefined offset: 1 in /home/u7189112/public_html/versidemo/dep/absensi.mhswedit.php on line 161
+[15-Jun-2022 13:59:06 Asia/Bangkok] PHP Notice:  Undefined offset: 1 in /home/u7189112/public_html/versidemo/dep/absensi.mhswedit.php on line 161
+[15-Jun-2022 13:59:09 Asia/Bangkok] PHP Notice:  Undefined offset: 1 in /home/u7189112/public_html/versidemo/dep/absensi.mhswedit.php on line 161
+[15-Jun-2022 13:59:22 Asia/Bangkok] PHP Notice:  Undefined offset: 1 in /home/u7189112/public_html/versidemo/dep/absensi.mhswedit.php on line 161
+[15-Jun-2022 13:59:28 Asia/Bangkok] PHP Notice:  Undefined offset: 1 in /home/u7189112/public_html/versidemo/dep/absensi.mhswedit.php on line 161
+[15-Jun-2022 13:59:33 Asia/Bangkok] PHP Notice:  Undefined offset: 1 in /home/u7189112/public_html/versidemo/dep/absensi.mhswedit.php on line 161
+[15-Jun-2022 14:09:08 Asia/Bangkok] PHP Notice:  Undefined offset: 1 in /home/u7189112/public_html/versidemo/dep/absensi.mhswedit.php on line 161
+[15-Jun-2022 14:11:14 Asia/Bangkok] PHP Notice:  Undefined offset: 1 in /home/u7189112/public_html/versidemo/dep/absensi.mhswedit.php on line 161
+[15-Jun-2022 14:11:16 Asia/Bangkok] PHP Notice:  Undefined offset: 1 in /home/u7189112/public_html/versidemo/dep/absensi.mhswedit.php on line 161
+[15-Jun-2022 08:21:18 UTC] PHP Warning:  include_once(../sisfokampus1.php): failed to open stream: No such file or directory in /home/u7189112/public_html/versidemo/dep/penilaian.final.php on line 3
+[15-Jun-2022 08:21:18 UTC] PHP Warning:  include_once(): Failed opening '../sisfokampus1.php' for inclusion (include_path='.:/opt/alt/php74/usr/share/pear') in /home/u7189112/public_html/versidemo/dep/penilaian.final.php on line 3
+[15-Jun-2022 08:21:18 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function HeaderSisfoKampus() in /home/u7189112/public_html/versidemo/dep/penilaian.final.php:5
+Stack trace:
+#0 {main}
+  thrown in /home/u7189112/public_html/versidemo/dep/penilaian.final.php on line 5
+[15-Jun-2022 15:23:16 Asia/Bangkok] PHP Fatal error:  Uncaught Error: Call to undefined function _query() in /home/u7189112/public_html/versidemo/dep/penilaian.final.php:41
+Stack trace:
+#0 /home/u7189112/public_html/versidemo/dep/penilaian.final.php(18): Finalisasi(Array)
+#1 {main}
+  thrown in /home/u7189112/public_html/versidemo/dep/penilaian.final.php on line 41
+[15-Jun-2022 15:25:26 Asia/Bangkok] PHP Fatal error:  Uncaught Error: Call to undefined function _query() in /home/u7189112/public_html/versidemo/dep/penilaian.final.php:54
+Stack trace:
+#0 /home/u7189112/public_html/versidemo/dep/penilaian.final.php(16): Finalisasi(Array)
+#1 {main}
+  thrown in /home/u7189112/public_html/versidemo/dep/penilaian.final.php on line 54
+[15-Jun-2022 15:26:25 Asia/Bangkok] PHP Fatal error:  Uncaught Error: Call to undefined function _fetch_array() in /home/u7189112/public_html/versidemo/dep/penilaian.final.php:59
+Stack trace:
+#0 /home/u7189112/public_html/versidemo/dep/penilaian.final.php(16): Finalisasi(Array)
+#1 {main}
+  thrown in /home/u7189112/public_html/versidemo/dep/penilaian.final.php on line 59
+[15-Jun-2022 08:28:56 UTC] PHP Parse error:  syntax error, unexpected 'new' (T_NEW) in /home/u7189112/public_html/versidemo/dep/penilaian.exportxl.php on line 21
