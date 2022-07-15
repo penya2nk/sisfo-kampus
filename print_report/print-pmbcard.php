@@ -1,12 +1,13 @@
 <?php 
+// error_reporting(0);
 session_start();
-error_reporting(0);
+
 include_once "../pengembang.lib.php";
 include_once "../konfigurasi.mysql.php";
 include_once "../sambungandb.php";
 include_once "../setting_awal.php";
 include_once "../check_setting.php";
-require ("../punksi/html2pdf/html2pdf.class.php");
+require ("../punksi/html2pdf-master/Html2Pdf.class.php");
 $filename='namafile.pdf';
 
 if (empty($_SESSION['_Login']) && empty($_SESSION['_LevelID'])){
@@ -15,12 +16,12 @@ if (empty($_SESSION['_Login']) && empty($_SESSION['_LevelID'])){
 else{
 $content   	= ob_get_clean();	
 $tgl 		= date('Y-m-d');	
-$dta 		= mysqli_fetch_array(mysqli_query($koneksi, "select * from pmb where PMBID='".strfilter($_GET[PMBID])."'"));	
-$Namax 		= strtolower($dta[Nama]);
+$dta 		= mysqli_fetch_array(mysqli_query($koneksi, "select * from pmb where PMBID='".strfilter($_GET['PMBID'])."'"));	
+$Namax 		= strtolower($dta['Nama']);
 $Nama		= ucwords($Namax);
 
 $tglujian	= mysqli_fetch_array(mysqli_query($koneksi, "select * from pmbperiod where PMBPeriodID='$dta[PMBPeriodID]'"));
-$tanggal 	= $tglujian[UjianMulai];
+$tanggal 	= $tglujian['UjianMulai'];
 $day 		= date('D', strtotime($tanggal));
 $dayList 	= array(
 	'Sun' => 'Minggu',
@@ -106,7 +107,7 @@ $content .= "
 <tr class='batas2' align='left'>
 <td >&nbsp;Tempat dan Tanggal Lahir</td>
 <td >:</td>
-<td >&nbsp;$dta[TempatLahir], ".tgl_indo($dta[TanggalLahir])."</td>
+<td >&nbsp;$dta[TempatLahir], ".tgl_indo($dta['TanggalLahir'])."</td>
 </tr>
 
 <tr class='batas2' align='left'>
@@ -125,7 +126,7 @@ $content .= "
 <tr class='batas2' align='left'>
 <td >&nbsp;Hari / Tanggal Ujian</td>
 <td >:</td>
-<td >&nbsp;$dayList[$day], ".tgl_indo($tglujian[UjianMulai])."</td>
+<td >&nbsp;$dayList[$day], ".tgl_indo($tglujian['UjianMulai'])."</td>
 </tr>
 <tr class='batas2' align='left'>
 <td >&nbsp;Waktu</td>

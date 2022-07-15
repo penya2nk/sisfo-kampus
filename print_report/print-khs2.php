@@ -1,40 +1,43 @@
 <?php 
 session_start();
 error_reporting(0);
+
 include_once "../pengembang.lib.php";
 include_once "../konfigurasi.mysql.php";
 include_once "../sambungandb.php";
 include_once "../setting_awal.php";
 include_once "../check_setting.php";
-require ("../punksi/html2pdf/html2pdf.class.php");
-$filename="namafile.pdf";
-$tgl = tgl_indo(date('Y-m-d'));
+require_once ("../punksi/html2pdf/vendor/autoload.php");
+use Spipu\Html2Pdf\Html2Pdf;
+use Spipu\Html2Pdf\Exception\Html2PdfException;
+use Spipu\Html2Pdf\Exception\ExceptionFormatter;
 
 if (empty($_SESSION['_Login']) && empty($_SESSION['_LevelID'])){
 	header("Location: ../login.php");
 }
-
 else{
 	
 
-include "headerx-rpt.php"; $content = ob_get_clean();
-$mhs       = mysqli_fetch_array(mysqli_query($koneksi, "SELECT ProdiID,ProgramID,MhswID,Nama FROM mhsw where MhswID='".strfilter($_GET[MhswID])."'"));
-$ProgramID = $mhs[ProgramID];
-$ProdiID   = $mhs[ProdiID];
+
+
+
+$mhs       = mysqli_fetch_array(mysqli_query($koneksi, "SELECT ProdiID,ProgramID,MhswID,Nama FROM mhsw where MhswID='".strfilter($_GET['MhswID'])."'"));
+$ProgramID = $mhs['ProgramID'];
+$ProdiID   = $mhs['ProdiID'];
 
 $program   = mysqli_fetch_array(mysqli_query($koneksi, "SELECT ProgramID,Nama FROM program where ProgramID='$ProgramID'"));
 $prodi     = mysqli_fetch_array(mysqli_query($koneksi, "SELECT ProdiID,Nama,Pejabat FROM prodi where ProdiID='$ProdiID'"));
 
-$ss       = mysqli_fetch_array(mysqli_query($koneksi, "SELECT KHSID,Sesi,TahunID,MhswID FROM khs where MhswID='".strfilter($_GET[MhswID])."' and TahunID='".strfilter($_GET[tahun])."'"));
+$ss       = mysqli_fetch_array(mysqli_query($koneksi, "SELECT KHSID,Sesi,TahunID,MhswID FROM khs where MhswID='".strfilter($_GET['MhswID'])."' and TahunID='".strfilter($_GET['tahun'])."'"));
 
-if ($ProdiID=='SI'){
-	$ttd="<img width='100' width='120' src='ttd_herix000.png'>";
-}else{
-	$ttd="<img width='100' width='120' src='ttd_yudax001.png'>";
-}
+// if ($ProdiID=='SI'){
+// 	$ttd="<img width='100' width='120' src='ttd_herix000.png'>";
+// }else{
+// 	$ttd="<img width='100' width='120' src='ttd_yudax001.png'>";
+// }
 
 
-
+include "headerx-rpt.php";
 $content .= "
 <table align='center'> 
 <tr>
@@ -70,13 +73,13 @@ $content .= "
 <th width='60' align='center'>BOBOT</th>
 </tr>";
         
-$sq = mysqli_query($koneksi, "SELECT * from vw_krs where MhswID='".strfilter($_GET[MhswID])."' and TahunID='".strfilter($_GET[tahun])."'");
+$sq = mysqli_query($koneksi, "SELECT * from vw_krs where MhswID='".strfilter($_GET['MhswID'])."' and TahunID='".strfilter($_GET['tahun'])."'");
 while($r=mysqli_fetch_array($sq)){
 $no++;	 
 //$tugas 		= $r[Tugas1]+ $r[Tugas2] + $r[Tugas3];
 //$ratatugas 	= $tugas/3;
 //$nilai 		= (0.25*$ratatugas)+(0.15*$r[Presensi])+(0.25*$r[UTS])+(0.35*$r[UAS]);      
-$nilai = $r[NilaiAkhir];
+$nilai = $r['NilaiAkhir'];
 if ($nilai >= 85 AND $nilai <= 100){
 						$huruf = "A";
 						$bobot = "4";
@@ -177,7 +180,7 @@ $content .= "
 
 <tr>
   <td align='left'></td>
-  <td align='left' align='left'>$ttd </td>
+  <td align='left' align='left'></td>
 </tr>
 
 <tr>
@@ -185,19 +188,17 @@ $content .= "
 <td align='left'>$prodi[Pejabat]</td>
 </tr>
 </table> ";
+try {
+    ob_start();
+    $html2pdf = new Html2Pdf('P','A4','fr', true, 'UTF-8', array(15, 15, 15, 15), false); 
+    $html2pdf->writeHTML($content);
+    $html2pdf->output();
+} catch (Html2PdfException $e) {
+    $html2pdf->clean();
 
+    $formatter = new ExceptionFormatter($e);
+    echo $formatter->getHtmlMessage();
+}
 
-try
-	{
-			
-	
-		$html2pdf = new HTML2PDF('P','Letter','en', false, 'ISO-8859-15',array(10, 10, 10, 10)); //setting ukuran kertas dan margin pada dokumen anda
-		// $html2pdf->setModeDebug();
-		$html2pdf->setDefaultFont('Arial');
-		$html2pdf->writeHTML($content, isset($_GET['vuehtml']));
-		$html2pdf->Output($filename);
-	}
-	catch(HTML2PDF_exception $e) { echo $e; }
-	
-} //session login
+}	
 ?>	

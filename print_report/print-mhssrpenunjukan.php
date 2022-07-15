@@ -1,41 +1,41 @@
 <?php 
 session_start();
-error_reporting(0);
+// error_reporting(0);
 include_once "../pengembang.lib.php";
 include_once "../konfigurasi.mysql.php";
 include_once "../sambungandb.php";
 include_once "../setting_awal.php";
 include_once "../check_setting.php";
-require ("../punksi/html2pdf/html2pdf.class.php");
-$filename="namafile.pdf";
-
-
+require_once ("../punksi/html2pdf/vendor/autoload.php");
+use Spipu\Html2Pdf\Html2Pdf;
+use Spipu\Html2Pdf\Exception\Html2PdfException;
+use Spipu\Html2Pdf\Exception\ExceptionFormatter;
 
 if (empty($_SESSION['_Login']) && empty($_SESSION['_LevelID'])){
 	header("Location: ../login.php");
 }
 else{
 
-include "headerx-rpt.php"; $content = ob_get_clean();
+include "headerx-rpt.php"; 
 $tgl 	   = tgl_indo(date('Y-m-d'));
 
-$dt  			= mysqli_fetch_array(mysqli_query($koneksi, "SELECT * FROM t_penelitian where IDPenelitian='".strfilter($_GET[IDPenelitian])."'"));
+$dt  			= mysqli_fetch_array(mysqli_query($koneksi, "SELECT * FROM t_penelitian where IDPenelitian='".strfilter($_GET['IDPenelitian'])."'"));
 
-$judulx 		= $dt[Judul];
+$judulx 		= $dt['Judul'];
 $judul_kecil 	= strtolower($judulx);
 $Judul			= ucwords($judul_kecil);
 
 $dos   			= mysqli_fetch_array(mysqli_query($koneksi, "SELECT Login,Nama,Gelar,NIDN FROM dosen where Login='$dt[Pembimbing1]'"));
 //$namarien 		= $dos[Nama];
-$nama_kecild 	= strtolower($dos[Nama]);
+$nama_kecild 	= strtolower($dos['Nama']);
 $pembimbing1	= ucwords($nama_kecild);	
 
 $mhs   			= mysqli_fetch_array(mysqli_query($koneksi, "SELECT Login,MhswID,Nama,ProdiID,ProgramID FROM mhsw where MhswID='$dt[MhswID]'"));
-$nama_kecimhs 	= strtolower($mhs[Nama]);
+$nama_kecimhs 	= strtolower($mhs['Nama']);
 $NamaMhs		= ucwords($nama_kecimhs);
 
 //08/Prodi-TI/STMIK-HTP/III/2016/
-$ProdiID   	= $dt[ProdiID];
+$ProdiID   	= $dt['ProdiID'];
 if ($ProdiID=='SI'){ 
 	$prod	="Sistem Informasi"; 
 	$kaprodi="Herianto, S.Kom, M.Kom"; 
@@ -254,15 +254,18 @@ $content .= "
 <td width='300'><font style='font-size:8px'>Login by: $_SESSION[_Login] ".tgl_indo(date('Y-m-d'))." ".date('H:i:s') . " WIB - Univ Tekno Indo Support System</font></td>
 </tr>
 </table>";
-try
-	{
-		$html2pdf = new HTML2PDF('P','Letter','en', false, 'ISO-8859-15',array(25, 10, 25, 10)); //setting ukuran kertas dan margin pada dokumen anda
-		// $html2pdf->setModeDebug();
-		$html2pdf->setDefaultFont('Arial');
-		$html2pdf->writeHTML($content, isset($_GET['vuehtml']));
-		$html2pdf->Output($filename);
-	}
-	catch(HTML2PDF_exception $e) { echo $e; }
-	
+
+try {
+  ob_start();
+  $html2pdf = new Html2Pdf('P','A4','fr', true, 'UTF-8', array(15, 15, 15, 15), false); 
+  $html2pdf->writeHTML($content);
+  $html2pdf->output();
+} catch (Html2PdfException $e) {
+  $html2pdf->clean();
+
+  $formatter = new ExceptionFormatter($e);
+  echo $formatter->getHtmlMessage();
 }
+
+}	
 ?>	
