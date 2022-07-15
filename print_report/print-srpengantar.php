@@ -7,20 +7,16 @@ include_once "../konfigurasi.mysql.php";
 include_once "../sambungandb.php";
 include_once "../setting_awal.php";
 include_once "../check_setting.php";
-require ("../punksi/html2pdf/html2pdf.class.php");
-
-$filename="namafile.pdf";
-
-
+require_once ("../punksi/html2pdf/vendor/autoload.php");
+use Spipu\Html2Pdf\Html2Pdf;
+use Spipu\Html2Pdf\Exception\Html2PdfException;
+use Spipu\Html2Pdf\Exception\ExceptionFormatter;
 
 if (empty($_SESSION['_Login']) && empty($_SESSION['_LevelID'])){
 	header("Location: ../login.php");
 }
 else{
-
-include "headerx-rpt.php"; $content = ob_get_clean();
-$tgl 	   = tgl_indo(date('Y-m-d'));
-
+  
 $dt  			= mysqli_fetch_array(mysqli_query($koneksi, "SELECT * FROM vw_jadwal_skripsi_ujian where JadwalID='".strfilter($_GET['JadwalID'])."'"));
 $namamhs 		= $dt['Nama'];
 $nama_kecilmhs 	= strtolower($namamhs);
@@ -58,6 +54,7 @@ if($bln=='1'){$BlnRomawi="I";}elseif($bln=='2'){$BlnRomawi="II";} elseif($bln=='
 elseif($bln=='6'){$BlnRomawi="VI";} elseif($bln=='7'){$BlnRomawi="VII";} elseif($bln=='8'){$BlnRomawi="VIII";} elseif($bln=='9'){$BlnRomawi="IX";} elseif($bln=='10'){$BlnRomawi="X";}
 elseif($bln=='11'){$BlnRomawi="XI";}else{{$BlnRomawi="XII";}}
 
+include "header-rpt.php";
 $content .= "
 <table width='800'  >
   <tr>
@@ -130,7 +127,7 @@ $content .= "
   <tr style=font-size:15px;font-family:Arial;>
     <td>&nbsp;</td>
     <td>&nbsp;</td>
-    <td colspan='3'><p>Ketua  Universitas Teknokrat Indonesia, dengan ini memberikan surat pengantar ke- </p></td>
+    <td colspan='3'><p>Ketua  Universitas Teknokrat Indonesia, dengan ini memberikan surat pengantar kepada Mahasiswa </p></td>
   </tr>
   <tr style=font-size:15px;font-family:Arial;>
     <td width='79'>&nbsp;</td>
@@ -255,20 +252,22 @@ $content .= "
   <td align='center'>&nbsp;</td>
   <td align='center'>&nbsp;</td>
 </tr>
-</table>
-
-<font style='font-size:8px'>Login by: $_SESSION[_Login] ".tgl_indo(date('Y-m-d'))." ".date('H:i:s') . " WIB - Univ Tekno Indo Support System</font>";
+</table>";
 
 
-try
-	{
-		$html2pdf = new HTML2PDF('P','Letter','en', false, 'ISO-8859-15',array(25, 10, 25, 10)); //setting ukuran kertas dan margin pada dokumen anda
-		// $html2pdf->setModeDebug();
-		$html2pdf->setDefaultFont('Arial');
-		$html2pdf->writeHTML($content, isset($_GET['vuehtml']));
-		$html2pdf->Output($filename);
-	}
-	catch(HTML2PDF_exception $e) { echo $e; }
-	
+
+try {
+    ob_start();
+    $html2pdf = new Html2Pdf('P','A4','fr', true, 'UTF-8', array(15, 15, 15, 15), false); 
+    $html2pdf->writeHTML($content);
+    $html2pdf->output();
+} catch (Html2PdfException $e) {
+    $html2pdf->clean();
+
+    $formatter = new ExceptionFormatter($e);
+    echo $formatter->getHtmlMessage();
 }
+
+}	
+
 ?>	

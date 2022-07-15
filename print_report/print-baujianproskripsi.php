@@ -6,59 +6,59 @@ include_once "../konfigurasi.mysql.php";
 include_once "../sambungandb.php";
 include_once "../setting_awal.php";
 include_once "../check_setting.php";
-require ("../punksi/html2pdf/html2pdf.class.php");
-$filename="namafile.pdf";
-
-
+require_once ("../punksi/html2pdf/vendor/autoload.php");
+use Spipu\Html2Pdf\Html2Pdf;
+use Spipu\Html2Pdf\Exception\Html2PdfException;
+use Spipu\Html2Pdf\Exception\ExceptionFormatter;
 
 if (empty($_SESSION['_Login']) && empty($_SESSION['_LevelID'])){
 	header("Location: ../login.php");
 }
 else{
 
-include "headerx-rpt.php"; $content = ob_get_clean();
+include "headerx-rpt.php"; 
 
-$dt  		= mysqli_fetch_array(mysqli_query($koneksi, "SELECT * FROM vw_jadwal_skripsi_ujian where JadwalID='".strfilter($_GET[JadwalID])."'"));
-$JudulP 	= strtolower($dt[Judul]);
+$dt  		= mysqli_fetch_array(mysqli_query($koneksi, "SELECT * FROM vw_jadwal_skripsi_ujian where JadwalID='".strfilter($_GET['JadwalID'])."'"));
+$JudulP 	= strtolower($dt['Judul']);
 $Judul		= ucwords($JudulP);
 
 
-$ProdiID   	= $dt[ProdiID];
+$ProdiID   	= $dt['ProdiID'];
 if ($ProdiID=='SI'){ $prod="Sistem Informasi"; $kaprodi="Herianto, M.Kom";}else{ $prod="Teknik Informatika"; $kaprodi="Eka Sabna, M.Pd, M.Kom";}
 
 $x   			= mysqli_fetch_array(mysqli_query($koneksi, "SELECT Login,Nama,Gelar FROM dosen where Login='$dt[PembimbingPro1]'"));
-$namap 			= $x[Nama];
+$namap 			= $x['Nama'];
 
 $nama_kecil 	= strtolower($namap);
 $pembimbing1	= ucwords($nama_kecil);	
 
 $y   			= mysqli_fetch_array(mysqli_query($koneksi, "SELECT Login,Nama,Gelar FROM dosen where Login='$dt[PembimbingPro2]'"));
-$nama2 			= $y[Nama];
+$nama2 			= $y['Nama'];
 $nama_kecil2 	= strtolower($nama2);
 $pembimbing2		= ucwords($nama_kecil2);	
 
 $a   			= mysqli_fetch_array(mysqli_query($koneksi, "SELECT Login,Nama,Gelar FROM dosen where Login='$dt[PengujiPro1]'"));
-$nama1 			= $a[Nama];
+$nama1 			= $a['Nama'];
 $nama_kecil1 	= strtolower($nama1);
 $penguji1		= ucwords($nama_kecil1);	
 
 $b   			= mysqli_fetch_array(mysqli_query($koneksi, "SELECT Login,Nama,Gelar FROM dosen where Login='$dt[PengujiPro2]'"));
-$nama2 			= $b[Nama];
+$nama2 			= $b['Nama'];
 $nama_kecil2 	= strtolower($nama2);
 $penguji2		= ucwords($nama_kecil2);	
 
 $c   			= mysqli_fetch_array(mysqli_query($koneksi, "SELECT Login,Nama,Gelar FROM dosen where Login='$dt[PengujiPro3]'"));
-$nama3 			= $c[Nama];
+$nama3 			= $c['Nama'];
 $nama_kecil3 	= strtolower($nama3);
 $penguji3		= ucwords($nama_kecil3);	
 
 $d     			= mysqli_fetch_array(mysqli_query($koneksi, "SELECT RuangID,Nama FROM ruang where RuangID='$dt[TempatUjian]'"));
 
-$tgl = substr($dt[TglUjianProposal],8,2); //2017-01-01
-$bln = substr($dt[TglUjianProposal],5,2);
-$thn = substr($dt[TglUjianProposal],0,4);
+$tgl = substr($dt['TglUjianProposal'],8,2); //2017-01-01
+$bln = substr($dt['TglUjianProposal'],5,2);
+$thn = substr($dt['TglUjianProposal'],0,4);
 
-$tanggal = $dt[TglUjianProposal];
+$tanggal = $dt['TglUjianProposal'];
 //$day = date('D', strtotime($tanggal));
 $day = date('D', strtotime($tanggal));
 $dayList = array(
@@ -98,7 +98,7 @@ elseif ($bln=='10'){$bul ="Oktober";}elseif ($bln=='11'){$bul ="Nopember"; }else
 */
 
 
-if ($dt[ProdiID]=='SI'){$progst ="Sistem Informasi";}else{$progst ="Teknik Informatika"; }
+if ($dt['ProdiID']=='SI'){$progst ="Sistem Informasi";}else{$progst ="Teknik Informatika"; }
 $content .= "
 
 <table width='700' border='0' cellpadding='0' cellspacing='0' align='center'>
@@ -290,15 +290,17 @@ $content .= "
 </table>";
 
 
-try
-	{
-		$html2pdf = new HTML2PDF('P','Letter','en', false, 'ISO-8859-15',array(25, 10, 25, 10)); //setting ukuran kertas dan margin pada dokumen anda
-		// $html2pdf->setModeDebug();
-		$html2pdf->setDefaultFont('Arial');
-		$html2pdf->writeHTML($content, isset($_GET['vuehtml']));
-		$html2pdf->Output($filename);
-	}
-	catch(HTML2PDF_exception $e) { echo $e; }
-	
+try {
+  ob_start();
+  $html2pdf = new Html2Pdf('P','Legal','fr', true, 'UTF-8', array(15, 15, 15, 15), false); 
+  $html2pdf->writeHTML($content);
+  $html2pdf->output();
+} catch (Html2PdfException $e) {
+  $html2pdf->clean();
+
+  $formatter = new ExceptionFormatter($e);
+  echo $formatter->getHtmlMessage();
 }
+
+}	
 ?>	
