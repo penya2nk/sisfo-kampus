@@ -6,7 +6,10 @@ include_once "../konfigurasi.mysql.php";
 include_once "../sambungandb.php";
 include_once "../setting_awal.php";
 include_once "../check_setting.php";
-require ("../punksi/html2pdf/html2pdf.class.php");
+require_once ("../punksi/html2pdf/vendor/autoload.php");
+use Spipu\Html2Pdf\Html2Pdf;
+use Spipu\Html2Pdf\Exception\Html2PdfException;
+use Spipu\Html2Pdf\Exception\ExceptionFormatter;
 $tgl= tgl_indo(date('Y-m-d'));
 
 $filename="absensi_$_GET[JadwalID].pdf";
@@ -18,13 +21,13 @@ else{
 
 
 include "headerx-rpt.php"; $content = ob_get_clean();
-$mboh     = mysqli_fetch_array(mysqli_query($koneksi, "SELECT * FROM vw_mengajar where JadwalID='".strfilter($_GET[JadwalID])."'"));
+$mboh     = mysqli_fetch_array(mysqli_query($koneksi, "SELECT * FROM vw_mengajar where JadwalID='".strfilter($_GET['JadwalID'])."'"));
 
-$prodi    = mysqli_fetch_array(mysqli_query($koneksi, "SELECT ProdiID,Nama,Pejabat FROM prodi where ProdiID='".strfilter($_GET[prodi])."'"));
+$prodi    = mysqli_fetch_array(mysqli_query($koneksi, "SELECT ProdiID,Nama,Pejabat FROM prodi where ProdiID='".strfilter($_GET['prodi'])."'"));
 $hari 	  = mysqli_fetch_array(mysqli_query($koneksi, "SELECT HariID,Nama FROM hari where HariID='$mboh[HariID]'"));
 $ruang 	  = mysqli_fetch_array(mysqli_query($koneksi, "SELECT RuangID,Nama FROM ruang where RuangID='$mboh[RuangID]'"));
 
-$Matakul  = $mboh[NamaMK];
+$Matakul  = $mboh['NamaMK'];
 $Matakul_kecil 	= strtolower($Matakul);
 $matKecil =ucwords($Matakul_kecil);
 
@@ -44,7 +47,7 @@ $content .= "
 
 <tr>
 <td>$prodi[Nama]</td>             
-<td>".substr($mboh[JamMulai],0,5)." - ".substr($mboh[JamSelesai],0,5)." WIB</td> 
+<td>".substr($mboh['JamMulai'],0,5)." - ".substr($mboh['JamSelesai'],0,5)." WIB</td> 
 </tr>
 
 <tr>
@@ -92,13 +95,13 @@ $sq = mysqli_query($koneksi, "SELECT krs.*, jadwal.Kehadiran,
 	FROM krs
 	LEFT OUTER JOIN jadwal ON krs.JadwalID=jadwal.JadwalID			
 	LEFT OUTER JOIN mhsw ON mhsw.MhswID=krs.MhswID
-	WHERE krs.JadwalID='".strfilter($_GET[JadwalID])."'
-	AND jadwal.TahunID='".strfilter($_GET[tahun])."'
+	WHERE krs.JadwalID='".strfilter($_GET['JadwalID'])."'
+	AND jadwal.TahunID='".strfilter($_GET['tahun'])."'
 	GROUP BY krs.JadwalID,krs.MhswID order by krs.MhswID asc");
 while($r=mysqli_fetch_array($sq)){
 $no++;	       
-$huruf= $r[GradeNilai];
-$NamaMhs 		= $r[NamaMhs];
+$huruf= $r['GradeNilai'];
+$NamaMhs 		= $r['NamaMhs'];
 $NamaMhs_kecil 	= strtolower($NamaMhs ); //strtoupper($kalimat);
 $NamaMhs_AKecil	= ucwords($NamaMhs_kecil);
 $content .= "<tr>
@@ -230,15 +233,17 @@ $content .="
 </tr>
 </table>";
 
-try
-	{
-		$html2pdf = new HTML2PDF('L','Letter','en', false, 'ISO-8859-15',array(10, 30, 10, 30)); //setting ukuran kertas dan margin pada dokumen anda
-		// $html2pdf->setModeDebug();
-		$html2pdf->setDefaultFont('Arial');
-		$html2pdf->writeHTML($content, isset($_GET['vuehtml']));
-		$html2pdf->Output($filename);
-	}
-	catch(HTML2PDF_exception $e) { echo $e; }
-	
-} //session login
-?>	
+try {
+	ob_start();
+	$html2pdf = new Html2Pdf('P','Legal','fr', true, 'UTF-8', array(15, 15, 15, 15), false); 
+	$html2pdf->writeHTML($content);
+	$html2pdf->output();
+  } catch (Html2PdfException $e) {
+	$html2pdf->clean();
+  
+	$formatter = new ExceptionFormatter($e);
+	echo $formatter->getHtmlMessage();
+  }
+  
+  }	
+  ?>	

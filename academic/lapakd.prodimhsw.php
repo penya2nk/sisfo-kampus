@@ -1,5 +1,5 @@
 <?php
-error_reporting(0);
+// error_reporting(0);
 session_start();
 
 include_once "../pengembang.lib.php";
@@ -9,7 +9,6 @@ include_once "../setting_awal.php";
 include_once "../check_setting.php";
 include_once "../fpdf.php";
 
-// *** Parameters ***
 $TahunID = GainVariabelx('TahunID');
 $ProdiID = GainVariabelx('ProdiID');
 

@@ -36,7 +36,7 @@ function periksax() {
           and LevelID = '".anti_injection($_POST['lev_id'])."' 
           and KodeID  = '".KodeID."' 
           and NA = 'N' 
-          and PasswordBro ='$pass'"; //and PasswordBro ='$pass' //and Password=LEFT(PASSWORD('".anti_injection($_POST['Password'])."'),10) limit 1"; // //and Password=LEFT(PASSWORD('".anti_injection($_POST['Password'])."'),10) limit 1
+          "; //and PasswordBro ='$pass' //and Password=LEFT(PASSWORD('".anti_injection($_POST['Password'])."'),10) limit 1"; // //and Password=LEFT(PASSWORD('".anti_injection($_POST['Password'])."'),10) limit 1
   $rows = mysqli_query($koneksi, $sqlqx);
   $datax = mysqli_fetch_array($rows);
   if (empty($datax)) {

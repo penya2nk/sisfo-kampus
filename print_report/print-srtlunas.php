@@ -6,17 +6,18 @@ include_once "../konfigurasi.mysql.php";
 include_once "../sambungandb.php";
 include_once "../setting_awal.php";
 include_once "../check_setting.php";
-require ("../punksi/html2pdf/html2pdf.class.php");
-$filename="namafile.pdf";
-
-
+use Spipu\Html2Pdf\Html2Pdf;
+use Spipu\Html2Pdf\Exception\Html2PdfException;
+use Spipu\Html2Pdf\Exception\ExceptionFormatter;
 
 if (empty($_SESSION['_Login']) && empty($_SESSION['_LevelID'])){
 	header("Location: ../login.php");
 }
 else{
-//$pdf->SetFont('Arial','B',50);
-$content   		= ob_get_clean();
+
+$tgl 	   = tgl_indo(date('Y-m-d'));
+
+include "headerx-rpt.php"; 
 $mhs        	= mysqli_fetch_array(mysqli_query($koneksi, "SELECT * FROM mhsw where MhswID='".strfilter($_GET[IDX])."'"));
 $keu        	= mysqli_fetch_array(mysqli_query($koneksi, "SELECT * FROM keuangan_bayar where MhswID='".strfilter($_GET[MhswID])."'"));
 $ProgramID 		= $dt[ProgramID];
@@ -193,16 +194,17 @@ $content .= "
 </tr>
 </table>";
 
+try {
+  ob_start();
+  $html2pdf = new Html2Pdf('P','Legal','fr', true, 'UTF-8', array(15, 15, 15, 15), false); 
+  $html2pdf->writeHTML($content);
+  $html2pdf->output();
+} catch (Html2PdfException $e) {
+  $html2pdf->clean();
 
-try
-	{
-		$html2pdf = new HTML2PDF('P','Legal','en', false, 'ISO-8859-15',array(22, 10,15, 10)); //setting ukuran kertas dan margin pada dokumen anda
-		// $html2pdf->setModeDebug();
-		$html2pdf->setDefaultFont('Arial');
-		$html2pdf->writeHTML($content, isset($_GET['vuehtml']));
-		$html2pdf->Output($filename);
-	}
-	catch(HTML2PDF_exception $e) { echo $e; }
-	
+  $formatter = new ExceptionFormatter($e);
+  echo $formatter->getHtmlMessage();
 }
+
+}	
 ?>	

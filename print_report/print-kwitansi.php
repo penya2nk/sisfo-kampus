@@ -16,8 +16,7 @@ if (empty($_SESSION['_Login']) && empty($_SESSION['_LevelID'])){
 }
 else{
 
-//include "headerx-rpt.php"; 
-$tgl      =date('Y-m-d');	
+include "headerx-rpt.php"; 	
 $dta      = mysqli_fetch_array(mysqli_query($koneksi, "select * from vw_jadwal_skripsi_ujian where JadwalID='".strfilter($_GET['JadwalID'])."'"));	
 $Namax 		= strtolower($dta['Nama']);
 $Nama		  = ucwords($Namax);

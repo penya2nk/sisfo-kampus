@@ -6,17 +6,17 @@ include_once "../konfigurasi.mysql.php";
 include_once "../sambungandb.php";
 include_once "../setting_awal.php";
 include_once "../check_setting.php";
-require ("../punksi/html2pdf/html2pdf.class.php");
-$filename="namafile.pdf";
-$tgl = tgl_indo(date('Y-m-d'));
+require_once ("../punksi/html2pdf/vendor/autoload.php");
+use Spipu\Html2Pdf\Html2Pdf;
+use Spipu\Html2Pdf\Exception\Html2PdfException;
+use Spipu\Html2Pdf\Exception\ExceptionFormatter;
 
 if (empty($_SESSION['_Login']) && empty($_SESSION['_LevelID'])){
 	header("Location: ../login.php");
 }
-
 else{
 
-include "headerx-rpt.php"; $content = ob_get_clean();
+include "headerx-rpt.php"; 	
 $mhs       = mysqli_fetch_array(mysqli_query($koneksi, "SELECT ProdiID,ProgramID,MhswID,Nama FROM mhsw where MhswID='".strfilter($_GET[MhswID])."'"));
 $ProgramID = $mhs[ProgramID];
 $ProdiID   = $mhs[ProdiID];

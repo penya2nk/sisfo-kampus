@@ -40,7 +40,7 @@ echo"
 </div>
 </div>
 
-<?php if ($_GET[act]==''){ 	
+<?php if ($_GET['act']==''){ 	
 if (isset($_GET['sukses'])){
 	echo "<div class='alert alert-success alert-dismissible fade in' role='alert'> 
 	<button type='button' class='close' data-dismiss='alert' aria-label='Close'>
@@ -92,7 +92,7 @@ while($r=mysqli_fetch_array($sqx)){
 	</td>
 	</tr>";
 $no++;
-$tsks += $r[SKS];
+$tsks += $r['SKS'];
 }
 
 echo"<tr bgcolor=$warna><td colspan='7'>Total SKS : $tsks SKS </td></tr>";	
@@ -109,19 +109,19 @@ echo "
 </div>";
 
 
-}else if ($_GET[act]=='ambilsp'){ 
-$cek =mysqli_num_rows(mysqli_query("select * from t_sp where MhswID='$_SESSION[_Login]' AND MKID='".strfilter($_GET[MKID])."'"));
+}else if ($_GET['act']=='ambilsp'){ 
+$cek =mysqli_num_rows(mysqli_query($koneksi, "select * from t_sp where MhswID='$_SESSION[_Login]' AND MKID='".strfilter($_GET['MKID'])."'"));
 if ($cek>0){
-	echo "<script>document.location='index.php?ndelox=students/daftarsp&SpID=".$_GET[SpID]."&MhswID=".$_GET[MhswID]."&gagal';</script>";
+	echo "<script>document.location='index.php?ndelox=students/daftarsp&SpID=".$_GET['SpID']."&MhswID=".$_GET['MhswID']."&gagal';</script>";
 	exit;
 }
-$t =mysqli_fetch_array(mysqli_query("select sum(SKS) as totSKS from t_sp where MhswID='$_SESSION[_Login]' and TahunID='$_SESSION[tahun_akademik]'"));
-$vsks = $t[totSKS]+$_GET[SKS];
+$t =mysqli_fetch_array(mysqli_query($koneksi, "select sum(SKS) as totSKS from t_sp where MhswID='$_SESSION[_Login]' and TahunID='$_SESSION[tahun_akademik]'"));
+$vsks = $t['totSKS']+$_GET['SKS'];
 if ($vsks>10){
 	echo "<script>document.location='index.php?ndelox=students/daftarsp&SpID&lebih';</script>";
 	exit;
 }
-$sqx =mysqli_query("insert into t_sp(TahunID,
+$sqx =mysqli_query($koneksi, "insert into t_sp(TahunID,
 									Tanggal,
 									MhswID,
 									MKID,
@@ -130,8 +130,8 @@ $sqx =mysqli_query("insert into t_sp(TahunID,
 				values('$_SESSION[tahun_akademik]',
 						'".date('Y-m-d')."',
 						'$_SESSION[_Login]',
-						'".strfilter($_GET[MKID])."',
-						'".strfilter($_GET[SKS])."',
+						'".strfilter($_GET['MKID'])."',
+						'".strfilter($_GET['SKS'])."',
 						'$_SESSION[Periode]')");
 	if ($sqx){
 		echo "<script>document.location='index.php?ndelox=students/daftarsp&sukses';</script>";                       
@@ -140,7 +140,7 @@ $sqx =mysqli_query("insert into t_sp(TahunID,
 	}
 }
 
-else if ($_GET[act]=='viewdata'){ 
+else if ($_GET['act']=='viewdata'){ 
 $r = mysqli_fetch_array(mysqli_query($koneksi, "SELECT * FROM t_sp WHERE MhswID='$_SESSION[_Login]' AND TahunID='$_SESSION[tahun_akademik]'"));                                      
 echo"							 
 	 <div class='box box-info'>								
@@ -192,10 +192,10 @@ if (isset($_GET['sukses'])){
 					
 </tr>";
 	$no++;
-	$tsks += $r[SKS];
+	$tsks += $r['SKS'];
 	}
-if (isset($_GET[hapus])){
-	mysqli_query("DELETE FROM t_sp WHERE SpID='".strfilter($_GET[hapus])."'");
+if (isset($_GET['hapus'])){
+	mysqli_query($koneksi, "DELETE FROM t_sp WHERE SpID='".strfilter($_GET['hapus'])."'");
 	echo "<script>document.location='index.php?ndelox=students/daftarsp&act=viewdata';</script>";
 }					  
 echo"<tr bgcolor=$warna><td colspan='7'>Total: $tsks SKS </td></tr>";		 

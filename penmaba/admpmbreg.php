@@ -6,7 +6,7 @@
 	<label class="col-md-7 col-form-label text-md-right"><b style='color:purple'>REG PMB</b></label>
 		<div class="col-md-2">	  
 		<form style='margin-right:5px; margin-top:0px' class='pull-right' action='' method='GET'>
-		<input type="hidden" name='ndelox' value='pmb/admpmbreg'> 
+		<input type="hidden" name='ndelox' value='penmaba/admpmbreg'> 
 			<select name='tahun' class='form-control form-control-sm' onChange='this.form.submit()'>
 				<?php 
 					echo "<option value=''>- Pilih Periode PMB -</option>";

@@ -13,7 +13,7 @@ $DosenID = GainVariabelx('DosenID');
 $dsn = AmbilFieldx('dosen', "Login='$DosenID' and KodeID", KodeID, "*");
 
 ob_start();
-$pdf = new PDF();
+$pdf = new FPDF();
 $pdf->SetTitle("Jadwal Dosen");
 $pdf->AddPage();
 

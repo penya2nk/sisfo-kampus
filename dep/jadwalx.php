@@ -4,9 +4,9 @@
 
 		<h3 class="box-title">
 		<?php 
-		if (isset($_GET[tahun])){ 
+		if (isset($_GET['tahun'])){ 
 			echo "<b style='color:green;font-size:20px'>Jadwal Kuliah &nbsp;&nbsp;</b> 
-			<a class='btn btn-success btn-xs' href='index.php?ndelox=dep/labeluts&JadwalID=$r[JadwalID]&tahun=$_GET[tahun]&prodi=$_GET[prodi]'><span class='glyphicon glyphicon-print'></span> Label UTS dan UAS</a> ";	 
+			<a class='btn btn-success btn-xs' href='index.php?ndelox=dep/labeluts&tahun=$_GET[tahun]&prodi=$_GET[prodi]'><span class='glyphicon glyphicon-print'></span> Label UTS dan UAS</a> ";	 
 		}else{ 
 			echo "<b style='color:green;font-size:20px'>Jadwal Kuliah</b>";  
 		} ?>
@@ -23,7 +23,7 @@
 							echo "<option value=''>- Pilih Tahun Akademik -</option>";
 							$tahun = mysqli_query($koneksi, "SELECT distinct(TahunID) FROM tahun order by TahunID Desc"); //and NA='N'
 							while ($k = mysqli_fetch_array($tahun)){
-							if ($_GET[tahun]==$k[TahunID]){
+							if ($_GET['tahun']==$k['TahunID']){
 								echo "<option value='$k[TahunID]' selected>$k[TahunID]</option>";
 							}else{
 								echo "<option value='$k[TahunID]'>$k[TahunID]</option>";
@@ -40,7 +40,7 @@
 						echo "<option value='' >- Pilih Program Studi -</option>";
 						$prodi = mysqli_query($koneksi, "SELECT * from prodi order by Nama ASC");
 						while ($k = mysqli_fetch_array($prodi)){
-						if ($_GET[prodi]==$k[ProdiID]){
+						if ($_GET['prodi']==$k['ProdiID']){
 							echo "<option value='$k[ProdiID]' selected>$k[Nama]</option>";
 						}else{
 							echo "<option value='$k[ProdiID]'>$k[Nama]</option>";
@@ -56,7 +56,7 @@
 				</div>
 				
 				<div class="col-md-1">				
-				<a style='padding:4px;margin-left:0px' class='pull-right btn btn-primary btn-sm' href='index.php?ndelox=dep/jadwalx&act=tambahjadwal&tahun=<?php echo $_GET[tahun]; ?>&prodi=<?php echo "$_GET[prodi]"; ?>&program=<?php echo 	"$_GET[program]"; ?>'>Add Jadwal</a>
+				<a style='padding:4px;margin-left:0px' class='pull-right btn btn-primary btn-sm' href='index.php?ndelox=dep/jadwalx&act=tambahjadwal&tahun=<?php echo $_GET['tahun']; ?>&prodi=<?php echo "$_GET[prodi]"; ?>&program=<?php echo 	"$_GET[program]"; ?>'>Add Jadwal</a>
 				</div>
 		</div>
 
@@ -65,7 +65,7 @@
 
 
 
-<?php if ($_GET[act]==''){ ?>          
+<?php if ($_GET['act']==''){ ?>          
 <?php 
 if (isset($_GET['sukses'])){
 	echo "<div class='alert alert-success alert-dismissible fade in' role='alert'> 
@@ -100,7 +100,7 @@ if (isset($_GET['sukses'])){
           </thead>
           <tbody>
         <?php
-          if (isset($_GET[tahun])){
+          if (isset($_GET['tahun'])){
 			    $no = 0;
 			  $prodix = ".".strfilter($_GET['prodi']).".";  
 			  $hari = mysqli_query($koneksi, "SELECT * from hari WHERE Nama NOT IN ('Minggu','') order by HariID asc");
@@ -125,7 +125,7 @@ if (isset($_GET['sukses'])){
 					  and ruang.RuangID=jadwal.RuangID
 					  and hari.HariID=jadwal.HariID
 					  and jadwal.HariID='$h[HariID]'
-					  and jadwal.TahunID='".strfilter($_GET[tahun])."' 
+					  and jadwal.TahunID='".strfilter($_GET['tahun'])."' 
 					  and jadwal.ProdiID='$prodix'"); //".strfilter('$prodix')."
                       
 		
@@ -136,7 +136,7 @@ if (isset($_GET['sukses'])){
 			  $jmlpres=mysqli_num_rows(mysqli_query($koneksi, "select * from presensi where JadwalID='$r[JadwalID]'"));
           echo "<tr><td>$no</td>
                   
-                    <td>".substr($r[JamMulai],0,5)." - ".substr($r[JamSelesai],0,5)."</td>
+                    <td>".substr($r['JamMulai'],0,5)." - ".substr($r['JamSelesai'],0,5)."</td>
                     <td style='text-align:center'>$r[RuangID]</td>
                     <td>$r[MKKode]</td>
                     <td><a href='?ndelox=dep/jadwalx&act=viewinfo&JadwalID=$r[JadwalID]&program=$r[ProgramID]&prodi=$r[ProdiID]&tahun=$r[TahunID]&NamaMK=$r[NamaMK]&NamaDosen=$r[NamaDosen]&SKS=$r[SKS]&Sesi=$r[Sesi]'>$r[NamaMK]</a></td>
@@ -163,8 +163,8 @@ echo "</tr>";
 	  }
 	  }
 }//hari
-	  if (isset($_GET[hapus])){
-		mysqli_query("DELETE FROM jadwal_jangan_dihapus where JadwalID='".strfilter($_GET[hapus])."'");
+	  if (isset($_GET['hapus'])){
+		mysqli_query($koneksi, "DELETE FROM jadwal_jangan_dihapus where JadwalID='".strfilter($_GET['hapus'])."'");
 		echo "<script>document.location='index.php?ndelox=jadwalx&program=$_GET[program]&prodi=$_GET[prodi]&tahun=$_GET[tahun]';</script>";
 	  }
   ?>
@@ -173,7 +173,7 @@ echo "</tr>";
   </table>
 </div><!-- /.box-body -->
 <?php 
-	if ($_GET[prodi] == '' OR $_GET[tahun] == ''){
+	if ($_GET['prodi'] == '' OR $_GET['tahun'] == ''){
 		echo "<center style='padding:60px; color:red'>Tentukan Tahun akademik dan Program Studi Terlebih dahulu...</center>";
 	}
 ?>
@@ -181,8 +181,8 @@ echo "</tr>";
 </div>
 
 <?php 
-}elseif($_GET[act]=='tambahjadwal'){
-    if (isset($_POST[tambah])){	
+}elseif($_GET['act']=='tambahjadwal'){
+    if (isset($_POST['tambah'])){	
 	    $tglnow =date('Y-m-d H:i:s');	
 	
 	 			
@@ -192,7 +192,7 @@ echo "</tr>";
 		// 	exit;
 		// 	}
 		//and MKID='$_POST[ai]' and DosenID='$_POST[av]' 
-		$jamMulai =substr($_POST[ao],0,2);
+		$jamMulai =substr($_POST['ao'],0,2);
 		//echo"Data :$_POST[an] $_POST[bc] $jamMulai $_POST[tahun]";
 		/*
 		$cek = mysqli_num_rows(mysqli_query($koneksi, "select * from jadwalx 
@@ -205,12 +205,12 @@ echo "</tr>";
 												exit;
 												}
 		*/	
-		$prodi=strfilter($_POST[prodi]);	
+		$prodi=strfilter($_POST['prodi']);	
 		$arrProgramID = $_POST['ProgramID'];
     	//$ProgramID = (empty($arrProgramID))? '' : '.'.implode('.', $arrProgramID).'.'; //oribro
 		$ProgramID = (empty($arrProgramID))? '.REG A.' : '.'.implode('.', $arrProgramID).'.'; //if empty set REG A as default value	
 		//echo"$ProgramID";
-	    $m = mysqli_fetch_array(mysqli_query($koneksi, "SELECT MKID,Nama,MKKode,SKS from mk where MKID='".strfilter($_POST[ai])."'"));
+	    $m = mysqli_fetch_array(mysqli_query($koneksi, "SELECT MKID,Nama,MKKode,SKS from mk where MKID='".strfilter($_POST['ai'])."'"));
 		
         $query = mysqli_query("INSERT INTO jadwal(
 							JadwalID,
@@ -274,66 +274,66 @@ echo "</tr>";
 							TglEdit,
 							LoginEdit,
 							NA) 
-					 VALUES('".strfilter($_POST[aa])."',
-							'".strfilter($_POST[ab])."',
-							'".strfilter($_POST[ac])."',
+					 VALUES('".strfilter($_POST['aa'])."',
+							'".strfilter($_POST['ab'])."',
+							'".strfilter($_POST['ac'])."',
 							'HTP',
-							'".strfilter($_GET[tahun])."',
+							'".strfilter($_GET['tahun'])."',
 							'$prodi',
 							'".strfilter($ProgramID)."',
-							'".strfilter($_POST[ah])."',
-							'".strfilter($_POST[ai])."',
+							'".strfilter($_POST['ah'])."',
+							'".strfilter($_POST['ai'])."',
 							'K',
 							'N',
 							'$m[MKKode]',
 							'$m[Nama]',
-							'".strfilter($_POST[an])."',
-							'".strfilter($_POST[ao])."',
-							'".strfilter($_POST[ap])."',
-							'".strfilter($_POST[aq])."',
-							'".strfilter($_POST[ar])."',
+							'".strfilter($_POST['an'])."',
+							'".strfilter($_POST['ao'])."',
+							'".strfilter($_POST['ap'])."',
+							'".strfilter($_POST['aq'])."',
+							'".strfilter($_POST['ar'])."',
 							'".strfilter($_POST['as'])."',
 							'$m[SKS]',
-							'".strfilter($_POST[au])."',
-							'".strfilter($_POST[av])."',
-							'".strfilter($_POST[aw])."',
-							'".strfilter($_POST[ax])."',
-							'".strfilter($_POST[ay])."',
-							'".strfilter($_POST[az])."',
-							'".strfilter($_POST[ba])."',
+							'".strfilter($_POST['au'])."',
+							'".strfilter($_POST['av'])."',
+							'".strfilter($_POST['aw'])."',
+							'".strfilter($_POST['ax'])."',
+							'".strfilter($_POST['ay'])."',
+							'".strfilter($_POST['az'])."',
+							'".strfilter($_POST['ba'])."',
 							'50',
-							'".strfilter($_POST[bc])."',
-							'".strfilter($_POST[bf])."',
-							'".strfilter($_POST[bg])."',
-							'".strfilter($_POST[bh])."',
-							'".strfilter($_POST[bi])."',
-							'".strfilter($_POST[bj])."',
-							'".strfilter($_POST[bk])."',
-							'".strfilter($_POST[bl])."',
-							'".strfilter($_POST[bm])."',
-							'".strfilter($_POST[bn])."',
-							'".strfilter($_POST[bo])."',
-							'".strfilter($_POST[bp])."',
+							'".strfilter($_POST['bc'])."',
+							'".strfilter($_POST['bf'])."',
+							'".strfilter($_POST['bg'])."',
+							'".strfilter($_POST['bh'])."',
+							'".strfilter($_POST['bi'])."',
+							'".strfilter($_POST['bj'])."',
+							'".strfilter($_POST['bk'])."',
+							'".strfilter($_POST['bl'])."',
+							'".strfilter($_POST['bm'])."',
+							'".strfilter($_POST['bn'])."',
+							'".strfilter($_POST['bo'])."',
+							'".strfilter($_POST['bp'])."',
 							'N',
-							'".strfilter($_POST[br])."',
-							'".strfilter($_POST[bs])."',
-							'".strfilter($_POST[bt])."',
-							'".strfilter($_POST[bu])."',
-							'".strfilter($_POST[bv])."',
-							'".strfilter($_POST[bw])."',
-							'".strfilter($_POST[bx])."',
-							'".strfilter($_POST[by])."',
-							'".strfilter($_POST[bz])."',
+							'".strfilter($_POST['br'])."',
+							'".strfilter($_POST['bs'])."',
+							'".strfilter($_POST['bt'])."',
+							'".strfilter($_POST['bu'])."',
+							'".strfilter($_POST['bv'])."',
+							'".strfilter($_POST['bw'])."',
+							'".strfilter($_POST['bx'])."',
+							'".strfilter($_POST['by'])."',
+							'".strfilter($_POST['bz'])."',
 							'web',
 							'N',
-							'".strfilter($_POST[cc])."',
-							'".strfilter($_POST[cd])."',
-							'".strfilter($_POST[ce])."',
-							'".strfilter($_POST[cf])."',
+							'".strfilter($_POST['cc'])."',
+							'".strfilter($_POST['cd'])."',
+							'".strfilter($_POST['ce'])."',
+							'".strfilter($_POST['cf'])."',
 							'$tglnow',
-							'$_SESSION[id]',
-							'".strfilter($_POST[ci])."',
-							'".strfilter($_POST[cj])."',
+							'".$_SESSION['_Login']."',
+							'".strfilter($_POST['ci'])."',
+							'".strfilter($_POST['cj'])."',
 							'N')");
 		
         if ($query){
@@ -347,7 +347,7 @@ echo "</tr>";
 
     //$ex = explode('.',$_GET[kelas]);
     //$tingkat = $ex[0];
-$kurAktif = mysqli_fetch_array(mysqli_query($koneksi, "SELECT * FROM kurikulum where ProdiID='".strfilter($_GET[prodi])."' and NA='N' order by KurikulumID Desc limit 1"));
+$kurAktif = mysqli_fetch_array(mysqli_query($koneksi, "SELECT * FROM kurikulum where ProdiID='".strfilter($_GET['prodi'])."' and NA='N' order by KurikulumID Desc limit 1"));
     echo "
 	            <div class='card'>
 				<div class='card-header'>
@@ -370,7 +370,7 @@ $kurAktif = mysqli_fetch_array(mysqli_query($koneksi, "SELECT * FROM kurikulum w
 						<option value='0' selected>- Pilih Tahun Akademik -</option>"; 
 						$tahun = mysqli_query($koneksi, "SELECT distinct(TahunID),NA,ProdiID FROM tahun ");
 						while($a = mysqli_fetch_array($tahun)){
-						  if ($_GET[tahun]==$a[TahunID]){
+						  if ($_GET['tahun']==$a['TahunID']){
 							echo "<option value='$a[TahunID]' selected>$a[TahunID]</option>";
 						  }else{
 							echo "<option value='$a[TahunID]'>$a[TahunID]</option>";
@@ -392,7 +392,7 @@ $kurAktif = mysqli_fetch_array(mysqli_query($koneksi, "SELECT * FROM kurikulum w
 						<option value='0' selected>- Pilih Program -</option>"; 
 						$program = mysqli_query($koneksi, "SELECT * FROM prodi");
 						while($a = mysqli_fetch_array($program)){
-						  if ($_GET[prodi]==$a[ProdiID]){
+						  if ($_GET['prodi']==$a['ProdiID']){
 							echo "<option value='$a[ProdiID]' selected>$a[Nama]</option>";
 						  }else{
 							echo "<option value='$a[ProdiID]'>$a[Nama]</option>";
@@ -460,24 +460,24 @@ $kurAktif = mysqli_fetch_array(mysqli_query($koneksi, "SELECT * FROM kurikulum w
                   </div>
               </form>
             </div>";
-}elseif($_GET[act]=='edit'){
-    if (isset($_POST[update])){
-		$mk = mysqli_fetch_array(mysqli_query($koneksi, "SELECT MKID,Nama FROM mk where MKID='".strfilter($_POST[c])."'"));
+}elseif($_GET['act']=='edit'){
+    if (isset($_POST['update'])){
+		$mk = mysqli_fetch_array(mysqli_query($koneksi, "SELECT MKID,Nama FROM mk where MKID='".strfilter($_POST['c'])."'"));
 		$arrProgramID = $_POST['ProgramID'];    
         $ProgramID = (empty($arrProgramID))? '' : '.'.implode('.', $arrProgramID).'.'; //if empty set REG A as default value
         $query = mysqli_query($koneksi, "UPDATE jadwal SET 
 							  ProgramID 		= '".strfilter($ProgramID)."',
-							  MKID 				= '".strfilter($_POST[c])."',
+							  MKID 				= '".strfilter($_POST['c'])."',
 							  Nama 				= '$mk[Nama]',
-							  NamaKelas 		= '".strfilter($_POST[NamaKelas])."',
-							  RuangID 			= '".strfilter($_POST[b])."',  
-							  HariID 			= '".strfilter($_POST[d])."',													                                                 
-							  DosenID 			= '".strfilter($_POST[e])."',                                                    
-							  RencanaKehadiran 	= '".strfilter($_POST[f])."',
-							  KehadiranMin 		=  '".strfilter($_POST[g])."',
-							  JamMulai 			= '".strfilter($_POST[h])."',
-							  JamSelesai 		= '".strfilter($_POST[i])."'
-							  where JadwalID	= '".strfilter($_POST[JadwalID])."'");
+							  NamaKelas 		= '".strfilter($_POST['NamaKelas'])."',
+							  RuangID 			= '".strfilter($_POST['b'])."',  
+							  HariID 			= '".strfilter($_POST['d'])."',													                                                 
+							  DosenID 			= '".strfilter($_POST['e'])."',                                                    
+							  RencanaKehadiran 	= '".strfilter($_POST['f'])."',
+							  KehadiranMin 		=  '".strfilter($_POST['g'])."',
+							  JamMulai 			= '".strfilter($_POST['h'])."',
+							  JamSelesai 		= '".strfilter($_POST['i'])."'
+							  where JadwalID	= '".strfilter($_POST['JadwalID'])."'");
         if ($query){
           echo "<script>document.location='index.php?ndelox=dep/jadwalx&tahun=$_POST[a]&program=$_POST[program]&prodi=$_POST[prodi]&JadwalID=$_POST[JadwalID]&sukses';</script>";
         }else{
@@ -485,8 +485,8 @@ $kurAktif = mysqli_fetch_array(mysqli_query($koneksi, "SELECT * FROM kurikulum w
         }
     }
     
-    $e = mysqli_fetch_array(mysqli_query($koneksi, "SELECT * FROM jadwal where JadwalID='".strfilter($_GET[JadwalID])."'"));
-	$kurAktif = mysqli_fetch_array(mysqli_query($koneksi, "SELECT * FROM kurikulum where ProdiID='".strfilter($_GET[prodi])."' and NA='N' order by KurikulumID Desc limit 1"));
+    $e = mysqli_fetch_array(mysqli_query($koneksi, "SELECT * FROM jadwal where JadwalID='".strfilter($_GET['JadwalID'])."'"));
+	$kurAktif = mysqli_fetch_array(mysqli_query($koneksi, "SELECT * FROM kurikulum where ProdiID='".strfilter($_GET['prodi'])."' and NA='N' order by KurikulumID Desc limit 1"));
 
     //$ex = explode('.',$e[kode_kelas]);
     //$tingkat = $ex[0];
@@ -510,7 +510,7 @@ $kurAktif = mysqli_fetch_array(mysqli_query($koneksi, "SELECT * FROM kurikulum w
 						<option value='0' selected>- Pilih Tahun Akademik -</option>"; 
 						$tahun = mysqli_query($koneksi, "SELECT distinct(TahunID),NA,ProdiID FROM tahun order by TahunID desc");
 						while($a = mysqli_fetch_array($tahun)){
-						  if ($e[TahunID]==$a[TahunID]){
+						  if ($e['TahunID']==$a['TahunID']){
 							echo "<option value='$a[TahunID]' selected>$a[TahunID]</option>";
 						  }else{
 							echo "<option value='$a[TahunID]'>$a[TahunID]</option>";
@@ -542,7 +542,7 @@ $kurAktif = mysqli_fetch_array(mysqli_query($koneksi, "SELECT * FROM kurikulum w
 					<option value='0' selected></option>";					   
 						$hari = mysqli_query($koneksi, "SELECT * FROM hari");
 						while($a = mysqli_fetch_array($hari)){
-						  if ($e[HariID]==$a[HariID]){
+						  if ($e['HariID']==$a['HariID']){
 							echo "<option value='$a[HariID]' selected>$a[Nama]</option>";
 						  }else{
 							echo "<option value='$a[HariID]'>$a[Nama]</option>";
@@ -554,7 +554,7 @@ $kurAktif = mysqli_fetch_array(mysqli_query($koneksi, "SELECT * FROM kurikulum w
 						<option value='$a[RuangID]' selected>- Pilih Ruang -</option>"; 
 						$ruang = mysqli_query($koneksi, "SELECT * FROM ruang");
 						while($a = mysqli_fetch_array($ruang)){
-						  if ($e[RuangID]==$a[RuangID]){
+						  if ($e['RuangID']==$a['RuangID']){
 							echo "<option value='$a[RuangID]' selected>$a[Nama]</option>";
 						  }else{
 							echo "<option value='$a[RuangID]'>$a[Nama]</option>";
@@ -583,7 +583,7 @@ $kurAktif = mysqli_fetch_array(mysqli_query($koneksi, "SELECT * FROM kurikulum w
 						<option value='$a[Login]' selected>- Pilih Dosen -</option>"; 
 						$dosen = mysqli_query($koneksi, "SELECT * FROM vw_dosenaktif"); //vw_dosenaktif order by Nama ASC
 						while($a = mysqli_fetch_array($dosen)){
-						  if ($e[DosenID]==$a[Login]){
+						  if ($e['DosenID']==$a['Login']){
 							echo "<option value='$a[Login]' selected>$a[Nama] - [ $a[Login] ] </option>";
 						  }else{
 							echo "<option value='$a[Login]'>$a[Nama] - [ $a[Login] ]</option>";
@@ -597,7 +597,7 @@ $kurAktif = mysqli_fetch_array(mysqli_query($koneksi, "SELECT * FROM kurikulum w
                     <tr><th scope='row'>Jam Selesai</th><td><input type='text' style='width:100px' class='form-control' name='i' placeholder='hh:ii:ss' value='$e[JamSelesai]'></td></tr>
                    
                     <tr><th scope='row'>Aktif</th><td>";
-						if ($e[NA]=='N'){
+						if ($e['NA']=='N'){
 							echo "<input type='radio' name='k' value='Ya' checked> Ya
 								   <input type='radio' name='k' value='Tidak'> Tidak";
 						}else{
@@ -618,14 +618,14 @@ $kurAktif = mysqli_fetch_array(mysqli_query($koneksi, "SELECT * FROM kurikulum w
             </div>";
 }
 
-elseif($_GET[act]=='viewinfo'){
+elseif($_GET['act']=='viewinfo'){
 $dt = mysqli_fetch_array(mysqli_query($koneksi, "select JadwalID,NamaMK,NamaDosen,Gelar,SKS,Sesi,NamaKelas,NamaHari,NamaRuang, 
 										DATE_FORMAT(UASTanggal,'%d-%m-%Y') AS Tgl,TIME_FORMAT(JamMulai, '%H:%i') AS JMulai,
 										TIME_FORMAT(JamSelesai, '%H:%i') AS JSelesai 
-										FROM vw_jadwal where JadwalID='".strfilter($_GET[JadwalID])."'"));
-$NamaDosx 	= strtolower($dt[NamaDosen]); //strtoupper($kalimat);
+										FROM vw_jadwal where JadwalID='".strfilter($_GET['JadwalID'])."'"));
+$NamaDosx 	= strtolower($dt['NamaDosen']); //strtoupper($kalimat);
 $NamaDos	= ucwords($NamaDosx);
-$NamaMKx 	= strtolower($dt[NamaMK]); //strtoupper($kalimat);
+$NamaMKx 	= strtolower($dt['NamaMK']); //strtoupper($kalimat);
 $NamaMK		= ucwords($NamaMKx);
 echo"            <div class='card'>
 				<div class='card-header'>
@@ -677,22 +677,22 @@ echo"            <div class='card'>
 	FROM krs
 	LEFT OUTER JOIN jadwal ON krs.JadwalID=jadwal.JadwalID			
 	LEFT OUTER JOIN mhsw ON mhsw.MhswID=krs.MhswID
-	WHERE krs.JadwalID='".strfilter($_GET[JadwalID])."'
-	AND jadwal.TahunID='".strfilter($_GET[tahun])."'
+	WHERE krs.JadwalID='".strfilter($_GET['JadwalID'])."'
+	AND jadwal.TahunID='".strfilter($_GET['tahun'])."'
 	GROUP BY krs.JadwalID,krs.MhswID order by krs.MhswID asc"); 
 	$no=0;
 	while($r=mysqli_fetch_array($sq)){
 	$n++;	
 	
-	$persen			= ($r[JML]/$r[Kehadiran])* 100;
-	$persentase		= number_format(($r[JML]/$r[Kehadiran])* 100,0);				       			
-	$NamaMhs 		= strtolower($r[NamaMhs]); //strtoupper($kalimat);
+	$persen			= ($r['JML']/$r['Kehadiran'])* 100;
+	$persentase		= number_format(($r['JML']/$r['Kehadiran'])* 100,0);				       			
+	$NamaMhs 		= strtolower($r['NamaMhs']); //strtoupper($kalimat);
 	$NamaMhsLower	= ucwords($NamaMhs);
-	$Alamatx 	    = strtolower($r[Alamat]);
+	$Alamatx 	    = strtolower($r['Alamat']);
 	$Alamat 		= ucwords($Alamatx);
-	$TmpLahirx 	    = strtolower($r[TempatLahir]);
+	$TmpLahirx 	    = strtolower($r['TempatLahir']);
 	$TmpLahir 		= ucwords($TmpLahirx);
-	$NamaIbux 	    = strtolower($r[NamaIbu]);
+	$NamaIbux 	    = strtolower($r['NamaIbu']);
 	$NamaIbu 		= ucwords($NamaIbux);
 	 mysqli_query("update krs set Presensi='$persen' where MhswID=$r[MhswID] and JadwalID='$r[JadwalID]'");
 	echo"<tr>
@@ -701,7 +701,7 @@ echo"            <div class='card'>
 	<td>$NamaMhsLower ($r[Kelamin])</td>
 	<td>$Alamat</td>
 	<td>$TmpLahir</td>
-	<td>".tgl_indo($r[TanggalLahir])."</td>
+	<td>".tgl_indo($r['TanggalLahir'])."</td>
 	<td align='left'>$r[Handphone]</td>
 	<td align=left >$NamaIbu</td>
 	<td align=left >$r[NIK]</td>

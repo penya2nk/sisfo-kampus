@@ -6,8 +6,7 @@ include_once "../konfigurasi.mysql.php";
 include_once "../sambungandb.php";
 include_once "../setting_awal.php";
 include_once "../check_setting.php";
-require ("../punksi/html2pdf/html2pdf.class.php");
-$filename='namafile.pdf';
+
 $tgl = tgl_indo(date('Y-m-d'));
 
 if (empty($_SESSION['_Login']) && empty($_SESSION['_LevelID'])){
@@ -16,18 +15,14 @@ if (empty($_SESSION['_Login']) && empty($_SESSION['_LevelID'])){
 
 else{
 
-//$awal 		= $_GET['awal'];
-//$akhir 		= $_GET['akhir'];
-//$periode 	= tgl_indo($awal)." s/d ".tgl_indo($akhir);
-
-$mhs       = mysqli_fetch_array(mysqli_query($koneksi, "SELECT ProdiID,ProgramID,MhswID,Nama FROM mhsw where MhswID='".strfilter($_GET[MhswID])."'"));
-$ProgramID = $mhs[ProgramID];
+$mhs       = mysqli_fetch_array(mysqli_query($koneksi, "SELECT ProdiID,ProgramID,MhswID,Nama FROM mhsw where MhswID='".strfilter($_GET['MhswID'])."'"));
+$ProgramID = $mhs['ProgramID'];
 
 $program   = mysqli_fetch_array(mysqli_query($koneksi, "SELECT ProgramID,Nama FROM program where ProgramID='$ProgramID'"));
-$prodi     = mysqli_fetch_array(mysqli_query($koneksi, "SELECT ProdiID,Nama,Pejabat FROM prodi where ProdiID='".strfilter($_GET[prodi])."'"));
+$prodi     = mysqli_fetch_array(mysqli_query($koneksi, "SELECT ProdiID,Nama,Pejabat FROM prodi where ProdiID='".strfilter($_GET['prodi'])."'"));
 
 
-$namaFile = "$mhs[Nama]_".$_GET[MhswID]."_TraskripNilaiLengkap.xls";
+$namaFile = "$mhs[Nama]_".$_GET['MhswID']."_TraskripNilaiLengkap.xls";
 header("Pragma: public");
 header("Expires: 0");
 header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
@@ -96,14 +91,14 @@ $sq = mysqli_query($koneksi, "SELECT
 				  FROM mhsw,krs,mk
 				  WHERE krs.MhswID=mhsw.MhswID
 				  AND krs.MKID=mk.MKID 
-				  AND mhsw.MhswID='".strfilter($_GET[MhswID])."'
+				  AND mhsw.MhswID='".strfilter($_GET['MhswID'])."'
 				  ORDER BY mk.Sesi,mk.Nama ASC");
 while($r=mysqli_fetch_array($sq)){
-$Matakul 	= $r[NamaMK];
+$Matakul 	= $r['NamaMK'];
 $Matakul_kecil 	= strtolower($Matakul);
 $matKecil 	= ucwords($Matakul_kecil);
 	  $no++;	       
-	  $huruf= $r[GradeNilai];
+	  $huruf= $r['GradeNilai'];
 	  if ($huruf=='A'){
 		  $bobot=4;
 	  }

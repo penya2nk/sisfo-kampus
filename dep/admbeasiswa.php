@@ -2,7 +2,7 @@
 <div class='card-header'>
 <h3 class="box-title">
 <?php 
-  if (isset($_GET[tahun])){ 
+  if (isset($_GET['tahun'])){ 
      echo "<b style='color:green;font-size:20px'>Beasiswa &nbsp;&nbsp;</b>"; 
 	 
   }else{ 
@@ -11,12 +11,12 @@
 </h3>
 
 <?php 
- if ($_GET[prodi] == '' OR $_GET[tahun] == '' ){ ?>
+ if ($_GET['prodi'] == '' OR $_GET['tahun'] == '' ){ ?>
      <?php echo"Upps Mas Ir!";?>
  <?php
  }else{
 ?>	     
-	<a class='pull-right btn btn-primary btn-sm' href='index.php?ndelox=dep/admbeasiswa&act=tambahdata&tahun=<?php echo $_GET[tahun]; ?>&prodi=<?php echo "$_GET[prodi]"; ?>&program=<?php echo 	"$_GET[program]"; ?>'>Tambahkan Data</a>
+	<a class='pull-right btn btn-primary btn-sm' href='index.php?ndelox=dep/admbeasiswa&act=tambahdata&tahun=<?php echo $_GET['tahun']; ?>&prodi=<?php echo "$_GET[prodi]"; ?>&program=<?php echo 	"$_GET[program]"; ?>'>Tambahkan Data</a>
 <?php } ?>
                   
 <div class="form-group row">
@@ -29,7 +29,7 @@
 					echo "<option value=''>- Pilih Tahun Akademik -</option>";
 					$tahun = mysqli_query($koneksi, "SELECT * FROM t_tahunnormal order by Tahun Desc"); //and NA='N'
 					while ($k = mysqli_fetch_array($tahun)){
-					if ($_GET[tahun]==$k[Tahun]){
+					if ($_GET['tahun']==$k['Tahun']){
 						echo "<option value='$k[Tahun]' selected>$k[Tahun]</option>";
 					}else{
 						echo "<option value='$k[Tahun]'>$k[Tahun]</option>";
@@ -45,7 +45,7 @@
 				echo "<option value=''>- Pilih Program Studi -</option>";
 				$prodi = mysqli_query($koneksi, "SELECT * from prodi order by Nama ASC");
 				while ($k = mysqli_fetch_array($prodi)){
-				if ($_GET[prodi]==$k[ProdiID]){
+				if ($_GET['prodi']==$k['ProdiID']){
 					echo "<option value='$k[ProdiID]' selected>$k[Nama]</option>";
 				}else{
 					echo "<option value='$k[ProdiID]'>$k[Nama]</option>";
@@ -64,7 +64,7 @@
 </div>
 </div>
 
-<?php if ($_GET[act]==''){ ?>
+<?php if ($_GET['act']==''){ ?>
 <div class='card'>
 <div class='card-header'>
 <div class='table-responsive'>
@@ -85,27 +85,27 @@
           </thead>
           <tbody>
         <?php
-            if ($_GET[tahun]!='' AND $_GET[prodi]!=''){
+            if ($_GET['tahun']!='' AND $_GET['prodi']!=''){
 			 $tampil = mysqli_query($koneksi, "select mhsw.Nama, mhsw.ProdiID,mhsw.Handphone, beasiswamhsw.* 
 			                        from mhsw, beasiswa, beasiswamhsw 
 			                        where mhsw.MhswID= beasiswamhsw.MhswID
 			                        and beasiswa.BeasiswaID= beasiswamhsw.BeasiswaID
-			                        and left(beasiswamhsw.TahunID,4)='".strfilter($_GET[tahun])."'
-			                        and mhsw.ProdiID='".strfilter($_GET[prodi])."'");
+			                        and left(beasiswamhsw.TahunID,4)='".strfilter($_GET['tahun'])."'
+			                        and mhsw.ProdiID='".strfilter($_GET['prodi'])."'");
 		 	}
-		 	else if ($_GET[tahun]!='' AND $_GET[prodi]==''){
+		 	else if ($_GET['tahun']!='' AND $_GET['prodi']==''){
 			 $tampil = mysqli_query($koneksi, "select mhsw.Nama, mhsw.ProdiID,mhsw.Handphone, beasiswamhsw.* 
 			                        from mhsw, beasiswa, beasiswamhsw 
 			                        where mhsw.MhswID= beasiswamhsw.MhswID
 			                       and beasiswa.BeasiswaID= beasiswamhsw.BeasiswaID
-			                        and left(beasiswamhsw.TahunID,4)='".strfilter($_GET[tahun])."'");
+			                        and left(beasiswamhsw.TahunID,4)='".strfilter($_GET['tahun'])."'");
 		  	}
-		  	else if ($_GET[tahun]=='' AND $_GET[prodi]!==''){
+		  	else if ($_GET['tahun']=='' AND $_GET['prodi']!==''){
 		     $tampil = mysqli_query($koneksi, "select mhsw.Nama, mhsw.ProdiID,mhsw.Handphone, beasiswamhsw.* 
 		                             from mhsw, beasiswa, beasiswamhsw 
 			                        where mhsw.MhswID= beasiswamhsw.MhswID
 			                        and beasiswa.BeasiswaID= beasiswamhsw.BeasiswaID
-			                        and mhsw.ProdiID='".strfilter($_GET[prodi])."'");
+			                        and mhsw.ProdiID='".strfilter($_GET['prodi'])."'");
 		    }else{
 		     $tampil = mysqli_query($koneksi, "select mhsw.Nama, mhsw.ProdiID,mhsw.Handphone, beasiswamhsw.* 
 		                            from mhsw, beasiswa, beasiswamhsw 
@@ -115,16 +115,16 @@
 		  $no = 1;
           while($r=mysqli_fetch_array($tampil)){  
           $jnsb = mysqli_fetch_array(mysqli_query($koneksi, "SELECT * FROM beasiswa where BeasiswaID='$r[BeasiswaID]'"));
-          $NamaBeax = strtolower($jnsb[Nama]); //strtoupper($kalimat);
+          $NamaBeax = strtolower($jnsb['Nama']); //strtoupper($kalimat);
           $NamaBea	= ucwords($NamaBeax);
-          $NamaMhsx = strtolower($r[Nama]); //strtoupper($kalimat);
+          $NamaMhsx = strtolower($r['Nama']); //strtoupper($kalimat);
           $NamaMhs	= ucwords($NamaMhsx);
           echo "<tr><td style='text-align:center'>$no</td>
                     <td style='text-align:center'>$r[MhswID]</td>
                     <td>$NamaMhs</td>
                     <td>$r[Handphone]</td>
                      <td style='text-align:left'>$NamaBea ($r[BeasiswaID])</td>
-                    <td style='text-align:right'>".number_format($r[Besar])."</td>
+                    <td style='text-align:right'>".number_format($r['Besar'])."</td>
                    
                      <td style='text-align:center'>$r[ProdiID]</td>
                     <td style='text-align:center'>$r[TahunID]</td>";
@@ -137,8 +137,8 @@ echo "</tr>";
 	  $no++;
 	  }
 
-	  if (isset($_GET[hapus])){
-		mysqli_query($koneksi, "DELETE FROM beasiswamhsw where BeasiswaMhswID='".strfilter($_GET[hapus])."'");
+	  if (isset($_GET['hapus'])){
+		mysqli_query($koneksi, "DELETE FROM beasiswamhsw where BeasiswaMhswID='".strfilter($_GET['hapus'])."'");
 		echo "<script>document.location='index.php?ndelox=dep/admbeasiswa&program=$_GET[program]&prodi=$_GET[prodi]&tahun=$_GET[tahun]';</script>";
 	  }
   ?>
@@ -148,8 +148,8 @@ echo "</tr>";
 </div>
 
 <?php 
-}elseif($_GET[act]=='tambahdata'){
-    if (isset($_POST[tambah])){	
+}elseif($_GET['act']=='tambahdata'){
+    if (isset($_POST['tambah'])){	
 	    $tglnow =date('Y-m-d H:i:s');	
         $query = mysqli_query($koneksi, "INSERT INTO beasiswamhsw(
 							TahunID,
@@ -161,15 +161,15 @@ echo "</tr>";
 							LoginBuat,
 							NA,
 							Keterangan) 
-					 VALUES('".strfilter($_POST[tahun])."',
+					 VALUES('".strfilter($_POST['tahun'])."',
 					 	    'SISFO',
-							'".strfilter($_POST[BeasiswaID])."',
-							'".strfilter($_POST[MhswID])."',
-						    '".strfilter($_POST[Besar])."',
+							'".strfilter($_POST['BeasiswaID'])."',
+							'".strfilter($_POST['MhswID'])."',
+						    '".strfilter($_POST['Besar'])."',
 							'$tglnow',
-							'$_SESSION[id]',
+							'$_SESSION[_Login]',
 							'N',
-							'".strfilter($_POST[Keterangan])."')");
+							'".strfilter($_POST['Keterangan'])."')");
 		
         if ($query){
             //echo"Berhasil";
@@ -194,13 +194,13 @@ echo "</tr>";
                   <h3 class='box-title'>Tambah Data Penerima Beasiswa</h3>
                 </div>
 			  <div class='table-responsive'>
-                  <table class='table table-condensed table-bordered'>
+                  <table class='table table-sm table-bordered'>
                   <tbody>
                     <tr><th style='width:260px' scope='row'>Tahun Akademik</th>   <td><select class='form-control' name='tahun'> 
 						<option value='0' selected>- Pilih Tahun Akademik -</option>"; 
 						$tahun = mysqli_query($koneksi, "SELECT * FROM t_tahunnormal order by Tahun DESC ");
 						while($a = mysqli_fetch_array($tahun)){
-						  if ($_GET[tahun]==$a[Tahun]){
+						  if ($_GET['tahun']==$a['Tahun']){
 							echo "<option value='$a[Tahun]' selected>$a[Tahun]</option>";
 						  }else{
 							echo "<option value='$a[Tahun]'>$a[Tahun]</option>";
@@ -213,7 +213,7 @@ echo "</tr>";
 						<option value='0' selected>- Pilih Program Studi -</option>"; 
 						$tahun = mysqli_query($koneksi, "SELECT distinct(ProdiID),NA,Nama FROM prodi ");
 						while($a = mysqli_fetch_array($tahun)){
-						  if ($_GET[prodi]==$a[ProdiID]){
+						  if ($_GET['prodi']==$a['ProdiID']){
 							echo "<option value='$a[ProdiID]' selected>$a[Nama]</option>";
 						  }else{
 							echo "<option value='$a[ProdiID]'>$a[Nama]</option>";
@@ -227,7 +227,7 @@ echo "</tr>";
 										
                     <tr><th scope='row'>Mahasiswa</th>   <td><select class='form-control select2' name='MhswID'> 
 						<option value='$a[MhswID]' selected>- Cari Mahasiswa -</option>"; 
-						if ($_GET[prodi]=='SI'){
+						if ($_GET['prodi']=='SI'){
 						    $mt = mysqli_query($koneksi, "SELECT * FROM mhsw where ProdiID='$_GET[prodi]'"); // AND StatusMhswID='A'
 						}else{
 							$mt = mysqli_query($koneksi, "SELECT * FROM mhsw where ProdiID='$_GET[prodi]'"); // AND StatusMhswID='A'
@@ -265,16 +265,16 @@ echo "</tr>";
      ";
 }
 
-elseif($_GET[act]=='editdata'){
-    if (isset($_POST[update])){
+elseif($_GET['act']=='editdata'){
+    if (isset($_POST['update'])){
         $query = mysqli_query($koneksi, "UPDATE beasiswamhsw SET 
-							  TahunID 		= '".strfilter($_POST[tahun])."',
-							  BeasiswaID 	= '".strfilter($_POST[BeasiswaID])."',  
-							  Besar 		= '".strfilter($_POST[Besar])."',	
-							  Keterangan 	= '".strfilter($_POST[Keterangan])."',
-							  LoginEdit 	= 	'$_SESSION[id]',                                                   
+							  TahunID 		= '".strfilter($_POST['tahun'])."',
+							  BeasiswaID 	= '".strfilter($_POST['BeasiswaID'])."',  
+							  Besar 		= '".strfilter($_POST['Besar'])."',	
+							  Keterangan 	= '".strfilter($_POST['Keterangan'])."',
+							  LoginEdit 	= 	'$_SESSION[_Login]',                                                   
 							  TanggalEdit 	= '".date('Y-m-d H:i:s')."'
-							  where BeasiswaMhswID	= '".strfilter($_POST[id])."'");
+							  where BeasiswaMhswID	= '".strfilter($_POST['id'])."'");
         if ($query){
           echo "<script>document.location='index.php?ndelox=dep/admbeasiswa&tahun=$_POST[tahun]&program=$_POST[program]&prodi=$_POST[prodi]&xx=$_POST[JadwalID]&sukses';</script>";
         }else{
@@ -282,7 +282,7 @@ elseif($_GET[act]=='editdata'){
         }
     }
     
-    $e = mysqli_fetch_array(mysqli_query($koneksi, "SELECT * FROM beasiswamhsw where BeasiswaMhswID='".strfilter($_GET[id])."'"));
+    $e = mysqli_fetch_array(mysqli_query($koneksi, "SELECT * FROM beasiswamhsw where BeasiswaMhswID='".strfilter($_GET['id'])."'"));
     $mhsx = mysqli_fetch_array(mysqli_query($koneksi, "SELECT * FROM mhsw where MhswID='$e[MhswID]'"));
     $prd = mysqli_fetch_array(mysqli_query($koneksi, "SELECT * FROM prodi where ProdiID='$mhsx[ProdiID]'"));
     echo "
@@ -295,7 +295,7 @@ elseif($_GET[act]=='editdata'){
               <h3 class='box-title'>Edit Data Penerima Beasiswa</h3>
               </div>
 			  <div class='table-responsive'>
-                  <table class='table table-condensed table-bordered'>
+                  <table class='table table-sm table-bordered'>
                   <tbody>
                   <input type='hidden' name='id' value='$_GET[id]'>
                    <input type='hidden' name='prodi' value='$prd[ProdiID]'>
@@ -303,7 +303,7 @@ elseif($_GET[act]=='editdata'){
 						<option value='0' selected>- Pilih Tahun Akademik -</option>"; 
 						$tahun = mysqli_query($koneksi, "SELECT * FROM t_tahunnormal order by Tahun DESC");
 						while($a = mysqli_fetch_array($tahun)){
-						  if ($_GET[tahun]==$a[Tahun]){
+						  if ($_GET['tahun']==$a['Tahun']){
 							echo "<option value='$a[Tahun]' selected>$a[Tahun]</option>";
 						  }else{
 							echo "<option value='$a[Tahun]'>$a[Tahun]</option>";
@@ -318,7 +318,7 @@ elseif($_GET[act]=='editdata'){
 						<option value='0' selected>- Mahasiswa -</option>"; 
 						$jb = mysqli_query($koneksi, "SELECT * FROM mhsw where ProdiID='".strfilter($_GET['prodi'])."'");
 						while($a = mysqli_fetch_array($jb)){
-                        if ($e[MhswID]==$a[MhswID]){
+                        if ($e['MhswID']==$a['MhswID']){
 							echo "<option value='$a[MhswID]' selected>$a[MhswID] - $a[Nama]</option>";
 						  }else{
 							echo "<option value='$a[MhswID]'>$a[MhswID] - $a[Nama]</option>";
@@ -331,7 +331,7 @@ elseif($_GET[act]=='editdata'){
 						<option value='0' selected>- Pilih Jenis Beasiswa -</option>"; 
 						$jb = mysqli_query($koneksi, "SELECT * FROM beasiswa order by Nama ASC");
 						while($a = mysqli_fetch_array($jb)){
-                        if ($e[BeasiswaID]==$a[BeasiswaID]){
+                        if ($e['BeasiswaID']==$a['BeasiswaID']){
 							echo "<option value='$a[BeasiswaID]' selected>$a[Nama]  - ($a[BeasiswaID])</option>";
 						  }else{
 							echo "<option value='$a[BeasiswaID]'>$a[Nama]  - ($a[BeasiswaID])</option>";

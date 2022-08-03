@@ -1,5 +1,5 @@
 <?php
-error_reporting(0);
+// error_reporting(0);
 session_start();
 include_once "../academic_sisfo1.php";
 ViewHeaderApps("Formulir");
@@ -95,7 +95,7 @@ function Edit($md, $gel, $id) {
   $optagamaayah = AmbilCombo2('agama', "concat(Agama, ' - ', Nama)", 'Agama', $w['AgamaAyah'], '', 'Agama');
   $optagamaibu = AmbilCombo2('agama', "concat(Agama, ' - ', Nama)", 'Agama', $w['AgamaIbu'], '', 'Agama');
   $optsipil = AmbilCombo2('statussipil', "concat(StatusSipil, ' - ', Nama)", 'StatusSipil', $w['StatusSipil'], '', 'StatusSipil');
-  $optpendidikan = AmbilCombo2('pendidikanterakhir', "PendidikanTerakhir", 'Urutan', $w['PendidikanTerakhir'], '', 'PendidikanTerakhir');
+//   $optpendidikan = AmbilCombo2('pendidikanterakhir', "PendidikanTerakhir", 'Urutan', $w['PendidikanTerakhir'], '', 'PendidikanTerakhir');
 //  $optpendidikanayah = AmbilCombo2('jenjang', "concat(JenjangID, '. ', Nama)", 'JenjangID', $w['PendidikanAyah'], '', 'JenjangID');
   $optpendidikanayah = AmbilCombo2('pendidikanortu', "concat(Pendidikan, '. ', Nama)", 'Pendidikan', $w['PendidikanAyah'], '', 'Pendidikan');
   $optpendidikanibu = AmbilCombo2('pendidikanortu', "concat(Pendidikan, '. ', Nama)", 'Pendidikan', $w['PendidikanIbu'], '', 'Pendidikan');
@@ -677,6 +677,7 @@ function Simpan($md, $gel, $id)
 
 function PilihKursi($md, $gel, $id)
 {	
+	global $koneksi;
 	if($md == 1)
 	{	$prodistring = ''; $arrProdi = array();
 		$pmb = AmbilFieldx('pmb p left outer join pmbformulir pf on p.PMBFormulirID=pf.PMBFormulirID', "p.PMBID='$id' and p.KodeID", KodeID, "p.Pilihan1, p.Pilihan2, p.Pilihan3, p.PMBID, p.Nama, p.ProgramID, pf.USM, pf.Wawancara, pf.Nama as _NamaForm");

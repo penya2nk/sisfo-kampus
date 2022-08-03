@@ -20,7 +20,7 @@ if ($_REQUEST['lungo'] != 'cetakLaporan'){
 	echo "<HTML xmlns=\"http://www.w3.org/1999/xhtml\">
 	<HEAD><TITLE>$title</TITLE>
 	<META content=\"SIAKAD TEAM\" name=\"author\">
-	<META content=\"Sisfo Sekolah\" name=\"description\">
+	<META content=\"Sisfo ACADEMIC\" name=\"description\">
 	<link rel=\"stylesheet\" type=\"text/css\" href=\"../themes/$themas/index.css\" />
 	";
 }

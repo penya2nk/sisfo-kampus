@@ -2,13 +2,11 @@
 error_reporting(0);
 
 session_start();
-include_once "../sisfokampus1.php";
+include_once "../academic_sisfo1.php";
 echo"<script type='text/javascript' src='jscolor.js'></script>";
-// *** Parameters ***
+
 $md = $_REQUEST['md'];
 $id = $_REQUEST['id'];
-
-// *** Main ***
 
 ViewHeaderApps("Jenis Libur");
 
@@ -92,7 +90,9 @@ function Edit($md, $id)
 }
 
 function SavData($md, $id)
-{	$JenisLiburID = $_REQUEST['JenisLiburID'];
+{	
+	global $koneksi;
+	$JenisLiburID = $_REQUEST['JenisLiburID'];
 	$Nama = $_REQUEST['Nama'];
 	$Keterangan = $_REQUEST['Keterangan'];
 	$Warna = $_REQUEST['Warna'];
@@ -107,7 +107,7 @@ function SavData($md, $id)
 					LoginEdit = '$_SESSION[_Login]'
 				where JenisLiburID='$JenisLiburID'
 				";
-		$r = mysqli_query($s);
+		$r = mysqli_query($koneksi, $s);
 	}
 	else if($md == 1) 
 	{	$ada = AmbilOneField('jenislibur', "JenisLiburID='$JenisLiburID' and KodeID", KodeID, 'JenisLiburID');
@@ -125,7 +125,7 @@ function SavData($md, $id)
 						Warna = '$Warna',
 						TanggalBuat= now(),
 						LoginBuat = '$_SESSION[_Login]'";
-			$r = mysqli_query($s);
+			$r = mysqli_query($koneksi, $s);
 		}
 	}
 	TutupScript();

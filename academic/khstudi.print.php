@@ -14,6 +14,8 @@ global $koneksi;
 $lbr = 190;
 $mrg = 10;
 
+
+
 $TahunID = GainVariabelx('TahunID');
 $ProdiID = GainVariabelx('ProdiID');
 $Angkatan = GainVariabelx('Angkatan', date('Y'));
@@ -25,9 +27,12 @@ else {
   $whr_mhsw = "and LEFT(m.TahunID, 4) = LEFT('$_SESSION[Angkatan]', 4)";
 }
 
+// ob_start();
+// $pdf = new PDF();
+// $pdf->SetTitle("Kartu Hasil Studi");
 ob_start();
-$pdf = new PDF();
-$pdf->SetTitle("Kartu Hasil Studi");
+$pdf = new FPDF(); //PDF change to FPDF
+$pdf->SetTitle("Formulir Pendaftaran");
 
 $s = "select h.KHSID, h.MhswID, m.Nama, h.IP, h.IPS, h.Sesi,
       h.TahunID, m.ProgramID, m.ProdiID,
@@ -163,7 +168,7 @@ function BuatHeaderDetail($p) {
   $t = 6;
   $p->SetFont('Times', 'B', 9);
   $p->Cell($mrg);
-  $p->Cell(10, $t, 'No.', 'LBT', 0, R);
+  $p->Cell(10, $t, 'No.', 'LBT', 0, 'R');
   $p->Cell(24, $t, 'Kode', 'BT', 0);
   $p->Cell(70, $t, 'Mata Kuliah', 'BT', 0);
   $p->Cell(15, $t, 'SKS', 'BT', 0, 'R');

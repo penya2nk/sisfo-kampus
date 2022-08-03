@@ -20,7 +20,7 @@ $lbr = 190;
 ob_start();
 //end leweh add
 
-$pdf = new PDF();
+$pdf = new FPDF();
 $pdf->SetTitle("Jadwal Mengajar Dosen - $TahunID");
 
 // Buat header dulu
@@ -125,7 +125,7 @@ function AmbilJadwal($TahunID, $ProdiID, $p) {
     $p->Cell(12, $t, $w['HR'], 'B');
     $p->Cell(18, $t, $w['JM'] . ' - ' . $w['JS'], 'B');
     $p->Cell(18, $t, $w['MKKode'], 'B');
-    $p->Cell(70, $t, $w['MK'].' '.$w[_lab], 'B');
+    $p->Cell(70, $t, $w['MK'].' '.$w['_lab'], 'B');
     $p->Cell(8, $t, $w['SKS'], 'B', 0, 'C');
     $p->Cell(10, $t, $w['namaKelas'], 'B', 0);
     $p->Cell(15, $t, $w['RuangID'], 'B', 0);

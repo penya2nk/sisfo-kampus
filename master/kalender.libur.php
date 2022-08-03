@@ -2,15 +2,12 @@
 error_reporting(0);
 
 session_start();
-include_once "../sisfokampus1.php";
+include_once "../academic_sisfo1.php";
 
-// *** Parameters ***
 $tanggal = $_REQUEST['tanggal'];
 $tanggal = (empty($tanggal))? date('Y-m-d') : $tanggal;
 $md = $_REQUEST['md'];
 $id = $_REQUEST['id'];
-
-// *** Main ***
 
 ViewHeaderApps("Kalender Tahunan");
 
@@ -82,7 +79,9 @@ function Edit($tanggal, $md, $id)
 }
 
 function SavData($tanggal, $md, $id)
-{	$TanggalMulai = "$_REQUEST[TanggalMulai_y]-$_REQUEST[TanggalMulai_m]-$_REQUEST[TanggalMulai_d]";
+{	
+	global $koneksi;
+	$TanggalMulai = "$_REQUEST[TanggalMulai_y]-$_REQUEST[TanggalMulai_m]-$_REQUEST[TanggalMulai_d]";
 	$TanggalSelesai = "$_REQUEST[TanggalSelesai_y]-$_REQUEST[TanggalSelesai_m]-$_REQUEST[TanggalSelesai_d]";
 	$Keterangan = $_REQUEST['Keterangan'];
 	$JenisLiburID = $_REQUEST['JenisLiburID'];
@@ -102,7 +101,7 @@ function SavData($tanggal, $md, $id)
 					NA = '$NA'
 				where HariLiburID='$id'
 				";
-		$r = mysqli_query($s);
+		$r = mysqli_query($koneksi, $s);
 	}
 	else if($md == 1) 
 	{	
@@ -116,7 +115,7 @@ function SavData($tanggal, $md, $id)
 						TanggalBuat= now(),
 						LoginBuat = '$_SESSION[_Login]',
 						NA = '$NA'";
-		$r = mysqli_query($s);
+		$r = mysqli_query($koneksi, $s);
 	}
 	TutupScript();
 }

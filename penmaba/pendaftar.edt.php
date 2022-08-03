@@ -1,5 +1,5 @@
 <?php
-error_reporting(0);
+// error_reporting(0);
 session_start();
 include_once "../academic_sisfo1.php";
 ViewHeaderApps("MASTER PENDAFTAR");
@@ -89,7 +89,7 @@ ESD;
   // Parameter
   $NamaSekolah = AmbilOneField('asalsekolah', 'SekolahID', @$w['AsalSekolah'], "concat(Nama, ', ', Kota)");
   $optkelamin = AmbilRadio("select Kelamin, Nama, concat(Kelamin, ' - ', Nama) as _kel from kelamin where NA='N'",
-    'Kelamin', "_kel", 'Kelamin', @$w[Kelamin], ', ');
+    'Kelamin', "_kel", 'Kelamin', @$w['Kelamin'], ', ');
   $TanggalLahir = AmbilComboTgl($w['TanggalLahir'], 'TGL');
   $TanggalDaftar = AmbilComboTgl($w['TanggalEdit'], 'TGLBuat');
   $optagama = AmbilCombo2('agama', "concat(Agama, ' - ', Nama)", 'Agama', @$w['Agama'], '', 'Agama');

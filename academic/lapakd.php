@@ -3,13 +3,11 @@ error_reporting(0);
 $TahunID = GainVariabelx('TahunID');
 $ProdiID = GainVariabelx('ProdiID');
 
-// *** Main ***
 TitleApps("Laporan Akademik");
 TampilkanHeaderLaporanAkademik();
 $lungo = (empty($_REQUEST['lungo']))? 'DftrLapAkd' : $_REQUEST['lungo'];
 $lungo();
 
-// *** Functions ***
 function TampilkanHeaderLaporanAkademik() {
   $optprd = AmbilPenggunaProdi($_SESSION['_Login'], $_SESSION['ProdiID']);
   echo <<<ESD
@@ -22,7 +20,7 @@ function TampilkanHeaderLaporanAkademik() {
       <td class=inp width=100>Tahun Akd:</td>
       <td class=ul width=120 nowrap>
         <input type=text name='TahunID' value='$_SESSION[TahunID]' size=5 maxlength=6 />
-        <input type=submit name='btnSet' value='Set' />
+        <input class='btn btn-success btn-sm' type=submit name='btnSet' value='Set' />
         </td>
       <td class=inp width=60>Prodi:</td>
       <td class=ul><select name='ProdiID' onChange='this.form.submit()'>$optprd</select></td>

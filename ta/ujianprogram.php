@@ -80,7 +80,7 @@ $tampil = mysqli_query($koneksi, "SELECT
 			AND jadwal_uptahun.TahunID='".strfilter($_GET['tahun'])."'
 			"); 									
 while($r=mysqli_fetch_array($tampil)){   					         
-$jml=mysqli_num_rows(mysqli_query("select * from jadwal_upmhs where PengujiID='$r[PengujiID]'"));
+$jml=mysqli_num_rows(mysqli_query($koneksi, "select * from jadwal_upmhs where PengujiID='$r[PengujiID]'"));
 $no++;
 echo "<tr bgcolor=$warna>
 <td>$no</td>
@@ -114,7 +114,7 @@ echo "</form>
 </div>";
 
 //===================================================================================================================================
-}else if ($_GET[act]=='tambahdata'){ 
+}else if ($_GET['act']=='tambahdata'){ 
 $penguji = mysqli_fetch_array(mysqli_query($koneksi, "SELECT * FROM jadwal_uppenguji WHERE PengujiID='".strfilter($_GET['PengujiID'])."'"));
 $dos = mysqli_fetch_array(mysqli_query($koneksi, "SELECT Login,Nama,Gelar,Handphone FROM dosen WHERE Login='$penguji[DosenID]'"));
 echo"
@@ -165,9 +165,9 @@ $tampil = mysqli_query($koneksi, "SELECT mhsw.Nama,jadwal_skripsi.*
 				AND jadwal_skripsi.ProdiID='".strfilter($_GET['prodi'])."'
 				order by mhsw.Nama asc"); // 
 while($r=mysqli_fetch_array($tampil)){   					         
-$jml=mysqli_num_rows(mysqli_query("select * from jadwal_upmhs where MhswID='$r[MhswID]'"));
-$p1 =mysqli_fetch_array(mysqli_query("select Login,Nama,Gelar from dosen where Login='$r[PembimbingSkripsi1]'"));
-$p2 =mysqli_fetch_array(mysqli_query("select Login,Nama,Gelar from dosen where Login='$r[PembimbingSkripsi2]'"));
+$jml=mysqli_num_rows(mysqli_query($koneksi, "select * from jadwal_upmhs where MhswID='$r[MhswID]'"));
+$p1 =mysqli_fetch_array(mysqli_query($koneksi, "select Login,Nama,Gelar from dosen where Login='$r[PembimbingSkripsi1]'"));
+$p2 =mysqli_fetch_array(mysqli_query($koneksi, "select Login,Nama,Gelar from dosen where Login='$r[PembimbingSkripsi2]'"));
 echo "<tr bgcolor=$warna>
 <td>$no</td>				
 <td>$r[MhswID]</td> 
@@ -200,7 +200,7 @@ for($i = 1; $i <= $JumData; $i++){
 				window.location = 'index.php?ndelox=ta/ujianprogram&PengujiID=$_POST[PengujiID]&tahun=$_POST[tahun]&prodi=$_POST[prodi]&gagal'</script>";
 				exit;
 			}
-		$query = mysqli_query("INSERT INTO jadwal_upmhs 
+		$query = mysqli_query($koneksi, "INSERT INTO jadwal_upmhs 
 							(PengujiID,
 							MhswID,
 							LoginBuat,

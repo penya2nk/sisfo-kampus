@@ -11,7 +11,7 @@
 echo "<option value=''>- Pilih Tahun Akademik -</option>";
 $tahun = mysqli_query($koneksi, "SELECT distinct(TahunID) FROM tahun order by TahunID Desc"); //and NA='N'
 while ($k = mysqli_fetch_array($tahun)){
-  if ($_GET[tahun]==$k[TahunID]){
+  if ($_GET['tahun']==$k['TahunID']){
 	echo "<option value='$k[TahunID]' selected>$k[TahunID]</option>";
   }else{
 	echo "<option value='$k[TahunID]'>$k[TahunID]</option>";
@@ -25,9 +25,9 @@ while ($k = mysqli_fetch_array($tahun)){
 <select name='prodi' class='form-control form-control-sm' onChange='this.form.submit()'>
 <?php 
 echo "<option value=''>- Pilih Program Studi -</option>";
-$prodi = mysqli_query($koneksi, "SELECT * from prodi where ProdiID='SI' or ProdiID='TI'");
+$prodi = mysqli_query($koneksi, "SELECT * from prodi order by Nama ASC");
 while ($k = mysqli_fetch_array($prodi)){
-   if ($_GET[prodi]==$k[ProdiID]){
+   if ($_GET['prodi']==$k['ProdiID']){
 	echo "<option value='$k[ProdiID]' selected>$k[Nama]</option>";
   }else{
 	echo "<option value='$k[ProdiID]'>$k[Nama]</option>";
@@ -56,7 +56,7 @@ echo"<a href='?ndelox=nilaisp&act=nilaispbl&prodi=$_GET[prodi]&tahun=$_GET[tahun
 
 
 	
-<?php if ($_GET[act]==''){ 
+<?php if ($_GET['act']==''){ 
 if (isset($_GET['sukses'])){
 	echo "<div class='alert alert-success alert-dismissible fade in' role='alert'> 
 		<button type='button' class='close' data-dismiss='alert' aria-label='Close'>
@@ -84,14 +84,14 @@ if (isset($_GET['sukses'])){
 </thead>
 <tbody>
 <?php
-if (isset($_GET[tahun])){ 
+if (isset($_GET['tahun'])){ 
 	echo"<input type='hidden' name='prodi' value='$_GET[prodi]'>
 	<input type='hidden' name='tahun' value='$_GET[tahun]'>";
-  $tampil = mysqli_query($koneksi, "SELECT distinct(MKID),MKKOde,NamaMK,DosenID,TahunID,ProdiID from vw_sp WHERE TahunID='".strfilter($_GET[tahun])."' 
-						 and ProdiID='".strfilter($_GET[prodi])."' ");      		 
+  $tampil = mysqli_query($koneksi, "SELECT distinct(MKID),MKKOde,NamaMK,DosenID,TahunID,ProdiID from vw_sp WHERE TahunID='".strfilter($_GET['tahun'])."' 
+						 and ProdiID='".strfilter($_GET['prodi'])."' ");      		 
   $no=1;
   while($r=mysqli_fetch_array($tampil)){	
-  	$NamaMKx 	= strtolower($r[NamaMK]); 
+  	$NamaMKx 	= strtolower($r['NamaMK']); 
 	$NamaMK		= ucwords($NamaMKx);  
   //$dos = mysqli_fetch_array(mysqli_query($koneksi, "SELECT Login,Nama,Gelar from dosen WHERE Login='$r[DosenID]'"));
   echo "<tr><td>$no</td>
@@ -118,7 +118,7 @@ if (isset($_GET[tahun])){
 }
 }
 
-else if ($_GET[act]=='nilaispbl'){ 
+else if ($_GET['act']=='nilaispbl'){ 
 
 ?>
   
@@ -145,22 +145,22 @@ else if ($_GET[act]=='nilaispbl'){
 </thead>
 <tbody>
 <?php
-  $tampil = mysqli_query($koneksi, "SELECT * from vw_sp WHERE TahunID='".strfilter($_GET[tahun])."' and ProdiID='".strfilter($_GET[prodi])."' ORDER BY NamaMK asc");      		 
+  $tampil = mysqli_query($koneksi, "SELECT * from vw_sp WHERE TahunID='".strfilter($_GET['tahun'])."' and ProdiID='".strfilter($_GET['prodi'])."' ORDER BY NamaMK asc");      		 
   $no=1;
   while($r=mysqli_fetch_array($tampil)){			 			 
-	$NamaMKx 	= strtolower($r[NamaMK]); 
+	$NamaMKx 	= strtolower($r['NamaMK']); 
 	$NamaMK		= ucwords($NamaMKx);
-	$NamaMhsx 	= strtolower($r[NamaMhs]); 
+	$NamaMhsx 	= strtolower($r['NamaMhs']); 
 	$NamaMhs	= ucwords($NamaMhsx);
 	$dos = mysqli_fetch_array(mysqli_query($koneksi, "SELECT Login,Nama,Gelar from dosen WHERE Login='$r[DosenID]'"));
 	$NamaDosx 	= strtolower($dos[Nama]); 
 	$NamaDos		= ucwords($NamaDosx);
-	if ($r[NilaiAkhir]=='0.00'){
+	if ($r['NilaiAkhir']=='0.00'){
 	   $c="style=color:red";
 	} else{
 	   $c="style=color:black";
 	}
-	    $nilai = $r[NilaiAkhir];
+	    $nilai = $r['NilaiAkhir'];
 		if ($nilai >= 85 AND $nilai <= 100){
 			$huruf = "A";
 			$bobot = 4;
@@ -218,9 +218,9 @@ else if ($_GET[act]=='nilaispbl'){
 		$no++;	
   }
   
-  	if (isset($_GET[hapus])){
-	$data=mysqli_fetch_array(mysqli_query($koneksi, "SELECT * from t_sp where SpID='".strfilter($_GET[hapus])."'"));
-    mysqli_query("INSERT into t_sp_del (SpID,
+  	if (isset($_GET['hapus'])){
+	$data=mysqli_fetch_array(mysqli_query($koneksi, "SELECT * from t_sp where SpID='".strfilter($_GET['hapus'])."'"));
+    mysqli_query($koneksi, "INSERT into t_sp_del (SpID,
 												  Tanggal,
 												  TahunID,
 												  MhswID,
@@ -232,19 +232,19 @@ else if ($_GET[act]=='nilaispbl'){
 												  GradeNilai,
 												  Periode,
 												  LoginBuat)
-										  VALUES('".strfilter($data[SpID])."',
+										  VALUES('".strfilter($data['SpID'])."',
 												 '".date('Y-m-d H:i:s')."',
-												 '".strfilter($data[TahunID])."',
-												 '".strfilter($data[MhswID])."',
-												 '".strfilter($data[MKID])."',
-												 '".strfilter($data[SKS])."',
-												 '".strfilter($data[DosenID])."',
-												 '".strfilter($data[NilaiAkhir])."',
-												 '".strfilter($data[BobotNilai])."',
-												 '".strfilter($data[GradeNilai])."',														 
-												 '".strfilter($data[Periode])."',
+												 '".strfilter($data['TahunID'])."',
+												 '".strfilter($data['MhswID'])."',
+												 '".strfilter($data['MKID'])."',
+												 '".strfilter($data['SKS'])."',
+												 '".strfilter($data['DosenID'])."',
+												 '".strfilter($data['NilaiAkhir'])."',
+												 '".strfilter($data['BobotNilai'])."',
+												 '".strfilter($data['GradeNilai'])."',														 
+												 '".strfilter($data['Periode'])."',
 												 '$_SESSION[id]')");
-	mysqli_query("DELETE FROM t_sp where SpID='".strfilter($_GET[hapus])."'");
+	mysqli_query($koneksi, "DELETE FROM t_sp where SpID='".strfilter($_GET['hapus'])."'");
 	echo "<script>document.location='index.php?ndelox=nilaisp&act=nilaispbl&prodi=$_GET[prodi]&tahun=$_GET[tahun]&MhswID=$_GET[MhswID]&Periode=$_GET[Periode]';</script>";
 	}	
   ?>
@@ -259,10 +259,10 @@ else if ($_GET[act]=='nilaispbl'){
 <?php
 }
 
-else if ($_GET[act]=='editnilaispbl'){ 								
-	 if (isset($_POST[ubahnilai])){	
+else if ($_GET['act']=='editnilaispbl'){ 								
+	 if (isset($_POST['ubahnilai'])){	
 	    $tglnow =date('Y-m-d H:i:s');	
-		$nilai = strfilter($_POST[NilaiAkhir]);
+		$nilai = strfilter($_POST['NilaiAkhir']);
 		if ($nilai >= 85 AND $nilai <= 100){
 			$huruf = "A";
 			$bobot = "4";
@@ -304,14 +304,14 @@ else if ($_GET[act]=='editnilaispbl'){
 			$bobot = "0";
 		}
 		//mengambil MKID untuk disimpan  
-	    $m = mysqli_fetch_array(mysqli_query($koneksi, "SELECT MKID,Nama,MKKode,SKS from mk where MKID='".strfilter($_POST[MKID])."'"));
-        $query = mysqli_query("UPDATE t_sp SET
+	    $m = mysqli_fetch_array(mysqli_query($koneksi, "SELECT MKID,Nama,MKKode,SKS from mk where MKID='".strfilter($_POST['MKID'])."'"));
+        $query = mysqli_query($koneksi, "UPDATE t_sp SET
 							 NilaiAkhir ='$nilai',
 							 GradeNilai	='$huruf',
 							 BobotNilai	='$bobot',
-							 LoginEdit  ='$_SESSION[id]',
+							 LoginEdit  ='$_SESSION[_Login]',
 							 TanggalEdit='".date('Y-m-d H:i:s')."'
-							 WHERE SpID='".strfilter($_POST[SpID])."'");						 
+							 WHERE SpID='".strfilter($_POST['SpID'])."'");						 
         if ($query){
 			echo "<script>document.location='index.php?ndelox=nilaisp&act=nilaispbl&tahun=$_POST[tahun]&MhswID=$_POST[MhswID]&prodi=$_POST[prodi]&sukses';</script>";
         }else{
@@ -319,10 +319,10 @@ else if ($_GET[act]=='editnilaispbl'){
         }
 		
     }
-	$x = mysqli_fetch_array(mysqli_query($koneksi, "SELECT * from t_sp where SpID='".strfilter($_GET[SpID])."'"));
-    $s = mysqli_fetch_array(mysqli_query($koneksi, "SELECT MKID,Nama,MKKode,SKS from mk where MKID='".strfilter($_GET[MKID])."'"));
-	$n = mysqli_fetch_array(mysqli_query($koneksi, "SELECT MhswID,Nama,ProdiID from mhsw where MhswID='".strfilter($_GET[MhswID])."'"));
-	$d = mysqli_fetch_array(mysqli_query($koneksi, "SELECT Login,Nama,Gelar from dosen where Login='".strfilter($x[DosenID])."'"));
+	$x = mysqli_fetch_array(mysqli_query($koneksi, "SELECT * from t_sp where SpID='".strfilter($_GET['SpID'])."'"));
+    $s = mysqli_fetch_array(mysqli_query($koneksi, "SELECT MKID,Nama,MKKode,SKS from mk where MKID='".strfilter($_GET['MKID'])."'"));
+	$n = mysqli_fetch_array(mysqli_query($koneksi, "SELECT MhswID,Nama,ProdiID from mhsw where MhswID='".strfilter($_GET['MhswID'])."'"));
+	$d = mysqli_fetch_array(mysqli_query($koneksi, "SELECT Login,Nama,Gelar from dosen where Login='".strfilter($x['DosenID'])."'"));
     echo "
 
 
@@ -361,9 +361,9 @@ else if ($_GET[act]=='editnilaispbl'){
 }  //tutup atas
 
 
-elseif($_GET[act]=='inputnilai'){ 
-	$dt = mysqli_fetch_array(mysqli_query("select * FROM vw_sp where MKID='".strfilter($_GET[MKID])."'"));
-	$dos = mysqli_fetch_array(mysqli_query("select Login,Nama,Gelar FROM dosen where Login='$dt[DosenID]'"));
+elseif($_GET['act']=='inputnilai'){ 
+	$dt = mysqli_fetch_array(mysqli_query($koneksi, "select * FROM vw_sp where MKID='".strfilter($_GET['MKID'])."'"));
+	$dos = mysqli_fetch_array(mysqli_query($koneksi, "select Login,Nama,Gelar FROM dosen where Login='$dt[DosenID]'"));
 	
 	echo"<div class='col-xs-12'>  
 	<div class='box'>
@@ -418,15 +418,15 @@ elseif($_GET[act]=='inputnilai'){
   </thead>
   <tbody>
 <?php
-  if (isset($_GET[tahun])){ 
+  if (isset($_GET['tahun'])){ 
 	  echo"<input type='hidden' name='prodi' value='$_GET[prodi]'>
 	  <input type='hidden' name='tahun' value='$_GET[tahun]'>";
-	  $tampil = mysqli_query($koneksi, "SELECT * from vw_sp WHERE TahunID='".strfilter($_GET[tahun])."' 
-							 and ProdiID='".strfilter($_GET[prodi])."' 
-							 AND MKID='".strfilter($_GET[MKID])."' ORDER by MhswID ASC");      		 
+	  $tampil = mysqli_query($koneksi, "SELECT * from vw_sp WHERE TahunID='".strfilter($_GET['tahun'])."' 
+							 and ProdiID='".strfilter($_GET['prodi'])."' 
+							 AND MKID='".strfilter($_GET['MKID'])."' ORDER by MhswID ASC");      		 
 	  $no=1;
 	  while($r=mysqli_fetch_array($tampil)){			 			 
-		$nilai = $r[NilaiAkhir];
+		$nilai = $r['NilaiAkhir'];
 		if ($nilai >= 85 AND $nilai <= 100){
 			$huruf = "A";
 			$bobot = 4;
@@ -494,9 +494,9 @@ elseif($_GET[act]=='inputnilai'){
 	 
 	
 	<?php
-	 if (isset($_POST[simpannilai])){ 			 	
+	 if (isset($_POST['simpannilai'])){ 			 	
 		//$JmlData 				= count($_POST[SpID]); //substitute prihan
-		$JmlData 				= mysqli_num_rows(mysqli_query($koneksi, "SELECT MhswID,TahunID FROM t_sp where TahunID='".strfilter($_GET[tahun])."'"));//prihan 	   //ProdiID='".strfilter($_GET[prodi])."' AND 		
+		$JmlData 				= mysqli_num_rows(mysqli_query($koneksi, "SELECT MhswID,TahunID FROM t_sp where TahunID='".strfilter($_GET['tahun'])."'"));//prihan 	   //ProdiID='".strfilter($_GET[prodi])."' AND 		
 		for ($i=1; $i <= $JmlData; $i++){
 		$MKID 					= strfilter($_POST['MKID'.$i]);
 		$MhswID 				= strfilter($_POST['MhswID'.$i]);
@@ -506,7 +506,7 @@ elseif($_GET[act]=='inputnilai'){
 		$cek = mysqli_query($koneksi, "SELECT * FROM t_sp where MKID='$MKID' and MhswID='$MhswID'");
 		$total = mysqli_num_rows($cek);
 			if ($total >= 1){
-				$query = mysqli_query("UPDATE t_sp SET 
+				$query = mysqli_query($koneksi, "UPDATE t_sp SET 
 								  NilaiAkhir='$NilaiAkhir',
 								  BobotNilai='$BobotNilai',
 								  GradeNilai='$GradeNilai'
@@ -516,9 +516,9 @@ elseif($_GET[act]=='inputnilai'){
 	 }
 	
 	  if ($query){
-		   echo "<script>document.location='index.php?ndelox=nilaisp&act=inputnilai&prodi=".$_POST[prodi]."&tahun=".$_POST[tahun]."&MKID=".$_GET[MKID]."&sukses';</script>";
+		   echo "<script>document.location='index.php?ndelox=nilaisp&act=inputnilai&prodi=".$_POST['prodi']."&tahun=".$_POST['tahun']."&MKID=".$_GET['MKID']."&sukses';</script>";
 	  }else{
-		   echo "<script>document.location='index.php?ndelox=nilaisp&act=inputnilai&prodi=".$_POST[prodi]."&tahun=".$_POST[tahun]."&MKID=".$_GET[MKID]."&gagal';</script>";
+		   echo "<script>document.location='index.php?ndelox=nilaisp&act=inputnilai&prodi=".$_POST['prodi']."&tahun=".$_POST['tahun']."&MKID=".$_GET['MKID']."&gagal';</script>";
 	  }  	  
 	}		 
 }

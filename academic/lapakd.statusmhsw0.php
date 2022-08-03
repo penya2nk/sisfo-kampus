@@ -8,8 +8,8 @@ include_once "../konfigurasi.mysql.php";
 include_once "../sambungandb.php";
 include_once "../setting_awal.php";
 include_once "../check_setting.php";
-  include_once "../fpdf.php";
-  include_once "../util.lib.php";
+include_once "../fpdf.php";
+include_once "../util.lib.php";
 
 
 $TahunID = GainVariabelx('TahunID');
@@ -24,7 +24,6 @@ $pdf->AddPage();
 	BuatIsinya($pdf);
 $pdf->Output();
 
-// *** Functions ***
 function BuatHeadernya($klmn, $stt, $p) {
   global $lbr;
   HeaderLogo("Rekapitulasi Jumlah Mahasiswa Per Angkatan", $p, 'P');
@@ -121,8 +120,8 @@ function BuatIsinya($p) {
     group by m.Kelamin";
   $r = mysqli_query($koneksi, $s);
   while($w = mysqli_fetch_array($r)){
-  $Ket = AmbilOneField('kelamin', "NA='N' and Kelamin", $w[Kelamin], 'Nama');
-  $p->Cell(8, $t, $w[Kelamin], 0, 0);
+  $Ket = AmbilOneField('kelamin', "NA='N' and Kelamin", $w['Kelamin'], 'Nama');
+  $p->Cell(8, $t, $w['Kelamin'], 0, 0);
   $p->Cell(15, $t, ': '.$Ket, 0, 0);
   $p->Ln($t/2);
   }
@@ -133,8 +132,8 @@ function BuatIsinya($p) {
     group by m.StatusMhswID, m.TahunID";
   $r = mysqli_query($koneksi, $s);
   while($w = mysqli_fetch_array($r)){
-  $Ket = AmbilOneField('statusmhsw', "NA='N' and StatusMhswID", $w[StatusMhswID], 'Nama');
-  $p->Cell(8, $t, $w[StatusMhswID], 0, 0);
+  $Ket = AmbilOneField('statusmhsw', "NA='N' and StatusMhswID", $w['StatusMhswID'], 'Nama');
+  $p->Cell(8, $t, $w['StatusMhswID'], 0, 0);
   $p->Cell(15, $t, ': '.$Ket, 0, 0);
   $p->Ln($t/2);
   }

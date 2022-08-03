@@ -19,7 +19,7 @@ $lbr = 190;
 //leweh add ob_start(); while error at php higher version
 ob_start();
 //end leweh add
-$pdf = new PDF('P', 'mm', 'A4');
+$pdf = new FPDF('P', 'mm', 'A4');
 $pdf->SetTitle("Rekap Kehadiran Kuliah - $TahunID");
 $pdf->AddPage('P');
 

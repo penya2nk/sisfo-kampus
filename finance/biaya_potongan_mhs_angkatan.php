@@ -1,5 +1,5 @@
 <?php
-error_reporting(0);
+// error_reporting(0);
 $Angkatan = GainVariabelx('Angkatan');
 $ProdiID = GainVariabelx('ProdiID');
 $BIPOTID = GainVariabelx('BIPOTID');
