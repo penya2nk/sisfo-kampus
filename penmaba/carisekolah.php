@@ -58,15 +58,20 @@ function TampilkanDaftarSekolah() {
   $Max = 50;
   
   $arrcr = explode(',', $Cari);
-  $arrcrmixed = array(); $arrcrnama = array(); $arrwhrnamaangks = array(); $arrwhrnama = array(); $arrwhrkota = array(); 
+  $arrcrmixed = array(); 
+  $arrcrnama = array(); 
+  $arrwhrnamaangks = array(); 
+  $arrwhrnama = array(); 
+  $arrwhrkota = array(); 
   
-  if(!empty($arrcr))
-  {	
+  if(!empty($arrcr)){	
 	if(count($arrcr) == 1)
 	{	$arrcrmixed = explode(' ', TRIM($arrcr[0]));
 		RemoveBannedWords($arrcrmixed);
+    $cr=1;
 		foreach($arrcrmixed as $cr)
-		{	if($cr+0 > 0) $arrwhrnamaangka[] = "Nama like ' ".TRIM($cr)." ' ";
+		{	
+      if((int)$cr+0 > 0) $arrwhrnamaangka[] = "Nama like ' ".TRIM($cr)." ' ";
 			else
 			{	$arrwhrnama[] = "Nama like '%".TRIM($cr)."%' ";
 				$arrwhrkota[] = "Kota like '%".TRIM($cr)."%' ";
@@ -79,7 +84,7 @@ function TampilkanDaftarSekolah() {
 		
 		RemoveBannedWords($arrcrnama);
 		foreach($arrcrnama as $cr) 
-		{	if($cr+0 > 0) $arrwhrnamaangka[] = "Nama like '% ".TRIM($cr)." %' ";
+		{	if((int)$cr+0 > 0) $arrwhrnamaangka[] = "Nama like '% ".TRIM($cr)." %' ";
 			else $arrwhrnama[] = "Nama like '%".TRIM($cr)."%' ";
 		}
 	    $arrwhrkota[] = "Kota like '%".TRIM($arrcr[1])."%' ";

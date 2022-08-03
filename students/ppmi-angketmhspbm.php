@@ -12,8 +12,9 @@ echo "<option value='$_SESSION[tahun_akademik]' selected>$_SESSION[tahun_akademi
 </select>
 <select name='prodi' style='padding:4px'>
 <?php 
-if ($_SESSION[prodi]=='SI'){$prodi="Sistem Informasi";} else{$prodi="Teknik Informatika";}
-echo "<option value='$_SESSION[prodi]' selected>$prodi</option>";
+$prdx   = mysqli_fetch_array(mysqli_query($koneksi, "select * from mhsw where Login='$_SESSION[_Login]'"));
+$prodi  = mysqli_fetch_array(mysqli_query($koneksi, "select * from prodi where ProdiID='$prdx[ProdiID]'"));
+echo "<option value='$_SESSION[prodi]' selected>$prodi[Nama]</option>";
 ?>
 </select>	
 <input type="submit" style='margin-top:-4px' class='btn btn-success btn-sm' value='Lihat'>
@@ -22,7 +23,7 @@ echo "<option value='$_SESSION[prodi]' selected>$prodi</option>";
 </div>
 </div>
 
-<?php if ($_GET[act]==''){ 	                                   											   												
+<?php if ($_GET['act']==''){ 	                                   											   												
 echo"
 <form method='POST' class='form-horizontal' action='' enctype='multipart/form-data'>							  							
 <div class='card'>
@@ -54,8 +55,8 @@ while($r=mysqli_fetch_array($tampil)){
 $jdwl   =mysqli_fetch_array(mysqli_query($koneksi, "select * from jadwal where JadwalID='$r[JadwalID]' AND TahunID='$_SESSION[tahun_akademik]'"));
 $dosen 	=mysqli_fetch_array(mysqli_query($koneksi, "select Login,Nama,Gelar from dosen where Login='$jdwl[DosenID]'"));
 $mk 	=mysqli_fetch_array(mysqli_query($koneksi, "select MKID,MKKode,Nama,SKS,Sesi,ProdiID from mk where MKID='$jdwl[MKID]'"));		
-$jjwb   =mysqli_fetch_array(mysqli_query($koneksi, "select Count(PertanyaanID) as Jml from t_ppmiangket where JadwalID='$r[JadwalID]' AND TahunID='$_SESSION[tahun_akademik]' AND MhswID='$_SESSION[id]'"));			         
-if ($jjwb[Jml]>0){
+$jjwb   =mysqli_fetch_array(mysqli_query($koneksi, "select Count(PertanyaanID) as Jml from t_ppmiangket where JadwalID='$r[JadwalID]' AND TahunID='$_SESSION[tahun_akademik]' AND MhswID='$_SESSION[_Login]'"));			         
+if ($jjwb['Jml']>0){
 	$c="style=color:red";
 }else{
 	$c="style=color:green";
@@ -69,7 +70,7 @@ echo "<tr $c>
 <td>$jdwl[NamaKelas]</td>
 <td align=center>$mk[SKS]</td>
 <td>";
-if ($jjwb[Jml]>0){
+if ($jjwb['Jml']>0){
 	echo"| <a href='index.php?ndelox=students/ppmi-angketmhspbm&act=viewangket&JadwalID=$jdwl[JadwalID]&tahun=$jdwl[TahunID]&MKID=$jdwl[MKID]&DosenID=$jdwl[DosenID]&prodi=$mk[ProdiID]'> Lihat Angket </a> <b style=color:green>($jjwb[Jml])</b> |</a>";
 }else{		
 	echo"<a href='index.php?ndelox=students/ppmi-angketmhspbm&act=tambahdata&JadwalID=$jdwl[JadwalID]&tahun=$jdwl[TahunID]&MKID=$jdwl[MKID]&DosenID=$jdwl[DosenID]&prodi=$mk[ProdiID]'> | Isi Angket</a>";		
@@ -91,10 +92,10 @@ echo "</form>
 </div>";
 
 //===================================================================================================================================
-}else if ($_GET[act]=='tambahdata'){ 
-$dos = mysqli_fetch_array(mysqli_query($koneksi, "SELECT Login,Nama,Gelar,Handphone FROM dosen WHERE Login='".strfilter($_GET[DosenID])."'"));
-$mk = mysqli_fetch_array(mysqli_query($koneksi, "SELECT MKID,MKKode,Nama,SKS,Sesi FROM mk WHERE MKID='".strfilter($_GET[MKID])."'"));
-$prd = mysqli_fetch_array(mysqli_query($koneksi, "SELECT ProdiID,Nama FROM prodi WHERE ProdiID='".strfilter($_GET[prodi])."'"));
+}else if ($_GET['act']=='tambahdata'){ 
+$dos = mysqli_fetch_array(mysqli_query($koneksi, "SELECT Login,Nama,Gelar,Handphone FROM dosen WHERE Login='".strfilter($_GET['DosenID'])."'"));
+$mk = mysqli_fetch_array(mysqli_query($koneksi, "SELECT MKID,MKKode,Nama,SKS,Sesi FROM mk WHERE MKID='".strfilter($_GET['MKID'])."'"));
+$prd = mysqli_fetch_array(mysqli_query($koneksi, "SELECT ProdiID,Nama FROM prodi WHERE ProdiID='".strfilter($_GET['prodi'])."'"));
 echo"
 <div class='card'>
 <div class='card-header'>
@@ -177,7 +178,7 @@ echo "<div class='box-footer'>
 </div>";
 echo "</form>";
 	
-if (isset($_POST[simpann])){
+if (isset($_POST['simpann'])){
     $JadwalID  	= strfilter($_POST['JadwalID']);             
 	$tahun   	= strfilter($_POST['tahun']);
 	$prodi   	= strfilter($_POST['prodi']);
@@ -226,7 +227,7 @@ if (isset($_POST[simpann])){
 
 } //tutup isset simpan
 
-else if ($_GET[act]=='viewangket'){ 
+else if ($_GET['act']=='viewangket'){ 
 $angket = mysqli_fetch_array(mysqli_query($koneksi, "SELECT JadwalID,MhswID FROM t_ppmiangket WHERE JadwalID='".strfilter($_GET['JadwalID'])."' and MhswID='$_SESSION[_Login]'"));
 $jdw = mysqli_fetch_array(mysqli_query($koneksi, "SELECT JadwalID,DosenID,MKID FROM jadwal WHERE JadwalID='$angket[JadwalID]'"));
 $dos = mysqli_fetch_array(mysqli_query($koneksi, "SELECT Login,Nama,Gelar,Handphone FROM dosen WHERE Login='$jdw[DosenID]'"));

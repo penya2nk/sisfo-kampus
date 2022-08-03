@@ -12,7 +12,7 @@ $TahunID = GainVariabelx('TahunID');
 $ProdiID = GainVariabelx('ProdiID');
 
 ob_start();
-$pdf = new PDF();
+$pdf = new FPDF();
 $pdf->SetTitle("Daftar Mahasiswa Yang Mengambil KRS");
 $lbr = 190;
 

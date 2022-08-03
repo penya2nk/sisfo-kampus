@@ -9,13 +9,12 @@ include_once "../setting_awal.php";
 include_once "../check_setting.php";
 include_once "../header_pdf.php";
 
-// *** Parameters ***
 $TahunID = GainVariabelx('TahunID');
 $ProdiID = GainVariabelx('ProdiID');
 $sta = GainVariabelx('sta');
 
 ob_start();
-$pdf = new PDF();
+$pdf = new FPDF();
 $pdf->SetTitle("Laporan Status Mahasiswa Per Prodi");
 $lbr = 190;
 

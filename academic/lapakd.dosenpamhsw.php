@@ -22,7 +22,6 @@ BuatIsinya($TahunID, $ProdiID, $pdf);
 
 $pdf->Output();
 
-// *** FUnctions ***
 function BuatIsinya($TahunID, $ProdiID, $p) {
   global $koneksi;
   $maxentryperpage = 45;

@@ -1,26 +1,29 @@
 <?php 
-session_start();
 error_reporting(0);
+session_start();
+
 include_once "../pengembang.lib.php";
 include_once "../konfigurasi.mysql.php";
 include_once "../sambungandb.php";
 include_once "../setting_awal.php";
 include_once "../check_setting.php";
-require ("../punksi/html2pdf/html2pdf.class.php");
-$filename='namafile.pdf';
+require_once ("../punksi/html2pdf/vendor/autoload.php");
+use Spipu\Html2Pdf\Html2Pdf;
+use Spipu\Html2Pdf\Exception\Html2PdfException;
+use Spipu\Html2Pdf\Exception\ExceptionFormatter;
 
 if (empty($_SESSION['_Login']) && empty($_SESSION['_LevelID'])){
-	header('Location: ../login.php');
+	header("Location: ../login.php");
 }
 else{
-$content   	= ob_get_clean();	
-$tgl 		= date('Y-m-d');	
-$dta 		= mysqli_fetch_array(mysqli_query($koneksi, "select * from pmb where PMBID='".strfilter($_GET[PMBID])."'"));	
-$Namax 		= strtolower($dta[Nama]);
+
+include "headerx-rpt.php"; 		
+$dta 		= mysqli_fetch_array(mysqli_query($koneksi, "select * from pmb where PMBID='".strfilter($_GET['PMBID'])."'"));	
+$Namax 		= strtolower($dta['Nama']);
 $Nama		= ucwords($Namax);
 
 $tglujian	= mysqli_fetch_array(mysqli_query($koneksi, "select * from pmbperiod where PMBPeriodID='$dta[PMBPeriodID]'"));
-$tanggal 	= $tglujian[UjianMulai];
+$tanggal 	= $tglujian['UjianMulai'];
 $day 		= date('D', strtotime($tanggal));
 $dayList 	= array(
 	'Sun' => 'Minggu',
@@ -61,7 +64,7 @@ $content .= "
 <br>
 <table  border='0' align='center' cellpadding='0' cellspacing='0' '>
 <tr  align='center'>
-<td  rowspan='3' align='center' ><img width='80' src='logo_uti.png' ></td>
+<td  rowspan='3' align='center' ></td>
 <td align='center' style=text-align:center;font-size:16px;font-weight:reguler;>YAYASAN TEKNOKRAT INDONESIA</td>
 <td align='left'>&nbsp;</td>
 </tr>
@@ -106,7 +109,7 @@ $content .= "
 <tr class='batas2' align='left'>
 <td >&nbsp;Tempat dan Tanggal Lahir</td>
 <td >:</td>
-<td >&nbsp;$dta[TempatLahir], ".tgl_indo($dta[TanggalLahir])."</td>
+<td >&nbsp;$dta[TempatLahir], ".tgl_indo($dta['TanggalLahir'])."</td>
 </tr>
 
 <tr class='batas2' align='left'>
@@ -125,7 +128,7 @@ $content .= "
 <tr class='batas2' align='left'>
 <td >&nbsp;Hari / Tanggal Ujian</td>
 <td >:</td>
-<td >&nbsp;$dayList[$day], ".tgl_indo($tglujian[UjianMulai])."</td>
+<td >&nbsp;$dayList[$day], ".tgl_indo($tglujian['UjianMulai'])."</td>
 </tr>
 <tr class='batas2' align='left'>
 <td >&nbsp;Waktu</td>
@@ -192,16 +195,17 @@ $content .= "
 </body>
 </center>
 ";
-try
-{
-	$html2pdf = new HTML2PDF('P','Letter','en', false, 'ISO-8859-15',array(8, 10, 10, 10));
-	// $html2pdf->setModeDebug();
-	$html2pdf->setDefaultFont('Arial');
-	$html2pdf->writeHTML($content, isset($_GET['vuehtml']));
-	$html2pdf->Output($filename);
-}
-catch(HTML2PDF_exception $e) { echo $e; }
-	
-}
-?>	
-
+try {
+	ob_start();
+	$html2pdf = new Html2Pdf('P','Legal','fr', true, 'UTF-8', array(5, 10, 5, 10), false); 
+	$html2pdf->writeHTML($content);
+	$html2pdf->output();
+  } catch (Html2PdfException $e) {
+	$html2pdf->clean();
+  
+	$formatter = new ExceptionFormatter($e);
+	echo $formatter->getHtmlMessage();
+  }
+  
+  }	
+  ?>	

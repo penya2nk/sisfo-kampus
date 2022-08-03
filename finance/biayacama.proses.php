@@ -61,7 +61,6 @@ function JalankanProses($_pmbJumlah, $_pmbProses) {
   
   fclose($f);
   
-  // Next...
   $_SESSION['_pmbProses']++;
   echo <<<SCR
     <script>

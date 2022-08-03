@@ -1,25 +1,24 @@
 <?php 
 session_start();
-// error_reporting(0);
+error_reporting(0);
 include_once "../pengembang.lib.php";
 include_once "../konfigurasi.mysql.php";
 include_once "../sambungandb.php";
 include_once "../setting_awal.php";
 include_once "../check_setting.php";
-require ("../punksi/html2pdf/html2pdf.class.php");
-
-$filename="namafile.pdf";
-
-
+require_once ("../punksi/html2pdf/vendor/autoload.php");
+use Spipu\Html2Pdf\Html2Pdf;
+use Spipu\Html2Pdf\Exception\Html2PdfException;
+use Spipu\Html2Pdf\Exception\ExceptionFormatter;
 
 if (empty($_SESSION['_Login']) && empty($_SESSION['_LevelID'])){
 	header("Location: ../login.php");
 }
 else{
 
-include "headerx-rpt.php"; $content = ob_get_clean();
-$tgl 	   = tgl_indo(date('Y-m-d'));
+include "headerx-rpt.php"; 
 
+$tgl 	   = tgl_indo(date('Y-m-d'));
 $dt  			= mysqli_fetch_array(mysqli_query($koneksi, "SELECT * FROM vw_jadwal_skripsi_ujian where JadwalID='".strfilter($_GET['JadwalID'])."'"));
 $namamhs 		= $dt['Nama'];
 $nama_kecilmhs 	= strtolower($namamhs);
@@ -253,15 +252,17 @@ $content .= "
 <td width='300'><font style='font-size:8px'>Login by: $_SESSION[_Login] ".tgl_indo(date('Y-m-d'))." ".date('H:i:s') . " WIB - Univ Tekno Indo Support System</font></td>
 </tr>
 </table>";
-try
-	{
-		$html2pdf = new HTML2PDF('P','Letter','en', false, 'ISO-8859-15',array(25, 10, 25, 10)); //setting ukuran kertas dan margin pada dokumen anda
-		// $html2pdf->setModeDebug();
-		$html2pdf->setDefaultFont('Arial');
-		$html2pdf->writeHTML($content, isset($_GET['vuehtml']));
-		$html2pdf->Output($filename);
-	}
-	catch(HTML2PDF_exception $e) { echo $e; }
-	
-}
+    try {
+      ob_start();
+      $html2pdf = new Html2Pdf('P','A4','fr', true, 'UTF-8', array(15, 15, 15, 15), false); 
+      $html2pdf->writeHTML($content);
+      $html2pdf->output();
+    } catch (Html2PdfException $e) {
+      $html2pdf->clean();
+
+      $formatter = new ExceptionFormatter($e);
+      echo $formatter->getHtmlMessage();
+    }
+
+}	
 ?>	

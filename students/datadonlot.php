@@ -1,5 +1,5 @@
 <?php 
-if ($_GET[act]==''){ 
+if ($_GET['act']==''){ 
 
 ?>	
 <div class='card'>
@@ -30,9 +30,9 @@ if ($_GET[act]==''){
 		//$total = mysqli_num_rows(mysqli_query($koneksi, "SELECT * FROM rb_elearning where kodejdwl='$r[kodejdwl]'"));
 		echo "<tr><td>$no</td>
 				  <td>$r[nama_file]</td>
-				  <td>".tgl_indo($r[TanggalBuat])."</td>
+				  <td>".tgl_indo($r['TanggalBuat'])."</td>
 				  <td>$r[Keterangan]</td>";
-				if ($_SESSION[_LevelID]=='1'){
+				if ($_SESSION['_LevelID']=='1'){
 				  echo "<td>";
 				  echo "<a style='margin-right:5px; width:106px' class='btn btn-info btn-xs' title='Download' href='$r[URL]' target=_BLANK><i class='fa fa-download'></i> Download </a>";   
 				  //echo "<a style='margin-right:5px; width:106px' class='btn btn-info btn-xs' title='Download' href='sedotmhs.php?file=$r[file_upload]'><span class='glyphicon glyphicon-download'></span> Download </a>";                                 
@@ -40,9 +40,9 @@ if ($_GET[act]==''){
 							<a class='btn btn-danger btn-xs' title='Delete' href='index.php?ndelox=datadonlot&prodi=$r[ProdiID]&tahun=$r[TahunID]&hapus=$r[UnduhID]' onclick=\"return confirm('Apa anda yakin untuk hapus Data ini?')\"><i class='fa fa-trash'></i></a>
 				  </td>
 				</tr>";
-				}elseif ($_SESSION[_LevelID]=='120'){
+				}elseif ($_SESSION['_LevelID']=='120'){
 				  $sekarangwaktu = date("YmdHis");
-				  $bataswaktu1 = str_replace('-','',$r[TanggalSelesai]);
+				  $bataswaktu1 = str_replace('-','',$r['TanggalSelesai']);
 				  $bataswaktu2 = str_replace(':','',$bataswaktu1);
 				  $bataswaktu3 = str_replace(' ','',$bataswaktu2);
 				  

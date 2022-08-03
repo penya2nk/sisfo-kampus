@@ -6,27 +6,26 @@ include_once "../konfigurasi.mysql.php";
 include_once "../sambungandb.php";
 include_once "../setting_awal.php";
 include_once "../check_setting.php";
-require ("../punksi/html2pdf/html2pdf.class.php");
-//include "../konfigurasi/fungsi_enkripsi2.php";
-
-
-$filename="transkripnilaiLengkap.pdf";
-$tgl = tgl_indo(date('Y-m-d'));
+require_once ("../punksi/html2pdf/vendor/autoload.php");
+use Spipu\Html2Pdf\Html2Pdf;
+use Spipu\Html2Pdf\Exception\Html2PdfException;
+use Spipu\Html2Pdf\Exception\ExceptionFormatter;
 
 if (empty($_SESSION['_Login']) && empty($_SESSION['_LevelID'])){
 	header("Location: ../login.php");
 }
-
 else{
-//$MhswIDx  = base64url_decode($_GET['MhswID']);
-include "headerx-rpt.php"; $content = ob_get_clean();
 
-$mhs       = mysqli_fetch_array(mysqli_query($koneksi, "SELECT ProdiID,ProgramID,MhswID,Nama FROM mhsw where MhswID='".strfilter($_GET[MhswID])."'"));
-$ProgramID = $mhs[ProgramID];
+
+
+$mhs       = mysqli_fetch_array(mysqli_query($koneksi, "SELECT ProdiID,ProgramID,MhswID,Nama FROM mhsw where MhswID='".strfilter($_GET['MhswID'])."'"));
+$ProgramID = $mhs['ProgramID'];
 
 $prodi     = mysqli_fetch_array(mysqli_query($koneksi, "SELECT ProdiID,FakultasID,Nama,Pejabat FROM prodi where ProdiID='".strfilter($_GET['prodi'])."'"));
-$fakultas  = mysqli_fetch_array(mysqli_query($koneksi, "SELECT FakultasID,Nama,Pejabat FROM fakultas where ProdiID='$prodi[FakultasID]'"));
+$fakultas  = mysqli_fetch_array(mysqli_query($koneksi, "SELECT FakultasID,Nama,Pejabat FROM fakultas where FakultasID='$prodi[FakultasID]'"));
 
+
+include "headerx-rpt.php";
 $content .= "
 
 <table align='center'> 
@@ -100,14 +99,14 @@ $sq = mysqli_query($koneksi, "SELECT
 				  FROM mhsw,krs,mk
 				  WHERE krs.MhswID=mhsw.MhswID
 				  AND krs.MKID=mk.MKID 
-				  AND mhsw.MhswID='".strfilter($_GET[MhswID])."'
+				  AND mhsw.MhswID='".strfilter($_GET['MhswID'])."'
 				  ORDER BY mk.Sesi,mk.Nama ASC"); //AND krs.GradeNilai NOT IN ('-','TL','E')
 $no = 1;
 while($r=mysqli_fetch_array($sq)){
-$Matakul        = $r[NamaMK];
+$Matakul        = $r['NamaMK'];
 $Matakul_kecil 	= strtolower($Matakul);
 $matKecil       = ucwords($Matakul_kecil);	       
-$huruf          = $r[GradeNilai];
+$huruf          = $r['GradeNilai'];
 if ($huruf=='A'){
 	$bobot=4;
 }
@@ -266,15 +265,17 @@ $content .= "</table>
 </table> ";
 
 
-try
-	{
-		$html2pdf = new HTML2PDF('P','Letter','en', false, 'ISO-8859-15',array(10, 10, 10, 10)); //setting ukuran kertas dan margin pada dokumen anda
-		// $html2pdf->setModeDebug();
-		$html2pdf->setDefaultFont('Arial');
-		$html2pdf->writeHTML($content, isset($_GET['vuehtml']));
-		$html2pdf->Output($filename);
-	}
-	catch(HTML2PDF_exception $e) { echo $e; }
-	
-} //session login
-?>	
+try {
+	ob_start();
+	$html2pdf = new Html2Pdf('P','Legal','fr', true, 'UTF-8', array(15, 15, 15, 15), false); 
+	$html2pdf->writeHTML($content);
+	$html2pdf->output();
+  } catch (Html2PdfException $e) {
+	$html2pdf->clean();
+  
+	$formatter = new ExceptionFormatter($e);
+	echo $formatter->getHtmlMessage();
+  }
+  
+  }	
+  ?>	

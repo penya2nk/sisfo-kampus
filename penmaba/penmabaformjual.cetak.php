@@ -8,9 +8,8 @@ include_once "../konfigurasi.mysql.php";
 include_once "../sambungandb.php";
 include_once "../setting_awal.php";
 include_once "../check_setting.php";
-  include_once "../fpdf.php";
+include_once "../fpdf.php";
 
-// *** Parameters ***
 $id = $_REQUEST['id'];
 $gel = $_REQUEST['gel'];
 	

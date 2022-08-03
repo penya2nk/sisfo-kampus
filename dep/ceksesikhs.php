@@ -49,12 +49,12 @@ function TampilkanData($mhsw) {
     </tr>";
   $n = 0;	
   while ($w = mysqli_fetch_array($r)) {
-    if ($w[Keterangan]<>'Lunas'){
+    if ($w['Keterangan']<>'Lunas'){
       $c="style=color:red";
     }else{
       $c="style=color:green";
     }	
-	$tot += $w[total_bayar];
+	$tot += $w['total_bayar'];
     $n++;
     echo "<tr><td class=inp width=10 style=text-align:center>$n</td>
     <td class=ul width=40>$w[TahunID]</td>
@@ -80,6 +80,7 @@ function TampilkanData($mhsw) {
 
 
 function SesiKHSEdit() {
+  global $koneksi;
   $mhswxx =mysqli_fetch_array(mysqli_query($koneksi, "select MhswID,Nama,ProdiID,ProgramID from mhsw where MhswID='$_SESSION[MhswID]'"));
   $prog =mysqli_fetch_array(mysqli_query($koneksi, "select ProgramID,Nama from program where ProgramID='$mhswxx[ProgramID]'"));
   $prod =mysqli_fetch_array(mysqli_query($koneksi, "select ProdiID,Nama from prodi where ProdiID='$mhswxx[ProdiID]'"));

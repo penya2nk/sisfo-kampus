@@ -25,7 +25,7 @@ AND mhsw.MhswID='$_SESSION[_Login]'"));
 
 
 
-<?php if ($_GET[act]==''){ 	 ?>                                       											   												
+<?php if ($_GET['act']==''){ 	 ?>                                       											   												
 <div class='card'>
 <div class='card-header'>
 <div class='col-md-12'>
@@ -121,7 +121,7 @@ while($r=mysqli_fetch_array($tampil)){
 	
 	</tr>";
 $no++;
-$nilai = $r[NilaiAkhir];
+$nilai = $r['NilaiAkhir'];
 if ($nilai >= 85 AND $nilai <= 100){
 	$huruf = "A";
 	$bobot = "4";
@@ -213,7 +213,7 @@ echo "</form>
  //tutup atas
  
  
-else if ($_GET[act]=='transkripsp'){ 	 ?>                                       											   												
+else if ($_GET['act']=='transkripsp'){ 	 ?>                                       											   												
 <div class="col-xs-8">  
 	  <div class="box">
 		<div class="box-header">
@@ -291,7 +291,7 @@ while($r=mysqli_fetch_array($tampil)){
 	
 	</tr>";
 $no++;
-$nilai = $r[NilaiAkhir];
+$nilai = $r['NilaiAkhir'];
 if ($nilai >= 85 AND $nilai <= 100){
 	$huruf = "A";
 	$bobot = "4";

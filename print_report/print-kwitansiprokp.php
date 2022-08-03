@@ -6,32 +6,34 @@ include_once "../konfigurasi.mysql.php";
 include_once "../sambungandb.php";
 include_once "../setting_awal.php";
 include_once "../check_setting.php";
-require ("../punksi/html2pdf/html2pdf.class.php");
-$filename='namafile.pdf';
+require_once ("../punksi/html2pdf/vendor/autoload.php");
+use Spipu\Html2Pdf\Html2Pdf;
+use Spipu\Html2Pdf\Exception\Html2PdfException;
+use Spipu\Html2Pdf\Exception\ExceptionFormatter;
 
 if (empty($_SESSION['_Login']) && empty($_SESSION['_LevelID'])){
-	header('Location: ../login.php');
+	header("Location: ../login.php");
 }
 else{
-$content   	= ob_get_clean();	
-$tgl =date('Y-m-d');	
-$dta = mysqli_fetch_array(mysqli_query($koneksi, "select * from vw_jadwalkp where JadwalID='".strfilter($_GET[JadwalID])."'"));	
-$Namax 		= strtolower($dta[Nama]);
+
+include "headerx-rpt.php"; 	
+$dta = mysqli_fetch_array(mysqli_query($koneksi, "select * from vw_jadwalkp where JadwalID='".strfilter($_GET['JadwalID'])."'"));	
+$Namax 		= strtolower($dta['Nama']);
 $Nama		= ucwords($Namax);
 
 //penguji 1 ----------------------------------------------------------------------------------------------------
 $dtu1 = mysqli_fetch_array(mysqli_query($koneksi, "select Login,Nama,Gelar from dosen where Login='$dta[Penguji1]'"));	
-$Namac 		= strtolower($dtu1[Nama]);
+$Namac 		= strtolower($dtu1['Nama']);
 $Penguji1	= ucwords($Namac);
 
 //penguji 2 ----------------------------------------------------------------------------------------------------
 $dtu2 = mysqli_fetch_array(mysqli_query($koneksi, "select Login,Nama,Gelar from dosen where Login='$dta[Penguji2]'"));	
-$Namad 		= strtolower($dtu2[Nama]);
+$Namad 		= strtolower($dtu2['Nama']);
 $Penguji2	= ucwords($Namad);
 
 //penguji 3 ----------------------------------------------------------------------------------------------------
 $dtu3 = mysqli_fetch_array(mysqli_query($koneksi, "select Login,Nama,Gelar from dosen where Login='$dta[Penguji3]'"));	
-$Namae 		= strtolower($dtu3[Nama]);
+$Namae 		= strtolower($dtu3['Nama']);
 $Penguji3	= ucwords($Namae);
 
 $prodi 		= mysqli_fetch_array(mysqli_query($koneksi, "select * from prodi where ProdiID='$dta[ProdiID]'"));
@@ -40,9 +42,9 @@ $petugas 	= mysqli_fetch_array(mysqli_query($koneksi, "select Login,Nama from ka
 											 where Login='$_SESSION[_Login]'"));
 											 
 $dth = mysqli_fetch_array(mysqli_query($koneksi, "select * from t_biaya where BiayaID='1'"));										 
-$n1 		=$dth[Jumlah];
+$n1 		=$dth['Jumlah'];
 $Nominal 	=terbilang($n1);
-$o1 		=$dth[Jumlah];
+$o1 		=$dth['Jumlah'];
 $NominalPenguji =terbilang($o1);
 
 $header ="<table border=0  align='center'>
@@ -51,7 +53,7 @@ $header ="<table border=0  align='center'>
 <br>
 <table  border='0' align='center' cellpadding='0' cellspacing='0' '>
 <tr  align='center'>
-<td width='80'  rowspan='3' align='center' ><img width='60' src='logo_uti.png' ></td>
+<td width='80'  rowspan='3' align='center' ></td>
 <td width='460' align='center' style=text-align:center;font-size:16px;font-weight:reguler;>YAYASAN PENDIDIKAN TEKNOKRAT</td>
 <td width='80' align='left'>&nbsp;</td>
 </tr>
@@ -128,9 +130,9 @@ $header
 <td >&nbsp;Mahasiswa</td>
 <td >:</td><td >&nbsp;</td>
 </tr>";
-$mhs = mysqli_query($koneksi, "select * from vw_jadwalkp_seminarhasilanggota where JadwalID='".strfilter($_GET[JadwalID])."'");	
+$mhs = mysqli_query($koneksi, "select * from vw_jadwalkp_seminarhasilanggota where JadwalID='".strfilter($_GET['JadwalID'])."'");	
 while($m=mysqli_fetch_array($mhs)){
-$Namag 		= strtolower($m[Nama]);
+$Namag 		= strtolower($m['Nama']);
 $NamaMhs		= ucwords($Namag);
 $content .=" <tr class='batas2' align='left'>
 <td >&nbsp;</td>
@@ -244,9 +246,9 @@ $header
 <td >&nbsp;Mahasiswa</td>
 <td >:</td><td >&nbsp;</td>
 </tr>";
-$mhs = mysqli_query($koneksi, "select * from vw_jadwalkp_seminarhasilanggota where JadwalID='".strfilter($_GET[JadwalID])."'");	
+$mhs = mysqli_query($koneksi, "select * from vw_jadwalkp_seminarhasilanggota where JadwalID='".strfilter($_GET['JadwalID'])."'");	
 while($m=mysqli_fetch_array($mhs)){
-$Namag 		= strtolower($m[Nama]);
+$Namag 		= strtolower($m['Nama']);
 $NamaMhs		= ucwords($Namag);
 $content .=" <tr class='batas2' align='left'>
 <td >&nbsp;</td>
@@ -362,9 +364,9 @@ $header
 <td >&nbsp;Mahasiswa</td>
 <td >:</td><td >&nbsp;</td>
 </tr>";
-$mhs = mysqli_query($koneksi, "select * from vw_jadwalkp_seminarhasilanggota where JadwalID='".strfilter($_GET[JadwalID])."'");	
+$mhs = mysqli_query($koneksi, "select * from vw_jadwalkp_seminarhasilanggota where JadwalID='".strfilter($_GET['JadwalID'])."'");	
 while($m=mysqli_fetch_array($mhs)){
-$Namag 		= strtolower($m[Nama]);
+$Namag 		= strtolower($m['Nama']);
 $NamaMhs		= ucwords($Namag);
 $content .=" <tr class='batas2' align='left'>
 <td >&nbsp;</td>
@@ -445,18 +447,17 @@ $content .="<tr class='batas2' align='left'>
 </center>
 ";
 
+try {
+  ob_start();
+  $html2pdf = new Html2Pdf('P','A4','fr', true, 'UTF-8', array(5, 5, 5, 5), false); 
+  $html2pdf->writeHTML($content);
+  $html2pdf->output();
+} catch (Html2PdfException $e) {
+  $html2pdf->clean();
 
+  $formatter = new ExceptionFormatter($e);
+  echo $formatter->getHtmlMessage();
+}
 
-try
-{
-	$html2pdf = new HTML2PDF('P','Letter','en', false, 'ISO-8859-15',array(8, 8, 10, 10));
-	// $html2pdf->setModeDebug();
-	$html2pdf->setDefaultFont('Arial');
-	$html2pdf->writeHTML($content, isset($_GET['vuehtml']));
-	$html2pdf->Output($filename);
-}
-catch(HTML2PDF_exception $e) { echo $e; }
-	
-}
+}	
 ?>	
-

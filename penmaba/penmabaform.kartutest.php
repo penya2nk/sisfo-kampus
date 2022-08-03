@@ -29,6 +29,7 @@ $pdf->Cell($lbr1, 9, "KARTU UJIAN SELEKSI MASUK", 0, 0, 'C');
 $pdf->Cell($lbr2, 9, "JADWAL UJIAN SELEKSI MASUK", 0, 0, 'C');
 $pdf->Ln(9);
 
+global $koneksi;
 $s = "select PMBID, Nama, Alamat, ProgramID, RuangID, Pilihan1, Pilihan2, Pilihan3, PMBFormulirID from `pmb` where PMBID='$PMBID' and KodeID='".KodeID."'";
 $r = mysqli_query($koneksi, $s);
 $w = mysqli_fetch_array($r);
@@ -51,6 +52,7 @@ $pdf->Output();
 
 function AmbilKartu($PMBID, $Nama, $ProgramID, $Alamat, $Kota, $Pilihan1, $Pilihan2, $Pilihan3, $Y, $p)
 {  
+  global $koneksi;
 	if(!empty($Pilihan1))
 	{
 		$s1 = "select ProdiID, Nama from `prodi` where ProdiID='$Pilihan1' ";
@@ -121,6 +123,7 @@ function AmbilKartu($PMBID, $Nama, $ProgramID, $Alamat, $Kota, $Pilihan1, $Pilih
   $p->Ln(30);
 }
 function AmbilJadwal($pmb, $gel, $Y, $p) {
+  global $koneksi;
   // Buat headernya dulu
   $p->SetFont('Helvetica', 'B', 8);
   $t = 4;

@@ -1,5 +1,5 @@
 <?php
-error_reporting(0);
+// error_reporting(0);
 $tahunkalender = GainVariabelx('tahunkalender', date('Y'));
 $bulankalender = GainVariabelx('bulankalender', date('m'));
 
@@ -10,7 +10,9 @@ $lungo = (empty($_REQUEST['lungo']))? 'Kalender' : $_REQUEST['lungo'];
 $lungo($tahunkalender, $bulankalender);
 
 function Kalender($tahun, $bulan)
-{	$arrTahun = GetTahunArray($tahun-5, $tahun+5);
+{	
+	global $koneksi;
+	$arrTahun = GetTahunArray($tahun-5, $tahun+5);
 	$bulan = str_pad($bulan, 2, '0', STR_PAD_LEFT);
 	echo "<p><div class='card'>
 	<div class='card-header'>
@@ -63,7 +65,7 @@ function Kalender($tahun, $bulan)
 			from harilibur hl left outer join jenislibur jl on hl.JenisLiburID=jl.JenisLiburID and jl.KodeID='".KodeID."'
 			where hl.KodeID='".KodeID."' and (LEFT(hl.TanggalMulai, 7) = '$tahun-$bulan' or LEFT(hl.TanggalSelesai, 7) = '$tahun-$bulan') 
 			and hl.TanggalMulai <= hl.TanggalSelesai and hl.NA='N'";
-	$r = mysqli_query($s);
+	$r = mysqli_query($koneksi, $s);
      
 	while($w = mysqli_fetch_array($r))
 	{	if($w['_StartMonth'] != $bulan) $w['_StartDate'] = '01'; 
@@ -131,7 +133,7 @@ function Kalender($tahun, $bulan)
 			  <tr><td class=ul1 colspan=2><b>Keterangan Jenis Hari Libur</b></td></tr>";
 	
 	$s = "select * from jenislibur where KodeID='".KodeID."'";
-	$r = mysqli_query($s);
+	$r = mysqli_query($koneksi, $s);
 	$n = 0;
 	while($w = mysqli_fetch_array($r))
 	{	$n++;

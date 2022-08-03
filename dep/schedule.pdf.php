@@ -8,6 +8,7 @@ session_start();
   include_once "../setting_awal.php";
   include_once "../check_setting.php";
   include_once "../fpdf.php";
+  // define('FPDF_FONTPATH','fpdf/font/');
 
 $TahunID = GainVariabelx('_jdwlTahun');
 $ProdiID = GainVariabelx('_jdwlProdi');
@@ -22,13 +23,14 @@ $lbr = 280;
 
 //leweh add ob_start(); while error at php higher version
 ob_start();
+$pdf = new FPDF();
 //end leweh add
 
-$pdf = new FPDF('L');
+//$pdf = new FPDF('L');
 $pdf->SetTitle("Jadwal Kuliah - $TahunID");
 $pdf->SetAutoPageBreak(true, 5);
 $pdf->AddPage('L');
-$pdf->SetFont('Helvetica', 'B', 14);
+// $pdf->SetFont('Arial', 'B', 14);
 
 HeaderLogo("Jadwal Kuliah", $pdf, 'L');
 // Buat header dulu
@@ -48,22 +50,22 @@ function BuatFooter($thn, $p) {
   $pjbt = AmbilFieldx('pejabat', "KodeID='".KodeID."' and KodeJabatan", 'PUKET1', "*");
   $p->Ln(4);
   $p->Cell($mrg);
-  $p->Cell(60, $t, $arrID['Kota'] . ", " . date('d M Y'), 0, 1);
+  // $p->Cell(60, $t, $arrID['Kota'] . ", " . date('d M Y'), 0, 1);
   $p->Cell($mrg);
-  $p->Cell(60, $t, $pjbt['Jabatan'], 0 , 1);
+  // $p->Cell(60, $t, $pjbt['Jabatan'], 0 , 1);
   $p->Ln(15);
 
   $p->Cell($mrg);
-  $p->SetFont('Helvetica', 'B', 9);
-  $p->Cell(60, $t, $pjbt['Nama'], 0, 1);
+  $p->SetFont('Arial', 'B', 9);
+  // $p->Cell(60, $t, $pjbt['Nama'], 0, 1);
   $p->Cell($mrg);
-  $p->SetFont('Helvetica', '', 9);
+  $p->SetFont('Arial', '', 9);
   //$p->Cell(60, $t, 'NIP: ' . $pjbt['NIP'], 0, 1);
 }
 function AmbilJadwal($thn, $p) {
   global $koneksi;
   // Buat headernya dulu
-  $p->SetFont('Helvetica', 'B', 9);
+  $p->SetFont('Arial', 'B', 9);
   $t = 6;
   
   $p->Cell(8, $t, 'No', 1, 0);
@@ -117,7 +119,7 @@ function AmbilJadwal($thn, $p) {
     if ($_p != $w['ProgramID']) {
       $_p = $w['ProgramID'];
       $_prg = AmbilOneField('program', "KodeID='".KodeID."' and ProgramID", $_p, 'Nama');
-      $p->SetFont('Helvetica', 'B', 10);
+      $p->SetFont('Arial', 'B', 10);
       $p->Cell(190, $t, $_prg, 1, 1, 'C');
     }
     */
@@ -125,12 +127,12 @@ function AmbilJadwal($thn, $p) {
     //  $_h = $w['HR'];
       $hr = $w['HR'];
     //} else $hr = '-';
-    $p->SetFont('Helvetica', '', 8);
+    $p->SetFont('Arial', '', 8);
     $p->Cell(8, $t, $n, 1, 0, 'R');
     $p->Cell(14, $t, $hr, 1);
     $p->Cell(22, $t, $w['JM'] . ' - ' . $w['JS'], 1);
     $p->Cell(20, $t, $w['MKKode'], 1);
-    $p->Cell(90, $t, $w['MK'].' '.$w[_lab], 1);
+    $p->Cell(90, $t, $w['MK'].' '.$w['_lab'], 1);
     $p->Cell(9, $t, $w['SKS'], 1, 0, 'C');
     $p->Cell(70, $t, $w['DSN'], 1);
     $p->Cell(14, $t, $w['namaKelas'], 1, 0, 'C');
@@ -140,7 +142,7 @@ function AmbilJadwal($thn, $p) {
   }
 }
 function BuatHeader($thn, $p) {
-  $p->SetFont('Helvetica', 'B', 10);
+  $p->SetFont('Arial', 'B', 10);
   
   $prodi = AmbilOneField('prodi', "KodeID='".KodeID."' and ProdiID", $thn['ProdiID'], 'Nama');
   $prg   = AmbilOneField('program', "KodeID='".KodeID."' and ProgramID", $thn['ProgramID'], 'Nama');
@@ -166,24 +168,24 @@ function HeaderLogo($jdl, $p, $orientation='P')
     $identitas = AmbilFieldx('identitas', 'Kode', KodeID, 'Nama, Alamat1, Telepon, Fax');
 	$p->Image($logo, 12, 8, 18);
 	$p->SetY(5);
-    $p->SetFont("Helvetica", '', 8);
+    $p->SetFont("Arial", '', 8);
     $p->Cell($pjg, 5, $identitas['Yayasan'], 0, 1, 'C');
-    $p->SetFont("Helvetica", 'B', 10);
+    $p->SetFont("Arial", 'B', 10);
     $p->Cell($pjg, 7, $identitas['Nama'], 0, 0, 'C');
     
 	//Judul
 	if($orientation == 'L')
 	{
-		$p->SetFont("Helvetica", 'B', 16);
+		$p->SetFont("Arial", 'B', 16);
 		$p->Cell(20, 7, '', 0, 0);
 		$p->Cell($pjg, 7, $jdl, 0, 1, 'C');
 	}
 	else
-	{	$p->SetFont("Helvetica", 'B', 12);
+	{	$p->SetFont("Arial", 'B', 12);
 		$p->Cell(80, 7, $jdl, 0, 1, 'R');
 	}
 	
-    $p->SetFont("Helvetica", 'I', 6);
+    $p->SetFont("Arial", 'I', 6);
 	$p->Cell($pjg, 3,
       $identitas['Alamat1'], 0, 1, 'C');
     $p->Cell($pjg, 3,

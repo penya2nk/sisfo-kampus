@@ -185,7 +185,7 @@ if (isset($_GET['tahun'])){
 		    echo "<script>document.location='index.php?ndelox=ta/pjudultaadm&prodi=$_GET[prodi]&tahun=$_GET[tahun]&MhswID=$_GET[MhswID]';</script>";
 	    } 
 	}
-	if (isset($_GET[reject])){
+	if (isset($_GET['reject'])){
 	mysqli_query("update t_penelitian set Status='DITOLAK',Komentar='Judul belum memenuhi kriteria' where IDPenelitian='".strfilter($_GET[IDX])."'");
 	echo "<script>document.location='index.php?ndelox=ta/pjudultaadm&prodi=$_GET[prodi]&tahun=$_GET[tahun]&MhswID=$_GET[MhswID]';</script>";
 }

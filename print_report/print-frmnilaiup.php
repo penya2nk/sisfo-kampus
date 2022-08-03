@@ -6,29 +6,28 @@ include_once "../konfigurasi.mysql.php";
 include_once "../sambungandb.php";
 include_once "../setting_awal.php";
 include_once "../check_setting.php";
-require ("../punksi/html2pdf/html2pdf.class.php");
+require_once ("../punksi/html2pdf/vendor/autoload.php");
+use Spipu\Html2Pdf\Html2Pdf;
+use Spipu\Html2Pdf\Exception\Html2PdfException;
+use Spipu\Html2Pdf\Exception\ExceptionFormatter;
 
-$tgl	= tgl_indo(date('Y-m-d'));
-
-$filename="AbsensiUjianProgram_$_GET[tahun].pdf";
 if (empty($_SESSION['_Login']) && empty($_SESSION['_LevelID'])){
 	header("Location: ../login.php");
 }
-
 else{
 
-$content 	= ob_get_clean();
-$uj     	= mysqli_fetch_array(mysqli_query($koneksi, "SELECT * FROM jadwal_uptahun where UjianID='".strfilter($_GET[UjianID])."'"));
-$ujp     	= mysqli_fetch_array(mysqli_query($koneksi, "SELECT * FROM jadwal_uppenguji where PengujiID='".strfilter($_GET[PengujiID])."'"));
+include "headerx-rpt.php"; 	
+$uj     	= mysqli_fetch_array(mysqli_query($koneksi, "SELECT * FROM jadwal_uptahun where UjianID='".strfilter($_GET['UjianID'])."'"));
+$ujp     	= mysqli_fetch_array(mysqli_query($koneksi, "SELECT * FROM jadwal_uppenguji where PengujiID='".strfilter($_GET['PengujiID'])."'"));
 $dos     	= mysqli_fetch_array(mysqli_query($koneksi, "SELECT Login,Nama,Gelar FROM dosen where Login='$ujp[DosenID]'"));
-$prodi    	= mysqli_fetch_array(mysqli_query($koneksi, "SELECT ProdiID,Nama,Pejabat FROM prodi where ProdiID='".strfilter($_GET[prodi])."'"));
+$prodi    	= mysqli_fetch_array(mysqli_query($koneksi, "SELECT ProdiID,Nama,Pejabat FROM prodi where ProdiID='".strfilter($_GET['prodi'])."'"));
 
 
 
-$NamaDosx 		= strtolower($dos[Nama]);
+$NamaDosx 		= strtolower($dos['Nama']);
 $NamaDos		= ucwords($NamaDosx);	
 
-$tanggal 	= $uj[TglUjian];
+$tanggal 	= $uj['TglUjian'];
 $day 		= date('D', strtotime($tanggal));
 $dayList 	= array(
 	'Sun' => 'Minggu',
@@ -70,8 +69,8 @@ $content .= "
 
 <table border='0' cellpadding='0' cellspacing='0' align='center'>
 <tr><td width='200'>Dosen Penguji</td><td width='10'>:</td><td width='200'>$NamaDos, $dos[Gelar]</td> </tr>
-<tr><td>Hari / Tanggal</td><td>:</td><td>$dayList[$day], ".tgl_indo($uj[TglUjian])."</td> </tr>
-<tr><td width='200'>Waktu</td><td width='10'>:</td><td width='200'>".substr($uj[JamMulai],0,5)." s/d ".substr($uj[JamSelesai],0,5)." WIB</td> </tr>
+<tr><td>Hari / Tanggal</td><td>:</td><td>$dayList[$day], ".tgl_indo($uj['TglUjian'])."</td> </tr>
+<tr><td width='200'>Waktu</td><td width='10'>:</td><td width='200'>".substr($uj['JamMulai'],0,5)." s/d ".substr($uj['JamSelesai'],0,5)." WIB</td> </tr>
 <tr><td width='200'>Tempat</td><td width='10'>:</td><td width='200'>$uj[Ruang]</td> </tr>
 
 </table>
@@ -92,11 +91,11 @@ $sq = mysqli_query($koneksi, "SELECT
 	jadwal_upmhs.*
 	from mhsw,jadwal_upmhs
 	WHERE mhsw.MhswID=jadwal_upmhs.MhswID
-	AND jadwal_upmhs.PengujiID='".strfilter($_GET[PengujiID])."'
+	AND jadwal_upmhs.PengujiID='".strfilter($_GET['PengujiID'])."'
 	order by jadwal_upmhs.MhswID asc");
 while($r=mysqli_fetch_array($sq)){
 	$no++;	       
-	$NamaMhsx 	= strtolower($r[Nama]); //strtoupper($kalimat);
+	$NamaMhsx 	= strtolower($r['Nama']); //strtoupper($kalimat);
 	$NamaMhs	= ucwords($NamaMhsx);
 $content .= "<tr>
 	<td height='20' align=center> $no</td>
@@ -191,16 +190,17 @@ $content .="
 </tr>
 </table>";
 
+try {
+    ob_start();
+    $html2pdf = new Html2Pdf('P','A4','fr', true, 'UTF-8', array(15, 15, 15, 15), false); 
+    $html2pdf->writeHTML($content);
+    $html2pdf->output();
+} catch (Html2PdfException $e) {
+    $html2pdf->clean();
 
-try
-	{
-		$html2pdf = new HTML2PDF('P','Letter','en', false, 'ISO-8859-15',array(10, 5, 10, 5)); //setting ukuran kertas dan margin pada dokumen anda
-		// $html2pdf->setModeDebug();
-		$html2pdf->setDefaultFont('Arial');
-		$html2pdf->writeHTML($content, isset($_GET['vuehtml']));
-		$html2pdf->Output($filename);
-	}
-	catch(HTML2PDF_exception $e) { echo $e; }
-	
-} //session login
+    $formatter = new ExceptionFormatter($e);
+    echo $formatter->getHtmlMessage();
+}
+
+}	
 ?>	

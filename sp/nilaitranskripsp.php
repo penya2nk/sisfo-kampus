@@ -3,7 +3,7 @@
 <h3 class="box-title"><b style='color:green;font-size:20px'> &nbsp;&nbsp;Transkrip Nilai Sementara Semester Pendek</b></h3>              
 <?php
 $m = mysqli_fetch_array(mysqli_query($koneksi, "SELECT a.MhswID, a.Nama AS NamaMhs, a.ProdiID, a.ProgramID, b.Nama AS NamaProdi 
-									FROM mhsw a LEFT JOIN prodi b ON a.ProdiID=b.ProdiID where a.MhswID='".strfilter($_GET[MhswID])."'")); 
+									FROM mhsw a LEFT JOIN prodi b ON a.ProdiID=b.ProdiID where a.MhswID='".strfilter($_GET['MhswID'])."'")); 
 
 ?>
 
@@ -32,13 +32,13 @@ $m = mysqli_fetch_array(mysqli_query($koneksi, "SELECT a.MhswID, a.Nama AS NamaM
 
 
 
-<?php if ($_GET[act]==''){ 	                                        											   												
+<?php if ($_GET['act']==''){ 	                                        											   												
 echo"<form method='POST' class='form-horizontal' action='' enctype='multipart/form-data'>							  							 
 	<input type='hidden' name='TahunID' value='$_GET[tahun]'>
 	<input type='hidden' name='MhswID' value='$_GET[MhswID]'>
 	<input type='hidden' name='prodi' value='$r[ProdiID]'>";
 				 
-	if (isset($_GET[MhswID])){ 
+	if (isset($_GET['MhswID'])){ 
 	echo"<div class='card'>
 	<div class='card-header'>
 	<div class='table-responsive'>
@@ -98,10 +98,10 @@ echo"<form method='POST' class='form-horizontal' action='' enctype='multipart/fo
 	<tbody>
 <?php									
 $no = 1;									
-$tampil = mysqli_query($koneksi, "SELECT * FROM vw_sp where MhswID='".strfilter($_GET[MhswID])."' Group By MKKode order by NamaMK asc ");  								
+$tampil = mysqli_query($koneksi, "SELECT * FROM vw_sp where MhswID='".strfilter($_GET['MhswID'])."' Group By MKKode order by NamaMK asc ");  								
 
 while($r=mysqli_fetch_array($tampil)){   					         
-	$nilai = $r[NilaiAkhir];
+	$nilai = $r['NilaiAkhir'];
 		if ($nilai >= 85 AND $nilai <= 100){
 			$huruf = "A";
 			$bobot = 4;
@@ -156,9 +156,9 @@ $no++;
 $tsks += $r[SKS];
 }
 
-if (isset($_GET[hapus])){
-	mysqli_query("DELETE FROM xxx where KRSID='".strfilter($_GET[hapus])."'");
-    echo "<script>document.location='index.php?ndelox=sp/nilaitranskripsp&JadwalID=".$_GET[JadwalID]."&tahun=".$_GET[tahun]."&MhswID=".$_GET[MhswID]."&sukses';</script>";
+if (isset($_GET['hapus'])){
+	mysqli_query($koneksi, "DELETE FROM xxx where KRSID='".strfilter($_GET['hapus'])."'");
+    echo "<script>document.location='index.php?ndelox=sp/nilaitranskripsp&JadwalID=".$_GET['JadwalID']."&tahun=".$_GET['tahun']."&MhswID=".$_GET['MhswID']."&sukses';</script>";
 }
 echo"<tr bgcolor=$warna>
 	<td colspan='7'>Total SKS yang diambil: $tsks SKS </td>

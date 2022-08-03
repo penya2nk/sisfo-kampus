@@ -4,7 +4,6 @@ include_once "../academic_sisfo1.php";
 
 ViewHeaderApps("Jadwal Ruang", 1);
 
-// *** Parameters ***
 $_jdwlRuang = GainVariabelx('_jdwlRuang');
 $_jdwlTgl_d = GainVariabelx('_jdwlTgl_d', date('d'));
 $_jdwlTgl_m = GainVariabelx('_jdwlTgl_m', date('m'));
@@ -17,11 +16,9 @@ $_jdwlTahun = GainVariabelx('_jdwlTahun');
 $_jdwlHari  = GainVariabelx('_jdwlHari');
 $_jdwlUjian = GainVariabelx('_jdwlUjian', 2);
 
-// *** Main ***
 $lungo = (empty($_REQUEST['lungo']))? 'DftrRuang' : $_REQUEST['lungo'];
 $lungo();
 
-// *** Functions ****
 function DftrRuang() {
   TampilkanHeaderRuang();
   

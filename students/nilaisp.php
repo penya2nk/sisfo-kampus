@@ -15,8 +15,8 @@ echo"</div>";
 echo"				
 <div class='card'>
 <div class='card-header'>";
-echo"<a class='pull-right btn btn-primary btn-sm' href='index.php?view=daftarsp&act=viewdata'>Lihat Data SP</a>";
-echo"<a class='pull-right btn btn-primary btn-sm' href='index.php?view=daftarsp'>Tambah Data SP</a><p></p>"; 
+echo"<a class='pull-right btn btn-primary btn-sm' href='index.php?ndelox=students/daftarsp&act=viewdata'>Lihat Data SP</a>";
+echo"<a class='pull-right btn btn-primary btn-sm' href='index.php?ndelox=students/daftarsp'>Tambah Data SP</a><p></p>"; 
 echo"<div class='table-responsive'>
 	<table class='table table-sm table-bordered'>
 	<tbody>              
@@ -44,7 +44,7 @@ echo"<div class='table-responsive'>
 
 
 
-<?php if ($_GET[act]==''){ 	
+<?php if ($_GET['act']==''){ 	
 
 echo"							  				 
 <div class='card'>
@@ -79,11 +79,11 @@ while($r=mysqli_fetch_array($sqx)){
 	<td>$r[SKS]</td>
 	<td>$r[GradeNilai]</td>
 	<td>
-	<a  class='btn btn-success btn-xs' href='index.php?view=daftarsp&act=prosesnilai&SpID=$r[SpID]&MKID=$r[MKID]&SKS=$r[SKS]'><span class='glyphicon glyphicon-th'></span> Proses</a>
+	<a  class='btn btn-success btn-xs' href='index.php?ndelox=students/nilaisp&act=prosesnilai&SpID=$r[SpID]&MKID=$r[MKID]&SKS=$r[SKS]'><span class='glyphicon glyphicon-th'></span> Proses</a>
 	</td>
 	</tr>";
 $no++;
-$tsks += $r[SKS];
+$tsks += $r['SKS'];
 }
 
 echo"<tr bgcolor=$warna>
@@ -101,19 +101,19 @@ echo "
 </div>";
 
 
-}else if ($_GET[act]=='prosesnilai'){ 
-$cek =mysqli_num_rows(mysqli_query("select * from xxxx where MhswID='$_SESSION[_Login]' AND MKID='".strfilter($_GET[MKID])."'"));
+}else if ($_GET['act']=='prosesnilai'){ 
+$cek =mysqli_num_rows(mysqli_query($koneksi, "select * from xxxx where MhswID='$_SESSION[_Login]' AND MKID='".strfilter($_GET['MKID'])."'"));
 if ($cek>0){
-	echo "<script>document.location='index.php?view=nilaisp&SpID=".$_GET[SpID]."&MhswID=".$_GET[MhswID]."&gagal';</script>";
+	echo "<script>document.location='index.php?ndelox=students/nilaisp&SpID=".$_GET['SpID']."&MhswID=".$_GET['MhswID']."&gagal';</script>";
 	exit;
 }
-$t =mysqli_fetch_array(mysqli_query("select sum(SKS) as totSKS from txxxxx_sp where MhswID='$_SESSION[_Login]'"));
-$vsks = $t[totSKS]+$_GET[SKS];
+$t =mysqli_fetch_array(mysqli_query($koneksi, "select sum(SKS) as totSKS from txxxxx_sp where MhswID='$_SESSION[_Login]'"));
+$vsks = $t['totSKS']+$_GET['SKS'];
 if ($vsks>10){
-	echo "<script>document.location='index.php?view=nilaisp&SpID&lebih';</script>";
+	echo "<script>document.location='index.php?ndelox=students/nilaisp&SpID&lebih';</script>";
 	exit;
 }
-$sqx =mysqli_query("insert into xxx(TahunID,
+$sqx =mysqli_query($koneksi, "insert into xxx(TahunID,
 									Tanggal,
 									MhswID,
 									MKID,
@@ -121,15 +121,15 @@ $sqx =mysqli_query("insert into xxx(TahunID,
 				values('$_SESSION[tahun_akademik]',
 						'".date('Y-m-d')."',
 						'$_SESSION[_Login]',
-						'".strfilter($_GET[MKID])."',
-						'".strfilter($_GET[SKS])."')");
+						'".strfilter($_GET['MKID'])."',
+						'".strfilter($_GET['SKS'])."')");
 	if ($sqx){
-		echo "<script>document.location='index.php?view=nilaisp&sukses';</script>";                       
+		echo "<script>document.location='index.php?ndelox=students/nilaisp&sukses';</script>";                       
 	}else{
-		echo "<script>document.location='index.php?view=nilaisp&gagal';</script>";
+		echo "<script>document.location='index.php?ndelox=students/nilaisp&gagal';</script>";
 	}
 
-}else if ($_GET[act]=='viewdata'){ 
+}else if ($_GET['act']=='viewdata'){ 
 	$r = mysqli_fetch_array(mysqli_query($koneksi, "SELECT * FROM t_sp WHERE MhswID='$_SESSION[MhswID]' AND TahunID='$_SESSION[tahun_akademik]'"));                       
 
 
@@ -175,15 +175,15 @@ $sqx =mysqli_query("insert into xxx(TahunID,
 							<td>$r[SKS]</td>
 							<td>$r[Sesi]</td>
 							<td style='width:70px !important'>
-<a class='btn btn-danger btn-xs' title='Hapus' href='index.php?view=nilaisp&act=viewdata&hapus=$r[SpID]' onclick=\"return confirm('Apakah anda Yakin Data ini Dihapus?')\"><span class='glyphicon glyphicon-remove'></span></a>
+<a class='btn btn-danger btn-xs' title='Hapus' href='index.php?ndelox=students/nilaisp&act=viewdata&hapus=$r[SpID]' onclick=\"return confirm('Apakah anda Yakin Data ini Dihapus?')\"><span class='glyphicon glyphicon-remove'></span></a>
 	  </center></td>
 						  </tr>";
 					  $no++;
-					  $tsks += $r[SKS];
+					  $tsks += $r['SKS'];
 					  }
-  if (isset($_GET[hapus])){
-		mysqli_query("DELETE FROM t_sp WHERE SpID='".strfilter($_GET[hapus])."'");
-		echo "<script>document.location='index.php?view=nilaisp&act=viewdata';</script>";
+  if (isset($_GET['hapus'])){
+		mysqli_query($koneksi, "DELETE FROM t_sp WHERE SpID='".strfilter($_GET['hapus'])."'");
+		echo "<script>document.location='index.php?ndelox=students/nilaisp&act=viewdata';</script>";
   }					  
 echo"<tr bgcolor=$warna>
 	<td colspan='7'>Total: $tsks SKS </td>

@@ -1,7 +1,9 @@
 <?php 
-echo"<table width='1408' border='0' cellpadding='0' cellspacing='0' align='center'>
+$content .= "<table width='1408' border='0' cellpadding='0' cellspacing='0' align='center'>
 <tr>
-<td width='8%' rowspan='4'><img width='80' width='80' src='logo_uti.png'></td>       
+<td width='8%' rowspan='4'>
+&nbsp;
+</td>       
 <td width='820' align='center' ><strong><font style='font-size:16px'>YAYASAN PENDIDIKAN TEKNOKRAT </font></strong></td>           
 <td width='8%' rowspan='4'>&nbsp;</td> 
 </tr>
@@ -17,8 +19,8 @@ echo"<table width='1408' border='0' cellpadding='0' cellspacing='0' align='cente
 <tr>
 <td align='center' >Email: uti@teknokrat.ac.id, Website: https://teknokrat.ac.id/</td>
 </tr>
-<tr>
 
+<tr>
 <td colspan='3'><hr></td>            
 </tr>
 </table>";

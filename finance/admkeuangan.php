@@ -176,7 +176,7 @@ echo"<div class='card'>
 	}else{
 		$c="style=color:green";
 	}	
-		$tot += $r[total_bayar];
+		$tot += $r['total_bayar'];
 	echo "<tr><td style='text-align:center'>$no</td>			 
 			  <td>$r[id_jenis]</td>
 			  <td style='text-align:center'>$r[TahunID]</td>
@@ -185,7 +185,7 @@ echo"<div class='card'>
 			  <td style='text-align:center'>".tgl_indo($r['TanggalBayar'])."</td>
 			  <td $c>$r[Keterangan]</td>
 			  <td>$r[NoBukti]</td>";
-			  if($_SESSION[level]!='kepala'){
+			  if($_SESSION['level']!='kepala'){
 		echo "<td><center>
 		<a class='btn btn-primary btn-xs' title='Delete Data' href='index.php?ndelox=finance/admkeuangan&act=edit&id=$r[id_keu]&tahun=$_GET[tahun]&prodi=$pr[ProdiID]&MhswID=$_GET[MhswID]'><i class='fa fa-edit'></i></a>
 			<a class='btn btn-primary btn-xs' title='Delete Data' href='index.php?ndelox=finance/admkeuangan&hapus=$r[id_keu]&tahun=$_GET[tahun]&prodi=$pr[ProdiID]&MhswID=$_GET[MhswID]' onclick=\"return confirm('Anda tidak memiliki akses di keuangan!')\"><i class='fa fa-trash'></i></a>
@@ -377,18 +377,17 @@ echo "
 							TanggalBayar,
 							TanggalBuat,
 							keterangan,
-							NoBukti,
-							Login) 		
+							NoBukti
+							) 		
 					VALUES('".strfilter($_POST['id_jenis'])."',
 							'".strfilter($_POST['TahunID'])."',
 							'".strfilter($_POST['MhswID'])."',
-							'$prodi[ProdiID]',
+							'".strfilter($prodi['ProdiID'])."',
 							'$angka1',
 							'".strfilter($_POST['TanggalBayar'])."',
 							'".date('Y-m-d')."',
 							'".strfilter($_POST['keterangan'])."',
-							'".strfilter($_POST['NoBukti'])."',
-							'$_SESSION[_Login]')");
+							'".strfilter($_POST['NoBukti'])."')");
 		//if ($_POST[id_jenis]=='SPP'){
 		//    mysqli_fetch_array("update khs set StatusMhswID='A' where MhswID='".strfilter($_POST[MhswID])."' AND TahunID='".strfilter($_POST[TahunID])."'");					
         //}
@@ -400,10 +399,7 @@ echo "
     }
 
 echo "
-
-
-
-	  <form method='POST' class='form-horizontal' action='' enctype='multipart/form-data'>
+<form method='POST' class='form-horizontal' action='' enctype='multipart/form-data'>
 <div class='card'>
 <div class='card-header'>
 <div class='box-header with-border'>

@@ -78,13 +78,13 @@ function BuatFooter($PMBID, $p) {
   $p->Cell(100, $t, 'Pembayaran ditransfer ke rekening', 0, 1);
   $rekening = AmbilFieldx('rekening', "Def='Y' and KodeID", KodeID, '*');
   $p->Cell(10, $t, '', 0, 0);
-  $p->Cell(100, $t, 'An: '.$rekening['Nama'], 0, 1);
+  // $p->Cell(100, $t, 'An: '.$rekening['Nama'], 0, 1);
   $p->Cell(10, $t, '', 0, 0);
-  $p->Cell(100, $t, 'No. Rekening: '.$rekening['RekeningID'], 0, 1);
+  // $p->Cell(100, $t, 'No. Rekening: '.$rekening['RekeningID'], 0, 1);
   $p->Cell(10, $t, '', 0, 0);
-  $p->Cell(100, $t, $rekening['Bank'], 0, 1);
+  // $p->Cell(100, $t, $rekening['Bank'], 0, 1);
   $p->Cell(10, $t, '', 0, 0);
-  $p->Cell(100, $t, $rekening['Cabang'], 0, 1);
+  // $p->Cell(100, $t, $rekening['Cabang'], 0, 1);
 }
 
 function TampilkanDetailBiaya($PMBID, $p) {
