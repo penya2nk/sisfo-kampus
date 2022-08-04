@@ -292,7 +292,7 @@ $content .= "
 
 try {
   ob_start();
-  $html2pdf = new Html2Pdf('P','Legal','fr', true, 'UTF-8', array(15, 15, 15, 15), false); 
+  $html2pdf = new Html2Pdf('P','A4','fr', true, 'UTF-8', array(15, 15, 15, 15), false); 
   $html2pdf->writeHTML($content);
   $html2pdf->output();
 } catch (Html2PdfException $e) {

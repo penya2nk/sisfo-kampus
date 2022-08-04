@@ -68,12 +68,13 @@ function Edit($PMBID, $pmb) {
   $xx = AmbilFieldx('ruangusm', "PMBID='$pmb[PMBID]' and PMBPeriodID='$gel' and KodeID", KodeID, "sum(NilaiUSM) as N, count(ProdiUSMID) as J");
   $rata = ($xx['J']>0)? number_format($xx['N']/$xx['J'],2) : 0;  
   $getnilaiujianrata = (empty($pmb['NilaiUjian']))? $rata : $pmb['NilaiUjian']+0;  
-  //$getgrade = AmbilOneField('pmbgrade', "NilaiUjianMin <= $getnilaiujianrata and $getnilaiujianrata <= NilaiUjianMax and KodeID", KodeID, 'GradeNilai');
+  $getgrade = AmbilOneField('pmbgrade', "NilaiUjianMin <= $getnilaiujianrata and $getnilaiujianrata <= NilaiUjianMax and KodeID", KodeID, 'GradeNilai');
   $getgrade = AmbilOneField('pmbgrade', "NilaiUjianMin <= 80 and   NilaiUjianMax <= 80 and KodeID", KodeID, 'GradeNilai');  
-  $optgrd = AmbilCombo2('pmbgrade', "concat(GradeNilai, ' (', if (Keterangan is NULL, '', Keterangan), ')')", 'GradeNilai', $getgrade, "KodeID='".KodeID."'", 'GradeNilai');
+  // $optgrd = AmbilCombo2('pmbgrade', "concat(GradeNilai, ' (', if (Keterangan is NULL, '', Keterangan), ')')", 'GradeNilai', $getgrade, "KodeID='".KodeID."'", 'GradeNilai');
   $arrPT = explode('~', $pmb['PrestasiTambahan']);
   foreach($arrPT as $Prestasi) 
-  {	if(!empty($Prestasi)) $PrestasiTambahan .= (empty($PrestasiTambahan))? $Prestasi : "<br>".$Prestasi;
+  {	
+    if(!empty($Prestasi)) $PrestasiTambahan .= (empty($PrestasiTambahan))? $Prestasi : "<br>".$Prestasi;
   }
   $ck = ($pmb['LulusUjian'] == 'Y')? 'checked' : '';
   echo '

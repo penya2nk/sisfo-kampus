@@ -113,7 +113,6 @@ function DftrForm($gel) {
   
   global $arrUrut, $koneksi;
   $_maxbaris = 10;
-  include_once "class/dwolister.class.php";
   // Urutan
   
   if($_SESSION['_LevelID'] != 33)
@@ -200,6 +199,7 @@ p.PMBID, p.Nama, p.Kelamin, p.ProdiID, p.Pilihan1, p.Pilihan2, p.Pilihan3, p.Lul
     <th class=ttl>Cetak</th>
     </tr> </thead>
                     <tbody>";
+   global $no;                   
 	 $r = mysqli_query($koneksi, $s);
 	  while ($w = mysqli_fetch_array($r)) {
       $no++;

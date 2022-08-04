@@ -1,8 +1,8 @@
 <div class='card'>
 <div class='card-header'>
 <?php 
-if (isset($_GET[MhswID])){ 
-   $mahasiswa =mysqli_fetch_array(mysqli_query($koneksi, "select MhswID,Nama,ProdiID, ProgramID from mhsw where MhswID='".strfilter($_GET[MhswID])."'"));
+if (isset($_GET['MhswID'])){ 
+   $mahasiswa =mysqli_fetch_array(mysqli_query($koneksi, "select MhswID,Nama,ProdiID, ProgramID from mhsw where MhswID='".strfilter($_GET['MhswID'])."'"));
 ?>   
    <h3 class='box-title'><b style=color:green;font-size:20px;>SURAT KETERANGAN LULUS : <?php echo"$mahasiswa[Nama]";?></b></h3> 
    
@@ -34,7 +34,7 @@ if (isset($_GET[MhswID])){
 
 
 
-<?php if ($_GET[act]==''){ 	
+<?php if ($_GET['act']==''){ 	
 
 echo"<form method='POST' class='form-horizontal' action='' enctype='multipart/form-data'>							  							
 	<input type='hidden' name='TahunID' value='$_GET[tahun]'>
@@ -62,14 +62,14 @@ echo"<form method='POST' class='form-horizontal' action='' enctype='multipart/fo
   if ($_GET['MhswID']==''){
   	  $tampil = mysqli_query($koneksi, "SELECT t_suratadm.*,mhsw.Nama FROM t_suratadm,mhsw where t_suratadm.MhswID=mhsw.MhswID order by t_suratadm.TanggalBuat desc");
   }else{
-	  $tampil = mysqli_query($koneksi, "SELECT t_suratadm.*,mhsw.Nama FROM t_suratadm,mhsw where t_suratadm.MhswID=mhsw.MhswID and t_suratadm.MhswID='".strfilter($_GET[MhswID])."' order by t_suratadm.TanggalBuat desc");
+	  $tampil = mysqli_query($koneksi, "SELECT t_suratadm.*,mhsw.Nama FROM t_suratadm,mhsw where t_suratadm.MhswID=mhsw.MhswID and t_suratadm.MhswID='".strfilter($_GET['MhswID'])."' order by t_suratadm.TanggalBuat desc");
   }
   $no = 1;
   while($r=mysqli_fetch_array($tampil)){
   echo "<tr>
   <td>$no</td>
   <td>$r[TahunID]</td>
-  <td>".tgl_indo($r[TanggalBuat])."</td>
+  <td>".tgl_indo($r['TanggalBuat'])."</td>
   <td>$r[MhswID]</td>
    <td>$r[Nama]</td>
   <td>$r[Keterangan]</td>
@@ -84,8 +84,8 @@ echo"<form method='POST' class='form-horizontal' action='' enctype='multipart/fo
   </tr>";
 	$no++;
 	}
-	if (isset($_GET[hapus])){
-		mysqli_query($koneksi, "DELETE FROM t_suratadm where MhswID='".strfilter($_GET[hapus])."'");
+	if (isset($_GET['hapus'])){
+		mysqli_query($koneksi, "DELETE FROM t_suratadm where MhswID='".strfilter($_GET['hapus'])."'");
 		echo "<script>document.location='index.php?ndelox=dep/srtluluskuliah';</script>";
 	}
 
@@ -101,10 +101,10 @@ echo "<div class='box-footer'>
 echo "</form>";
 
 
-}else if ($_GET[act]=='tambahsrtluluskuliah'){ 
+}else if ($_GET['act']=='tambahsrtluluskuliah'){ 
 $tglnow = date('Y-m-d H:i:s');
 $r = mysqli_fetch_array(mysqli_query($koneksi, "SELECT a.MhswID, a.Nama AS NamaMhs, a.ProdiID, a.ProgramID, b.Nama AS NamaProdi 
-									FROM mhsw a LEFT JOIN prodi b ON a.ProdiID=b.ProdiID where a.MhswID='".strfilter($_GET[MhswID])."'"));                                       											   												
+									FROM mhsw a LEFT JOIN prodi b ON a.ProdiID=b.ProdiID where a.MhswID='".strfilter($_GET['MhswID'])."'"));                                       											   												
 echo"<div class='card'>
 <div class='card-header'>
 <div class='table-responsive'> 
@@ -131,15 +131,15 @@ echo"<div class='card'>
 </div>
 "; 
 
-if (isset($_POST[tambah])){    
-  $cek=mysqli_num_rows(mysqli_query($koneksi, "select MhswID from aktifkul where MhswIDx='".strfilter($_GET[MhswID])."' and TahunID='$_SESSION[tahun_akademik]'"));
+if (isset($_POST['tambah'])){    
+  $cek=mysqli_num_rows(mysqli_query($koneksi, "select MhswID from aktifkul where MhswIDx='".strfilter($_GET['MhswID'])."' and TahunID='$_SESSION[tahun_akademik]'"));
   if($cek>0){		    
 	 echo "<script language='javascript'>alert('Sorry Bos, Data sudah ada..');
 		   window.location = 'index.php?ndelox=dep/srtluluskuliah&MhswID=$_GET[MhswID]'</script>";
 	 exit;
   } 
   
-  if ($_POST[Semester]==''){
+  if ($_POST['Semester']==''){
 	  echo "<script language='javascript'>alert('Pilih Semester..');
 		   window.location = 'index.php?ndelox=dep/srtluluskuliah&MhswID=$_GET[MhswID]&act=tambahsrtluluskuliah'</script>";
 	 exit;
@@ -151,7 +151,7 @@ if (isset($_POST[tambah])){
       elseif($bln=='6'){$BlnRomawi="VI";} elseif($bln=='7'){$BlnRomawi="VII";} elseif($bln=='8'){$BlnRomawi="VIII";} elseif($bln=='9'){$BlnRomawi="IX";} elseif($bln=='10'){$BlnRomawi="X";}
       elseif($bln=='11'){$BlnRomawi="XI";}else{{$BlnRomawi="XII";}}
 
-	  $query = mysqli_query($koneksi, "SELECT MAX(Nomor) AS last FROM t_suratadm where ProdiID='".strfilter($_POST[ProdiID])."' ORDER BY Nomor DESC LIMIT 1"); 
+	  $query = mysqli_query($koneksi, "SELECT MAX(Nomor) AS last FROM t_suratadm where ProdiID='".strfilter($_POST['ProdiID'])."' ORDER BY Nomor DESC LIMIT 1"); 
 	  $data  = mysqli_fetch_array($query);
 	  $lastNoTransaksi = $data['last'];
 	  
@@ -159,7 +159,7 @@ if (isset($_POST[tambah])){
 	  $nextNoUrut = $lastNoUrut + 1;  
 	  $Nomor 	  = sprintf('%03s', $nextNoUrut);	 
 	  
-	  $prodx      = mysqli_fetch_array(mysqli_query($koneksi, "SELECT * FROM prodi where ProdiID='".strfilter($_POST[ProdiID])."'"));
+	  $prodx      = mysqli_fetch_array(mysqli_query($koneksi, "SELECT * FROM prodi where ProdiID='".strfilter($_POST['ProdiID'])."'"));
 	  $NoSurat    = $prodx[KodeProdi]."STMIK-HTP/".$BlnRomawi."/".$tahun."/".$Nomor;	
 
   	    $query = mysqli_query($koneksi, "INSERT INTO t_suratadm
@@ -176,23 +176,22 @@ if (isset($_POST[tambah])){
 						TextSurat,
 						ProdiID,
 						Semester) 						
-				 VALUES('".strfilter($_POST[TahunID])."',
-						'".strfilter($_POST[MhswID])."',
-						'".strfilter($_POST[Tanggal])."',
-						'".strfilter($_POST[Keterangan])."',
-						'$_SESSION[id]',
+				 VALUES('".strfilter($_POST['TahunID'])."',
+						'".strfilter($_POST['MhswID'])."',
+						'".strfilter($_POST['Tanggal'])."',
+						'$_SESSION[_Login]',
 						'$tglnow',
 						'',
 						'',
 						'N',
 						'$Nomor',
 						'$NoSurat',
-						'".strfilter($_POST[ProdiID])."',
-						'".strfilter($_POST[Semester])."')");
+						'".strfilter($_POST['ProdiID'])."',
+						'".strfilter($_POST['Semester'])."')");
         if ($query){
-            echo "<script>document.location='index.php?ndelox=dep/srtluluskuliah&MhswID=".$_POST[MhswID]."&sukses';</script>";
+            echo "<script>document.location='index.php?ndelox=dep/srtluluskuliah&MhswID=".$_POST['MhswID']."&sukses';</script>";
         }else{
-            echo "<script>document.location='index.php?ndelox=dep/srtluluskuliah&MhswID=".$_POST[MhswID]."&gagal';</script>";
+            echo "<script>document.location='index.php?ndelox=dep/srtluluskuliah&MhswID=".$_POST['MhswID']."&gagal';</script>";
         }
 
 }
@@ -265,10 +264,10 @@ echo "
  
 } //tutup atas
 
-else if ($_GET[act]=='editsrt'){ 
+else if ($_GET['act']=='editsrt'){ 
 $tglnow = date('Y-m-d H:i:s');
 $r = mysqli_fetch_array(mysqli_query($koneksi, "SELECT a.MhswID, a.Nama AS NamaMhs, a.ProdiID, a.ProgramID, b.Nama AS NamaProdi 
-									FROM mhsw a LEFT JOIN prodi b ON a.ProdiID=b.ProdiID where a.MhswID='".strfilter($_GET[MhswID])."'"));                                       											   												
+									FROM mhsw a LEFT JOIN prodi b ON a.ProdiID=b.ProdiID where a.MhswID='".strfilter($_GET['MhswID'])."'"));                                       											   												
 echo"<div class='card'>
 <div class='card-header'>
 <div class='table-responsive'>  						
@@ -296,23 +295,23 @@ echo"<div class='card'>
 </div>
 "; 
 
-if (isset($_POST[editx])){    
+if (isset($_POST['editx'])){    
   	$query = mysqli_query($koneksi, "UPDATE t_suratadm 
-							SET Keterangan='".strfilter($_POST[Keterangan])."',
-							Semester='".strfilter($_POST[Semester])."',
-							Tanggal='".strfilter($_POST[Tanggal])."',
-							TextSurat='".strfilter($_POST[TextSurat])."' 
-							WHERE MhswID='".strfilter($_POST[MhswID])."'");
+							SET Keterangan='".strfilter($_POST['Keterangan'])."',
+							Semester='".strfilter($_POST['Semester'])."',
+							Tanggal='".strfilter($_POST['Tanggal'])."',
+							TextSurat='".strfilter($_POST['TextSurat'])."' 
+							WHERE MhswID='".strfilter($_POST['MhswID'])."'");
 	if ($query){
-		echo "<script>document.location='index.php?ndelox=dep/srtluluskuliah&MhswID=".$_POST[MhswID]."&tahun=".$_POST[tahun]."&sukses';</script>";
+		echo "<script>document.location='index.php?ndelox=dep/srtluluskuliah&MhswID=".$_POST['MhswID']."&tahun=".$_POST['tahun']."&sukses';</script>";
 	}else{
-	    echo "<script>document.location='index.php?ndelox=dep/srtluluskuliah&MhswID=".$_POST[MhswID]."&tahun=".$_POST[tahun]."&gagal';</script>";
+	    echo "<script>document.location='index.php?ndelox=dep/srtluluskuliah&MhswID=".$_POST['MhswID']."&tahun=".$_POST['tahun']."&gagal';</script>";
 	}
 }
 
 $e=mysqli_fetch_array(mysqli_query($koneksi, "select * from t_suratadm 
-								WHERE MhswID='".strfilter($_GET[MhswID])."' 
-								AND TahunID='".strfilter($_GET[tahun])."'"));
+								WHERE MhswID='".strfilter($_GET['MhswID'])."' 
+								AND TahunID='".strfilter($_GET['tahun'])."'"));
 
 echo "
 

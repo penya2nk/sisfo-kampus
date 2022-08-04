@@ -13,7 +13,7 @@ $TahunID = GainVariabelx('TahunID');
 $ProdiID = GainVariabelx('ProdiID');
 
 ob_start();
-$pdf = new PDF();
+$pdf = new FPDF();
 $pdf->SetTitle("Daftar Mahasiswa Yang Mengambil KRS");
 $lbr = 190;
 
@@ -22,7 +22,6 @@ BuatIsinya($TahunID, $ProdiID, $pdf);
 
 $pdf->Output();
 
-// *** FUnctions ***
 function BuatIsinya($TahunID, $ProdiID, $p) {
   global $koneksi;
   $whr_prodi = (empty($ProdiID))? '' : "and h.ProdiID = '$ProdiID' ";

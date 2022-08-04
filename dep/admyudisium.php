@@ -223,12 +223,13 @@ echo "
         <tr><th scope='row'>IPK</th> <td><input type='text' class='form-control' name='IPK' ></td></tr>        
       </tbody>
       </table>
+	  <div class='box-footer'>
+	  <button type='submit' name='simpanx' class='btn btn-info'>Simpan</button>
+	  <a href='index.php?ndelox=dep/admyudisium&tahun=$_GET[tahun]&prodi=$_GET[prodi]'><button type='button' class='btn btn-default pull-right'>Cancel</button></a                    
+	</div>
     </div>
   </div>
-  <div class='box-footer'>
-        <button type='submit' name='simpanx' class='btn btn-info'>Simpan</button>
-        <a href='index.php?ndelox=dep/admyudisium&tahun=$_GET[tahun]&prodi=$_GET[prodi]'><button type='button' class='btn btn-default pull-right'>Cancel</button></a                    
-      </div>
+
   </form>
 </div>";
 }

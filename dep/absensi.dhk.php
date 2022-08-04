@@ -226,8 +226,8 @@ function BuatHeaderTabel($Kolom, $p) {
   // Baris 2 
   $p->Cell(8, $t, 'No.', 'BLR', 0, 'C');
   $p->Cell(20, $t, 'N I M', 'BR', 0, 'C');
-  $p->Cell(50, $t, 'NAMA MAHASISWA', 'BR', 0, C);
-  for($i = 0; $i < $Kolom; $i++) $p->Cell($s, $t, $i+1, 1, 0, C);
+  $p->Cell(50, $t, 'NAMA MAHASISWA', 'BR', 0, 'C');
+  for($i = 0; $i < $Kolom; $i++) $p->Cell($s, $t, $i+1, 1, 0, 'C');
   $p->Cell($s, $t, 'JML', 'BR', 0, 'C');
   $p->Ln($t);
   

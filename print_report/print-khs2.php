@@ -16,11 +16,8 @@ if (empty($_SESSION['_Login']) && empty($_SESSION['_LevelID'])){
 	header("Location: ../login.php");
 }
 else{
-	
 
-
-
-
+include "headerx-rpt.php"; 	
 $mhs       = mysqli_fetch_array(mysqli_query($koneksi, "SELECT ProdiID,ProgramID,MhswID,Nama FROM mhsw where MhswID='".strfilter($_GET['MhswID'])."'"));
 $ProgramID = $mhs['ProgramID'];
 $ProdiID   = $mhs['ProdiID'];

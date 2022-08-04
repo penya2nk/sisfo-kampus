@@ -24,7 +24,7 @@ $lbr = 280;
 ob_start();
 //end leweh add
 
-$pdf = new FPDF('L');
+$pdf = new FPDF();
 $pdf->SetTitle("Formulir Rencana Studi - $TahunID");
 $pdf->SetAutoPageBreak(true, 5);
 $pdf->AddPage('L');
@@ -56,6 +56,7 @@ function BuatFooter($thn, $p) {
   $p->Cell(60, $t, ' NIM  :  _________________', 0, 1);
 }
 function AmbilJadwal($thn, $p) {
+  global $koneksi;
   // Buat headernya dulu
   $p->SetFont('Helvetica', 'B', 9);
   $t = 6;
@@ -114,7 +115,7 @@ function AmbilJadwal($thn, $p) {
 		$p->Cell(10, $t, '', 1, 0);
 		$p->Cell(8, $t, $n, 1, 0, 'R');
 		$p->Cell(20, $t, $w['MKKode'], 1);
-		$p->Cell(90, $t, $w['MK'].' '.$w[_lab], 1);
+		$p->Cell(90, $t, $w['MK'].' '.$w['_lab'], 1);
 		$p->Cell(9, $t, $w['SKS'], 1, 0, 'C');
 		$p->Cell(70, $t, $w['DSN'], 1);
 		$p->Cell(14, $t, $hr, 1);

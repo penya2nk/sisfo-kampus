@@ -4,7 +4,7 @@
 <h3 class="box-title"><b style='color:green;font-size:20px'>KARTU HASIL STUDI SEMESTER PENDEK</b></h3>              
 <?php
 $m = mysqli_fetch_array(mysqli_query($koneksi, "SELECT a.MhswID, a.Nama AS NamaMhs, a.ProdiID, a.ProgramID, b.Nama AS NamaProdi 
-									FROM mhsw a LEFT JOIN prodi b ON a.ProdiID=b.ProdiID where a.MhswID='".strfilter($_GET[MhswID])."'")); 
+									FROM mhsw a LEFT JOIN prodi b ON a.ProdiID=b.ProdiID where a.MhswID='".strfilter($_GET['MhswID'])."'")); 
 ?>                  
 
 
@@ -17,7 +17,7 @@ $m = mysqli_fetch_array(mysqli_query($koneksi, "SELECT a.MhswID, a.Nama AS NamaM
 		<?php 
 		$tahun = mysqli_query($koneksi, "SELECT distinct(TahunID) FROM tahun order by TahunID Desc"); //NA='N' and
 		while ($k = mysqli_fetch_array($tahun)){
-			if ($_GET[tahun]==$k[TahunID]){
+			if ($_GET['tahun']==$k['TahunID']){
 				echo "<option value='$k[TahunID]' selected>$k[TahunID]</option>";
 			}else{
 				echo "<option value='$k[TahunID]'>$k[TahunID]</option>";
@@ -46,7 +46,7 @@ $m = mysqli_fetch_array(mysqli_query($koneksi, "SELECT a.MhswID, a.Nama AS NamaM
 </div>
 </div>
 
-<?php if ($_GET[act]==''){ 	                                        											   												
+<?php if ($_GET['act']==''){ 	                                        											   												
 echo" 
 <div class='card'>
 <div class='card-header'>
@@ -111,9 +111,9 @@ echo"
 	<tbody>";
 									
 $no = 1;									
-$tampil = mysqli_query($koneksi, "SELECT * FROM vw_sp where MhswID='".strfilter($_GET[MhswID])."' and TahunID='".strfilter($_GET[tahun])."'");  								
+$tampil = mysqli_query($koneksi, "SELECT * FROM vw_sp where MhswID='".strfilter($_GET['MhswID'])."' and TahunID='".strfilter($_GET['tahun'])."'");  								
 while($r=mysqli_fetch_array($tampil)){   					         
-$nilai = $r[NilaiAkhir];
+$nilai = $r['NilaiAkhir'];
 if ($nilai >= 85 AND $nilai <= 100){
 	$huruf = "A";
 	$bobot = 4;
@@ -173,9 +173,9 @@ $ips = number_format($tbobottotal / $tsks,2);
 $no++;
 }
 
-if (isset($_GET[hapus])){
-	mysqli_query($koneksi, "DELETE FROM krsxxx where KRSID='".strfilter($_GET[hapus])."'");
-    echo "<script>document.location='index.php?ndelox=sp/khscetaksp&JadwalID=".$_GET[JadwalID]."&tahun=".$_GET[tahun]."&MhswID=".$_GET[MhswID]."&sukses';</script>";
+if (isset($_GET['hapus'])){
+	mysqli_query($koneksi, "DELETE FROM krsxxx where KRSID='".strfilter($_GET['hapus'])."'");
+    echo "<script>document.location='index.php?ndelox=sp/khscetaksp&JadwalID=".$_GET['JadwalID']."&tahun=".$_GET['tahun']."&MhswID=".$_GET['MhswID']."&sukses';</script>";
 }
 echo"
 <tr bgcolor=$warna>

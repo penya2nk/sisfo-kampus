@@ -8,7 +8,7 @@ include_once "../konfigurasi.mysql.php";
 include_once "../sambungandb.php";
 include_once "../setting_awal.php";
 include_once "../check_setting.php";
-  include_once "../header_pdf.php";
+include_once "../header_pdf.php";
 
 $gel = sqling($_REQUEST['gel']);
 $presenterid = $_SESSION['_curPres'];
@@ -16,7 +16,7 @@ $presenterid = $_SESSION['_curPres'];
 $lbr = 190;
 
 ob_start();
-$pdf = new PDF();
+$pdf = new FPDF(); //PDF change to FPDF
 $pdf->SetTitle("List Aplikan - $gel");
 $pdf->AddPage();
 

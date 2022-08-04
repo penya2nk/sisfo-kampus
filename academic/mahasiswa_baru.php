@@ -1,5 +1,5 @@
 <?php
-error_reporting(0);
+// error_reporting(0);
 include_once "$_SESSION[ndelox].lib.php";
 
 $gels = AmbilFieldx('pmbperiod', "KodeID='".KodeID."' and NA", 'N', "PMBPeriodID, Nama");
@@ -567,7 +567,7 @@ function ProsesBIPOT($gels, $gel) {
       $ada = AmbilOneField('bipotmhsw',
         "KodeID='".KodeID."' and PMBID = '$pmb[PMBID]'
         and TahunID='$pmb[PMBPeriodID]' and BIPOT2ID",
-        $w['BIPOT2ID'], "BIPOTMhswID") +0;
+        $w['BIPOT2ID'], "BIPOTMhswID"); // +0
       // Cek apakah memakai script atau tidak?
       if ($w['GunakanScript'] == 'Y') BipotGunakanScript($pmb, '', $w, $ada, 0);
       // Jika tidak perlu pakai script

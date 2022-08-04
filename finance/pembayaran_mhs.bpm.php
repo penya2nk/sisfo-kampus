@@ -1,5 +1,5 @@
 <?php
-error_reporting(0);
+// error_reporting(0);
 session_start();
 
 include_once "../pengembang.lib.php";
@@ -17,7 +17,7 @@ $trx = $_REQUEST['trx']+0;
 //leweh add ob_start(); while error at php higher version
 ob_start();
 //end leweh add
-$pdf = new PDF();
+$pdf = new FPDF();
 $pdf->SetTitle("Kartu Hasil Studi");
 $pdf->AddPage();
 
@@ -31,7 +31,6 @@ elseif ($trx == -1) {
 
 $pdf->Output();
 
-// *** functions ***
 function TampilkanDetailBayar($id, $p) {
   global $arrID, $koneksi;
   $s = "select b2.*, bn.Nama

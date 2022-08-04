@@ -61,7 +61,7 @@
 
 <?php
 if ($_GET['act']==''){ 
-$prodi=mysqli_fetch_array(mysqli_fetch_array($koneksi, "select ProdiID,Nama from prodi where ProdiID='".strfilter($_GET['prodi'])."'"));
+$prodi=mysqli_fetch_array(mysqli_query($koneksi, "select ProdiID,Nama from prodi where ProdiID='".strfilter($_GET['prodi'])."'"));
 ?> 
 <div class='card'>
 <div class='card-header'>
@@ -86,13 +86,13 @@ $prodi=mysqli_fetch_array(mysqli_fetch_array($koneksi, "select ProdiID,Nama from
 		$tampil = mysqli_query($koneksi, "SELECT * from mhsw WHERE ProdiID='".strfilter($_GET['prodi'])."' AND left(MhswID,2)='$angkatan' AND StatusMhswID IN ('A','P','C') order by MhswID asc");//		AND keuangan_bayar.TahunID='".strfilter($_GET[tahun])."' 
 		$no = 1;
 		while($r=mysqli_fetch_array($tampil)){
-        $jmlmk		=mysqli_num_rows(mysqli_fetch_array($koneksi, "select * from krs where MhswID='$r[MhswID]'"));
+        $jmlmk		=mysqli_num_rows(mysqli_query($koneksi, "select * from krs where MhswID='$r[MhswID]'"));
 		$Namax 	    = strtolower($r['Nama']);
 		$Nama 		= ucwords($Namax);
 		echo "<tr ><td>$no</td>
 				  <td>$r[MhswID]</td>
 				  <td>$Nama</b><br><a href='?ndelox=finance/admlapsppangkatan&act=historykrsmhs&MhswID=$r[MhswID]&prodi=$_GET[prodi]&tahun=$_GET[tahun]'>Cek History KRS ($jmlmk MK)</a></td>";				  
-				  $sqlb = mysqli_fetch_array($koneksi, "select keuangan_bayar.id_jenis,keuangan_bayar.TahunID,keuangan_bayar.MhswID,
+				  $sqlb = mysqli_query($koneksi, "select keuangan_bayar.id_jenis,keuangan_bayar.TahunID,keuangan_bayar.MhswID,
 												  keuangan_bayar.total_bayar,
 												  mhsw.ProdiID
 												  from keuangan_bayar,mhsw

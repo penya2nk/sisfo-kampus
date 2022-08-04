@@ -6,19 +6,20 @@ include_once "../konfigurasi.mysql.php";
 include_once "../sambungandb.php";
 include_once "../setting_awal.php";
 include_once "../check_setting.php";
-require ("../punksi/html2pdf/html2pdf.class.php");
-$filename="namafile.pdf";
-$tglnow = tgl_indo(date('Y-m-d'));
-
+require_once ("../punksi/html2pdf/vendor/autoload.php");
+use Spipu\Html2Pdf\Html2Pdf;
+use Spipu\Html2Pdf\Exception\Html2PdfException;
+use Spipu\Html2Pdf\Exception\ExceptionFormatter;
 
 if (empty($_SESSION['_Login']) && empty($_SESSION['_LevelID'])){
 	header("Location: ../login.php");
 }
 else{
 
-include "headerx-rpt.php"; $content = ob_get_clean();
-$dt        = mysqli_fetch_array(mysqli_query($koneksi, "SELECT * FROM vw_jadwalkp where JadwalID='".strfilter($_GET[JadwalID])."'"));
-$ProdiID   = $dt[ProdiID];
+include "headerx-rpt.php"; 	
+$tgl 	   = tgl_indo(date('Y-m-d'));
+$dt        = mysqli_fetch_array(mysqli_query($koneksi, "SELECT * FROM vw_jadwalkp where JadwalID='".strfilter($_GET['JadwalID'])."'"));
+$ProdiID   = $dt['ProdiID'];
 
 if ($ProdiID=='SI'){ $prod="Sistem Informasi"; $kaprodi="Herianto, M.Kom";}else{ $prod="Teknik Informatika"; $kaprodi="Eka Sabna, M.Pd, M.Kom";}
 
@@ -26,29 +27,7 @@ if ($ProdiID=='SI'){ $prod="Sistem Informasi"; $kaprodi="Herianto, M.Kom";}else{
 //$program   = mysqli_fetch_array(mysqli_query($koneksi, "SELECT ProgramID,Nama FROM program where ProgramID='$ProgramID'"));
 //$prodi     = mysqli_fetch_array(mysqli_query($koneksi, "SELECT ProdiID,Nama,Pejabat FROM prodi where ProdiID='$_GET[prodi]'"));
 
-$content .= "<table width='700' border='0' cellpadding='0' cellspacing='0' align='center'>
-<tr>
-<td width='8%' rowspan='4'><img width='80' width='80' src='logo_uti.png'></td>       
-<td width='84%' align='center' ><strong><font style='font-size:16px'>SEKOLAH TINGGI MANAJEMEN INFORMATIKA DAN KOMPUTER </font></strong></td>           
-<td width='8%' rowspan='4'>&nbsp;</td> 
-</tr>
-
-<tr>
-<td align='center' ><strong><font style='font-size:25px'>(STMIK) HANG TUAH PEKANBARU</font></strong></td>
-</tr>
-
-<tr>
-<td align='center' >Jl. ZA. Pagar Alam No.9 -11, Labuhan Ratu, Kec. Kedaton, Kota Bandar Lampung, Lampung 35132</td>
-</tr>
-
-<tr>
-<td align='center' >Email: stmikhtp@yahoo.co.id, Website: http://www.stmikhtp.ac.id</td>
-</tr>
-<tr>
-
-<td colspan='3'><hr></td>            
-</tr>
-</table><br>
+$content .= "<br>
 
 <table width='700' border='0' cellpadding='0' cellspacing='0' align='center'>
 <tr>
@@ -61,7 +40,7 @@ $content .= "<table width='700' border='0' cellpadding='0' cellspacing='0' align
 <br>
 <br>";
 
-$sql= mysqli_query($koneksi, "SELECT * FROM vw_jadwalkp_anggota where JadwalID='".strfilter($_GET[JadwalID])."'");
+$sql= mysqli_query($koneksi, "SELECT * FROM vw_jadwalkp_anggota where JadwalID='".strfilter($_GET['JadwalID'])."'");
 while($data=mysqli_fetch_array($sql)){
 
 $content .= "<table width='600' border='0' cellpadding='0' cellspacing='0' align='center'>
@@ -188,15 +167,18 @@ $content .="<br>
 </table>";
 
 
-try
-	{
-		$html2pdf = new HTML2PDF('P','Letter','en', false, 'ISO-8859-15',array(25, 9, 25, 9)); //setting ukuran kertas dan margin pada dokumen anda
-		// $html2pdf->setModeDebug();
-		$html2pdf->setDefaultFont('Arial');
-		$html2pdf->writeHTML($content, isset($_GET['vuehtml']));
-		$html2pdf->Output($filename);
-	}
-	catch(HTML2PDF_exception $e) { echo $e; }
-	
+
+try {
+  ob_start();
+  $html2pdf = new Html2Pdf('P','A4','fr', true, 'UTF-8', array(15, 15, 15, 15), false); 
+  $html2pdf->writeHTML($content);
+  $html2pdf->output();
+} catch (Html2PdfException $e) {
+  $html2pdf->clean();
+
+  $formatter = new ExceptionFormatter($e);
+  echo $formatter->getHtmlMessage();
 }
+
+}	
 ?>	

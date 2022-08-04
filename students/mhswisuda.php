@@ -14,7 +14,7 @@
 
     
 
-<?php if ($_GET[act]==''){ ?>
+<?php if ($_GET['act']==''){ ?>
 
 <div class='card'>
 <div class='card-header'>
@@ -66,8 +66,8 @@ echo "<td style='width:70px !important'><center>
 $no++;
 }
 
-if (isset($_GET[hapus])){
-mysqli_query($koneksi, "DELETE FROM xx where IDYudisium='".strfilter($_GET[hapus])."'");
+if (isset($_GET['hapus'])){
+mysqli_query($koneksi, "DELETE FROM xx where IDYudisium='".strfilter($_GET['hapus'])."'");
 echo "<script>document.location='index.php?view=mhswisuda&prodi=$_GET[prodi]&tahun=$_GET[tahun]';</script>";
 }
 ;
@@ -82,10 +82,10 @@ echo "<script>document.location='index.php?view=mhswisuda&prodi=$_GET[prodi]&tah
 <?php 
 }
 
-elseif($_GET[act]=='aplodpoto'){
-$j = mysqli_fetch_array(mysqli_query($koneksi, "select * from t_yudisium where IDYudisium='".strfilter($_GET[IDYudisium])."'"));
+elseif($_GET['act']=='aplodpoto'){
+$j = mysqli_fetch_array(mysqli_query($koneksi, "select * from t_yudisium where IDYudisium='".strfilter($_GET['IDYudisium'])."'"));
 $m = mysqli_fetch_array(mysqli_query($koneksi, "select MhswID,Foto,Nama,ProdiID,ProgramID from mhsw where MhswID='$_SESSION[_Login]'"));
-if (isset($_POST[ubahx])){										
+if (isset($_POST['ubahx'])){										
 	  $filename 	= basename($_FILES['ax']['name']);
 	  if ($filename != ''){      
 		    $ekstensi_diperbolehkan	= array('png','jpg');
@@ -108,7 +108,7 @@ if (isset($_POST[ubahx])){
 			}
 	  }else{
 		    $queryx = mysqli_query($koneksi, "UPDATE mhsw SET                           
-						   Nama     	='".strfilter($_POST[Nama])."'
+						   Nama     	='".strfilter($_POST['Nama'])."'
 						   where MhswID ='$_SESSION[_Login]'");
 		 	echo "<script>document.location='index.php?ndelox=students/mhswisuda&act=aplodpoto&act=aplodpoto&sukses';</script>";			   
 	  }
@@ -130,7 +130,7 @@ echo "
         <tr><th scope='row' >Nama Mahasiswa</th> <td><input type='text' class='form-control form-control-sm' name='Nama' value='$m[Nama]' readonly></td></tr>          
         <tr><th scope='row'>IPK </th> <td><input type='text' class='form-control form-control-sm' name='IPK' value='$j[IPK]' readonly></td></tr>
         <tr><th scope='row'> </th> <td style='background-color:#E7EAEC' width='460px' >";
-			if (trim($m[Foto])==''){
+			if (trim($m['Foto'])==''){
 			  echo "<img class='img-thumbnail' style='width:100px' src='pto_stud/no-image.jpg'>";
 			}else{
 			  echo "<img class='img-thumbnail' style='width:100px' src='pto_stud/$m[Foto]'>";
@@ -160,10 +160,10 @@ echo "
 }
 
 
-elseif($_GET[act]=='aplodfilebyr'){
-$j = mysqli_fetch_array(mysqli_query("select * from t_yudisium where IDYudisium='".strfilter($_GET[IDYudisium])."'"));
+elseif($_GET['act']=='aplodfilebyr'){
+$j = mysqli_fetch_array(mysqli_query("select * from t_yudisium where IDYudisium='".strfilter($_GET['IDYudisium'])."'"));
 $m = mysqli_fetch_array(mysqli_query("select MhswID,Foto from mhsw where MhswID='$_SESSION[_Login]'"));
-if (isset($_POST[ubahx])){										
+if (isset($_POST['ubahx'])){										
 	  $filename 	= basename($_FILES['ax']['name']);
 	  if ($filename != ''){      
 		    $ekstensi_diperbolehkan	= array('png','jpg');
@@ -177,7 +177,7 @@ if (isset($_POST[ubahx])){
 				if($ukuran < 55000){	 //1044070		
 					move_uploaded_file($file_tmp, 'pile_wisuda/'.$nama);
 				    $queryx = mysqli_query("UPDATE t_yudisium SET                           
-						   Nama   	= '".strfilter($_POST[Nama])."',
+						   Nama   	= '".strfilter($_POST['Nama'])."',
 						   Status  	= 'Menunggu Verifikasi',
 						   file_upload 	= '$nama' 
 						   where MhswID='$_SESSION[_Login]'");
@@ -190,7 +190,7 @@ if (isset($_POST[ubahx])){
 			}
 	  }else{
 		  $queryx = mysqli_query($koneksi, "UPDATE t_yudisium SET                           
-						   Nama     	='".strfilter($_POST[Nama])."',
+						   Nama     	='".strfilter($_POST['Nama'])."',
 						   Status  	= 'Menunggu Verifikasi'
 						   where MhswID ='$_SESSION[_Login]'");
 		  echo "<script>document.location='index.php?view=mhswisuda&tahun=$_POST[tahun]&prodi=$_POST[prodi]&sukses';</script>";				   
@@ -211,7 +211,7 @@ echo "
         <tr><th scope='row' >Nama Mahasiswa</th> <td><input type='text' class='form-control form-control-sm' name='Nama' value='$j[Nama]' readonly></td></tr>          
        
         <tr><th scope='row'> </th> <td style='background-color:#E7EAEC' width='460px' >";
-			if (trim($j[file_upload])==''){
+			if (trim($j['file_upload'])==''){
 			  echo "<img class='img-thumbnail' style='width:500px' src='pile_wisuda/no-image.jpg'>";
 			}else{
 			  echo "<img class='img-thumbnail' style='width:500px' src='pile_wisuda/$j[file_upload]'>";
@@ -239,49 +239,49 @@ echo "
 </div>";
 }
 
-elseif($_GET[act]=='profillulusan'){
+elseif($_GET['act']=='profillulusan'){
 $d 			= mysqli_fetch_array(mysqli_query($koneksi, "SELECT * from t_yudisium where MhswID='$_SESSION[_Login]'"));
 $c 			= mysqli_fetch_array(mysqli_query($koneksi, "SELECT * from mhsw where MhswID='$d[MhswID]'"));
 $kp  		= mysqli_fetch_array(mysqli_query($koneksi, "SELECT * FROM vw_jadwalkp_seminarhasilanggota WHERE MhswID='$d[MhswID]'"));
 $pn  		= mysqli_fetch_array(mysqli_query($koneksi, "SELECT * FROM vw_jadwal_skripsi WHERE MhswID='$d[MhswID]'"));
 
-$nilaikp 		= mysqli_fetch_array(mysqli_query($koneksi, "SELECT * from t_yudisiumdetail where MhswID='".strfilter($_GET[MhswID])."' AND MKID='PBSI7403'"));
-$nilaipn 		= mysqli_fetch_array(mysqli_query($koneksi, "SELECT * from t_yudisiumdetail where MhswID='".strfilter($_GET[MhswID])."' AND MKID='PBSI8604'"));
+$nilaikp 		= mysqli_fetch_array(mysqli_query($koneksi, "SELECT * from t_yudisiumdetail where MhswID='".strfilter($_GET['MhswID'])."' AND MKID='PBSI7403'"));
+$nilaipn 		= mysqli_fetch_array(mysqli_query($koneksi, "SELECT * from t_yudisiumdetail where MhswID='".strfilter($_GET['MhswID'])."' AND MKID='PBSI8604'"));
 
-$Namax 		= strtolower($c[Nama]);
+$Namax 		= strtolower($c['Nama']);
 $Nama 		= ucwords($Namax);
 
-$NamaAyahx 		= strtolower($c[NamaAyah]);
+$NamaAyahx 		= strtolower($c['NamaAyah']);
 $NamaAyah 		= ucwords($NamaAyahx);
 
-$NamaIbux 		= strtolower($c[NamaIbu]);
+$NamaIbux 		= strtolower($c['NamaIbu']);
 $NamaIbu 		= ucwords($NamaIbux);
 
-$TmpLahirx 		= strtolower($c[TempatLahir]);
+$TmpLahirx 		= strtolower($c['TempatLahir']);
 $TmpLahir 		= ucwords($TmpLahirx);
 
-$Judulx 	= strtolower($kp[Judul]);
+$Judulx 	= strtolower($kp['Judul']);
 $JudulKP		= ucwords($Judulx);
-$Juduly 	= strtolower($pn[Judul]);
+$Juduly 	= strtolower($pn['Judul']);
 $JudulPN		= ucwords($Juduly);
 
 $p1 = mysqli_fetch_array(mysqli_query("select Login,Nama,Gelar from dosen where Login='$pn[PembimbingSkripsi1]'"));
-$Pembimbing1x 	= strtolower($p1[Nama]);
+$Pembimbing1x 	= strtolower($p1['Nama']);
 $Pembimbing1	= ucwords($Pembimbing1x);
 	   
 $p2 = mysqli_fetch_array(mysqli_query("select Login,Nama,Gelar from dosen where Login='$pn[PembimbingSkripsi2]'"));	
-$Pembimbing2x 	= strtolower($p2[Nama]);
+$Pembimbing2x 	= strtolower($p2['Nama']);
 $Pembimbing2	= ucwords($Pembimbing2x);
 
 $kelamin = mysqli_fetch_array(mysqli_query("select Kelamin,Nama from kelamin where Kelamin='$c[Kelamin]'"));
 
-if (trim($c[Foto])=='-'){
+if (trim($c['Foto'])=='-'){
   $foto = 'pto_stud/no-image.jpg';
 }else{
-  $foto	= 'pto_stud/'.$c[Foto];
+  $foto	= 'pto_stud/'.$c['Foto'];
 } 
 
-if (($d[IPK]>=2.76) && ($d[IPK]<=3.50)){
+if (($d['IPK']>=2.76) && ($d['IPK']<=3.50)){
 	$predikat="Sangat Memuaskan";
 }else{
 	$predikat="Dengan Pujian";
@@ -293,9 +293,9 @@ $tahun 			= floor($data['selisih']/365);
 $bulan 			= floor(($data['selisih'] - ($tahun * 365))/30);
 $hari  			= $data['selisih'] - $bulan * 30 - $tahun * 365;
 
-$maks = mysqli_fetch_array(mysqli_query("select MhswID,Pemuncak from t_yudisium WHERE MhswID='".strfilter($_GET[MhswID])."' AND Pemuncak='Y'"));
+$maks = mysqli_fetch_array(mysqli_query("select MhswID,Pemuncak from t_yudisium WHERE MhswID='".strfilter($_GET['MhswID'])."' AND Pemuncak='Y'"));
 
-if ($maks[Pemuncak]=='Y'){
+if ($maks['Pemuncak']=='Y'){
     $label="<tr>  
 			<th scope='row'  width='120px'><b style=color:#FF8000;font-size:25px><img class='img-thumbnail' style='width:100px;' src='img/medals.png'></th>
 			<th scope='row'  width='160px'><b style=color:#FF8000;font-size:25px>** CONGRATULATION **</th>			
@@ -328,7 +328,7 @@ echo "<form method='POST' class='form-horizontal' action='' enctype='multipart/f
 	
 	<tr>
 	<th scope='row'><b style=color:#3c8dbc;font-size:20px>TTL</th> 
-	<td><b style=color:#3c8dbc;font-size:20px>: $TmpLahir, ".tgl_indo($c[TanggalLahir])."</td>
+	<td><b style=color:#3c8dbc;font-size:20px>: $TmpLahir, ".tgl_indo($c['TanggalLahir'])."</td>
 	</tr>
 	
 	<tr>

@@ -1008,7 +1008,7 @@ if (isset($_POST['tambah'])){
 				  <tr><th scope='row' width='200px'>Kab/Kota</th><td><input type='text' class='form-control' name='Kota' value='$tg[Kota]'></td></tr> 
 				  <tr><th scope='row' width='200px'>To (<i>Untuk Surat Pengantar</i>)</th><td><input type='text' class='form-control' name='Ke' value='$tg[Ke]'></td></tr> 
 				  <tr><th  scope='row' colspan='2' style='background-color:#E7EAEC'>PEMBIMBING PROPOSAL / SKRIPSI</th></tr>
-                  <tr><th scope='row'>Pembimbing 1</th>   <td><select class='form-control' name='PembimbingPro1'> 
+                  <tr><th scope='row'>Pembimbing 1</th>   <td><select class='form-control select2' name='PembimbingPro1'> 
 						<option value='0' selected>- Pilih Penguji 1 -</option>"; 
 						$dosen = mysqli_query($koneksi, "SELECT * FROM vw_dosenaktif order by Nama asc");
 						while($a = mysqli_fetch_array($dosen)){
@@ -1020,7 +1020,7 @@ if (isset($_POST['tambah'])){
 						}
 				echo "</select>
 				</td></tr>
-				<tr><th scope='row'>Pembimbing 2</th>   <td><select class='form-control' name='PembimbingPro2'> 
+				<tr><th scope='row'>Pembimbing 2</th>   <td><select class='form-control select2' name='PembimbingPro2'> 
 						<option value='0' selected>- Pilih Penguji 2 -</option>"; 
 						$dosen = mysqli_query($koneksi, "SELECT * FROM vw_dosenaktif order by Nama asc");
 						while($a = mysqli_fetch_array($dosen)){

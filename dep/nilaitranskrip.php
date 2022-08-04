@@ -9,7 +9,7 @@
 	FROM mhsw,prodi,program 
 	WHERE mhsw.ProdiID=prodi.ProdiID
 	AND mhsw.ProgramID=program.ProgramID
-	AND mhsw.MhswID='".strfilter($_GET[MhswID])."'")); 
+	AND mhsw.MhswID='".strfilter($_GET['MhswID'])."'")); 
 
 	?>
 	</div>
@@ -29,7 +29,7 @@
 
 				<div class="col-md-2">
 				<?php 
-				if ($_GET[MhswID]!=''){
+				if ($_GET['MhswID']!=''){
 				echo"<a class='pull-right btn btn-primary btn-sm' href='index.php?ndelox=dep/nilaitranskrip&act=historykrsmhs&MhswID=$_GET[MhswID]&prodi=$m[ProdiID]&program=$_GET[program]'>Cek History Nilai</a>";
 				}
 				?>
@@ -43,7 +43,7 @@
 
 
 
-<?php if ($_GET[act]==''){ 	                                        											   												
+<?php if ($_GET['act']==''){ 	                                        											   												
 				
 					              								
 if (isset($_GET['sukses'])){
@@ -65,7 +65,7 @@ echo"<form method='POST' class='form-horizontal' action='' enctype='multipart/fo
 	
      
 	
-if (isset($_GET[MhswID])){ 
+if (isset($_GET['MhswID'])){ 
 	echo"	<div class='card'>
 	<div class='card-header'>
 	<div class='table-responsive'>
@@ -159,7 +159,7 @@ $tampil = mysqli_query($koneksi, "SELECT
 				  FROM mhsw,krs,mk
 				  WHERE krs.MhswID=mhsw.MhswID
 				  AND krs.MKID=mk.MKID 
-				  AND mhsw.MhswID='".strfilter($_GET[MhswID])."'
+				  AND mhsw.MhswID='".strfilter($_GET['MhswID'])."'
 				  order by krs.TahunID, krs.MKKode"); 
 
 $_tahun = 'alksdjfasdf-asdf';
@@ -208,7 +208,7 @@ while($r=mysqli_fetch_array($tampil)){
 	
 	<a class='btn btn-success btn-xs' title='Edit Nilai' href='index.php?ndelox=dep/nilaitranskrip&act=editnilai&KRSID=$r[KRSID]&MhswID=$r[MhswID]&MKID=$r[MKID]&GLama=$r[GradeNilai]&prodi=$r[ProdiID]&tahun=$r[TahunID]'><i class='fa fa-edit'></i></a>
 	                              
-	<a class='btn btn-danger btn-xs' title='Delete' href='?ndelox=dep/nilaitranskrip&hapus=$r[KRSID]&JadwalID=".$_GET[JadwalID]."&tahun=".$_GET[tahun]."&MhswID=".$_GET[MhswID]."' 
+	<a class='btn btn-danger btn-xs' title='Delete' href='?ndelox=dep/nilaitranskrip&hapus=$r[KRSID]&JadwalID=".$_GET['JadwalID']."&tahun=".$_GET['tahun']."&MhswID=".$_GET['MhswID']."' 
 	onclick=\"return confirm('Apa anda yakin akan menghapus Data ($r[MKKode]) $r[NamaMK] - Nilai $r[GradeNilai]?')\"><i class='fa fa-trash'></i></a>
 	</center>
 	</td>
@@ -220,7 +220,7 @@ while($r=mysqli_fetch_array($tampil)){
 	onclick=\"return confirm('Apa anda yakin untuk hapus Data ini?')\"><i class='fa fa-trash'></i></a> */
 $no++;
 
-$huruf= $r[GradeNilai];
+$huruf= $r['GradeNilai'];
 if ($huruf=='A'){
 	$bobot=4;
 }
@@ -251,7 +251,7 @@ elseif ($huruf=='D'){
 else{
     $bobot=0; 
 }
-$tsks 		 += $r[SKS];
+$tsks 		 += $r['SKS'];
 $total_bobot  = $r['SKS'] * $bobot;
 
 $bobot 		 += $bobot;
@@ -260,8 +260,8 @@ $bobot_total += $total_bobot;
 $ipk = number_format($bobot_total / $tsks,2);
 }
 
-if (isset($_GET[hapus])){
-	$data=mysqli_fetch_array(mysqli_query($koneksi, "SELECT * from krs where KRSID='".strfilter($_GET[hapus])."'"));
+if (isset($_GET['hapus'])){
+	$data=mysqli_fetch_array(mysqli_query($koneksi, "SELECT * from krs where KRSID='".strfilter($_GET['hapus'])."'"));
     mysqli_query("INSERT into krs_del (KRSID,
 												  KHSID,
 												  MhswID,
@@ -284,30 +284,30 @@ if (isset($_GET[hapus])){
 												  BobotNilai,																						  
 												  LoginBuat,
 												  TanggalBuat)
-										  VALUES('".strfilter($data[KRSID])."',
-										  		 '".strfilter($data[KHSID])."',
-												 '".strfilter($data[MhswID])."',
-												 '".strfilter($data[TahunID])."',  
-												 '".strfilter($data[JadwalID])."',												
-												 '".strfilter($data[MKID])."',
-												 '".strfilter($data[MKKode])."',
-												 '".strfilter($data[SKS])."',
-												 '".strfilter($data[Tugas1])."',
-												 '".strfilter($data[Tugas2])."',
-												 '".strfilter($data[Tugas3])."',
-												 '".strfilter($data[Tugas4])."',
-												 '".strfilter($data[Tugas5])."',
-												 '".strfilter($data[Presensi])."',
-												 '".strfilter($data[_Presensi])."',
-												 '".strfilter($data[UTS])."',
-												 '".strfilter($data[UAS])."',
-												 '".strfilter($data[NilaiAkhir])."',
-												 '".strfilter($data[GradeNilai])."',
-												 '".strfilter($data[BobotNilai])."',
+										  VALUES('".strfilter($data['KRSID'])."',
+										  		 '".strfilter($data['KHSID'])."',
+												 '".strfilter($data['MhswID'])."',
+												 '".strfilter($data['TahunID'])."',  
+												 '".strfilter($data['JadwalID'])."',												
+												 '".strfilter($data['MKID'])."',
+												 '".strfilter($data['MKKode'])."',
+												 '".strfilter($data['SKS'])."',
+												 '".strfilter($data['Tugas1'])."',
+												 '".strfilter($data['Tugas2'])."',
+												 '".strfilter($data['Tugas3'])."',
+												 '".strfilter($data['Tugas4'])."',
+												 '".strfilter($data['Tugas5'])."',
+												 '".strfilter($data['Presensi'])."',
+												 '".strfilter($data['_Presensi'])."',
+												 '".strfilter($data['UTS'])."',
+												 '".strfilter($data['UAS'])."',
+												 '".strfilter($data['NilaiAkhir'])."',
+												 '".strfilter($data['GradeNilai'])."',
+												 '".strfilter($data['BobotNilai'])."',
 												 '$_SESSION[id]', 
 												 '".date('Y-m-d H:i:s')."')");
-	mysqli_query("DELETE FROM krs where KRSID='".strfilter($_GET[hapus])."'");//_offdulubro
-    echo "<script>document.location='index.php?ndelox=dep/nilaitranskrip&JadwalID=".$_GET[JadwalID]."&tahun=".$_GET[tahun]."&MhswID=".$_GET[MhswID]."&sukses';</script>";
+	mysqli_query($koneksi, "DELETE FROM krs where KRSID='".strfilter($_GET['hapus'])."'");//_offdulubro
+    echo "<script>document.location='index.php?ndelox=dep/nilaitranskrip&JadwalID=".$_GET['JadwalID']."&tahun=".$_GET['tahun']."&MhswID=".$_GET['MhswID']."&sukses';</script>";
 }
 echo"</tbody>
 </table></div>
@@ -340,15 +340,15 @@ echo "</form>
 </div>";      
 }
 
-else if ($_GET[act]=='historykrsmhs'){     
+else if ($_GET['act']=='historykrsmhs'){     
 $pr = mysqli_fetch_array(mysqli_query($koneksi, "SELECT mhsw.MhswID, mhsw.Nama AS NamaMhs, 
 mhsw.ProdiID, mhsw.ProgramID, 
 prodi.Nama AS NamaProdi 
 FROM mhsw,prodi,program 
 WHERE mhsw.ProdiID=prodi.ProdiID
 AND mhsw.ProgramID=program.ProgramID
-AND mhsw.MhswID='".strfilter($_GET[MhswID])."'")); 
-if ($m[ProdiID]=='SI'){$prod="Sistem Informasi";}else{$prod="Teknik Informatika";}
+AND mhsw.MhswID='".strfilter($_GET['MhswID'])."'")); 
+if ($m['ProdiID']=='SI'){$prod="Sistem Informasi";}else{$prod="Teknik Informatika";}
                                     											   												
 echo"
 <div class='card'>
@@ -389,7 +389,7 @@ echo"<table class='table table-sm table-bordered table-striped'>
 	</tr>
 	</thead>
 	<tbody>";
-$thk = mysqli_query($koneksi, "SELECT TahunID from tahun where ProdiID='".strfilter($_GET[prodi])."' AND ProgramID='REG A' order by TahunID desc limit 10");	
+$thk = mysqli_query($koneksi, "SELECT TahunID from tahun where ProdiID='".strfilter($_GET['prodi'])."' AND ProgramID='REG A' order by TahunID desc limit 10");	
 while($w=mysqli_fetch_array($thk)){
 echo"<tr style='background:purple;color:white'>
 <th colspan='6'>TahunID : $w[TahunID]</th>
@@ -399,7 +399,7 @@ echo"<tr style='background:purple;color:white'>
 	KRSID,
 	MKID,MKKode,NamaMK,SKS,TahunID,ProdiID,GradeNilai
 	FROM vw_transkripdetailok 
-	WHERE MhswID='".strfilter($_GET[MhswID])."' 
+	WHERE MhswID='".strfilter($_GET['MhswID'])."' 
 	AND TahunID='$w[TahunID]'
 	Order by TahunID Desc "); //AND TahunID='".strfilter($_GET[tahun])."' 									
 while($r=mysqli_fetch_array($tampil)){   					         
@@ -412,10 +412,10 @@ while($r=mysqli_fetch_array($tampil)){
 	<td>$r[GradeNilai]</td>   	
 	</tr>";
 	$no++;
-	$tsks += $r[SKS];
+	$tsks += $r['SKS'];
     
  }
-   $skssmt = mysqli_fetch_array(mysqli_query($koneksi, "SELECT sum(SKS) AS SKSSem FROM krs WHERE TahunID='$w[TahunID]' and MhswID='".strfilter($_GET[MhswID])."'"));
+   $skssmt = mysqli_fetch_array(mysqli_query($koneksi, "SELECT sum(SKS) AS SKSSem FROM krs WHERE TahunID='$w[TahunID]' and MhswID='".strfilter($_GET['MhswID'])."'"));
    $rec = mysqli_fetch_array(mysqli_query($koneksi, "SELECT krs.KRSID,krs.MhswID,mhsw.Nama,mhsw.ProdiID,mhsw.ProgramID,mhsw.NA,
 													krs.TahunID,krs.GradeNilai,
 													(SUM(krs.BobotNilai * mk.sks))/(SUM(mk.sks)) AS vIPK 
@@ -423,11 +423,11 @@ while($r=mysqli_fetch_array($tampil)){
 													WHERE krs.MhswID=mhsw.MhswID
 													AND krs.MKID=mk.MKID
 													AND krs.TahunID='$w[TahunID]'
-													AND mhsw.ProdiID='".strfilter($_GET[prodi])."'
-													AND krs.MhswID='".strfilter($_GET[MhswID])."'")); //AND krs.GradeNilai NOT IN ('-')
-   echo"<tr bgcolor=$warna><td colspan='2'></td><td style=text-align:right><b >SKS yang diambil  </b></td><td  style=text-align:center><b>$skssmt[SKSSem] SKS <b></td><td colspan='2'><b>IPS: ".number_format($rec[vIPK],2)."</b></td></tr>";	
+													AND mhsw.ProdiID='".strfilter($_GET['prodi'])."'
+													AND krs.MhswID='".strfilter($_GET['MhswID'])."'")); //AND krs.GradeNilai NOT IN ('-')
+   echo"<tr bgcolor=$warna><td colspan='2'></td><td style=text-align:right><b >SKS yang diambil  </b></td><td  style=text-align:center><b>$skssmt[SKSSem] SKS <b></td><td colspan='2'><b>IPS: ".number_format($rec['vIPK'],2)."</b></td></tr>";	
 }//th akademik
-   $skstot = mysqli_fetch_array(mysqli_query($koneksi, "SELECT sum(SKS) AS SKSTot FROM krs WHERE MhswID='".strfilter($_GET[MhswID])."'"));
+   $skstot = mysqli_fetch_array(mysqli_query($koneksi, "SELECT sum(SKS) AS SKSTot FROM krs WHERE MhswID='".strfilter($_GET['MhswID'])."'"));
    echo"<tr bgcolor=$warna><td colspan='6'><b ></td></tr>";
    echo"<tr bgcolor=$warna><td colspan='6'><b >Total SKS yang diambil: $skstot[SKSTot] SKS<b></td></tr>";	
 echo "</tbody></table>";
@@ -438,15 +438,15 @@ echo "</form>
 }
 
 
-else if ($_GET[act]=='historykrsmhs'){     
+else if ($_GET['act']=='historykrsmhs'){     
 $pr = mysqli_fetch_array(mysqli_query($koneksi, "SELECT mhsw.MhswID, mhsw.Nama AS NamaMhs, 
 mhsw.ProdiID, mhsw.ProgramID, 
 prodi.Nama AS NamaProdi 
 FROM mhsw,prodi,program 
 WHERE mhsw.ProdiID=prodi.ProdiID
 AND mhsw.ProgramID=program.ProgramID
-AND mhsw.MhswID='".strfilter($_GET[MhswID])."'")); 
-if ($m[ProdiID]=='SI'){$prod="Sistem Informasi";}else{$prod="Teknik Informatika";}
+AND mhsw.MhswID='".strfilter($_GET['MhswID'])."'")); 
+if ($m['ProdiID']=='SI'){$prod="Sistem Informasi";}else{$prod="Teknik Informatika";}
                                     											   												
 echo"
 <div class='col-md-8'>
@@ -490,7 +490,7 @@ echo"
 	</tr>
 	</thead>
 	<tbody>";
-$thk = mysqli_query($koneksi, "SELECT TahunID from tahun where ProdiID='".strfilter($_GET[prodi])."' AND ProgramID='REG A' order by TahunID desc limit 10");	
+$thk = mysqli_query($koneksi, "SELECT TahunID from tahun where ProdiID='".strfilter($_GET['prodi'])."' AND ProgramID='REG A' order by TahunID desc limit 10");	
 while($w=mysqli_fetch_array($thk)){
 echo"<tr style='background:purple;color:white'>
 <th colspan='6'>TahunID : $w[TahunID]</th>
@@ -500,7 +500,7 @@ echo"<tr style='background:purple;color:white'>
 	KRSID,
 	MKID,MKKode,NamaMK,SKS,TahunID,ProdiID,GradeNilai
 	FROM vw_transkripdetailok 
-	WHERE MhswID='".strfilter($_GET[MhswID])."' 
+	WHERE MhswID='".strfilter($_GET['MhswID'])."' 
 	AND TahunID='$w[TahunID]'
 	Order by TahunID Desc "); //AND TahunID='".strfilter($_GET[tahun])."' 									
 while($r=mysqli_fetch_array($tampil)){   					         
@@ -513,10 +513,10 @@ while($r=mysqli_fetch_array($tampil)){
 	<td>$r[GradeNilai]</td>   	
 	</tr>";
 	$no++;
-	$tsks += $r[SKS];
+	$tsks += $r['SKS'];
     
  }
-   $skssmt = mysqli_fetch_array(mysqli_query($koneksi, "SELECT sum(SKS) AS SKSSem FROM krs WHERE TahunID='$w[TahunID]' and MhswID='".strfilter($_GET[MhswID])."'"));
+   $skssmt = mysqli_fetch_array(mysqli_query($koneksi, "SELECT sum(SKS) AS SKSSem FROM krs WHERE TahunID='$w[TahunID]' and MhswID='".strfilter($_GET['MhswID'])."'"));
    $rec = mysqli_fetch_array(mysqli_query($koneksi, "SELECT krs.KRSID,krs.MhswID,mhsw.Nama,mhsw.ProdiID,mhsw.ProgramID,mhsw.NA,
 													krs.TahunID,krs.GradeNilai,
 													(SUM(krs.BobotNilai * mk.sks))/(SUM(mk.sks)) AS vIPK 
@@ -524,11 +524,11 @@ while($r=mysqli_fetch_array($tampil)){
 													WHERE krs.MhswID=mhsw.MhswID
 													AND krs.MKID=mk.MKID
 													AND krs.TahunID='$w[TahunID]'
-													AND mhsw.ProdiID='".strfilter($_GET[prodi])."'
-													AND krs.MhswID='".strfilter($_GET[MhswID])."'")); //AND krs.GradeNilai NOT IN ('-')
-   echo"<tr bgcolor=$warna><td colspan='2'></td><td style=text-align:right><b >SKS yang diambil  </b></td><td  style=text-align:center><b>$skssmt[SKSSem] SKS <b></td><td colspan='2'><b>IPS: ".number_format($rec[vIPK],2)."</b></td></tr>";	
+													AND mhsw.ProdiID='".strfilter($_GET['prodi'])."'
+													AND krs.MhswID='".strfilter($_GET['MhswID'])."'")); //AND krs.GradeNilai NOT IN ('-')
+   echo"<tr bgcolor=$warna><td colspan='2'></td><td style=text-align:right><b >SKS yang diambil  </b></td><td  style=text-align:center><b>$skssmt[SKSSem] SKS <b></td><td colspan='2'><b>IPS: ".number_format($rec['vIPK'],2)."</b></td></tr>";	
 }//th akademik
-   $skstot = mysqli_fetch_array(mysqli_query($koneksi, "SELECT sum(SKS) AS SKSTot FROM krs WHERE MhswID='".strfilter($_GET[MhswID])."'"));
+   $skstot = mysqli_fetch_array(mysqli_query($koneksi, "SELECT sum(SKS) AS SKSTot FROM krs WHERE MhswID='".strfilter($_GET['MhswID'])."'"));
    echo"<tr bgcolor=$warna><td colspan='6'><b ></td></tr>";
    echo"<tr bgcolor=$warna><td colspan='6'><b >Total SKS yang diambil: $skstot[SKSTot] SKS<b></td></tr>";	
 echo "</tbody></table>";
@@ -539,16 +539,16 @@ echo "</form>
 }
 
 
-else if ($_GET[act]=='editnilai'){ 
+else if ($_GET['act']=='editnilai'){ 
  //header
  $r = mysqli_fetch_array(mysqli_query($koneksi, "SELECT a.MhswID, a.Nama AS NamaMhs, a.ProdiID, a.ProgramID, b.Nama AS NamaProdi 
-									FROM mhsw a LEFT JOIN prodi b ON a.ProdiID=b.ProdiID where a.MhswID='".strfilter($_GET[MhswID])."'"));
+									FROM mhsw a LEFT JOIN prodi b ON a.ProdiID=b.ProdiID where a.MhswID='".strfilter($_GET['MhswID'])."'"));
  //ambil MKID tampil untuk edit
- $s = mysqli_fetch_array(mysqli_query($koneksi, "SELECT MKID,MKKode,NilaiAkhir,GradeNilai,BobotNilai from krs where KRSID='".strfilter($_GET[KRSID])."'"));	
+ $s = mysqli_fetch_array(mysqli_query($koneksi, "SELECT MKID,MKKode,NilaiAkhir,GradeNilai,BobotNilai from krs where KRSID='".strfilter($_GET['KRSID'])."'"));	
  									
-	 if (isset($_POST[ubahnilai])){	
-	    $uas = strfilter($_POST[NilaiAkhir]);
-		$nilai = strfilter($_POST[NilaiAkhir]);
+	 if (isset($_POST['ubahnilai'])){	
+	    $uas = strfilter($_POST['NilaiAkhir']);
+		$nilai = strfilter($_POST['NilaiAkhir']);
 		if ($nilai >= 85 AND $nilai <= 100){
 			$huruf = "A";
 			$bobot = "4";
@@ -590,24 +590,24 @@ else if ($_GET[act]=='editnilai'){
 			$bobot = "0";
 		}
 		//mengambil MKID untuk disimpan  
-	    $m = mysqli_fetch_array(mysqli_query($koneksi, "SELECT MKID,Nama,MKKode,SKS from mk where MKID='".strfilter($_POST[MKID])."'"));
-        $query = mysqli_query("UPDATE krs SET
+	    $m = mysqli_fetch_array(mysqli_query($koneksi, "SELECT MKID,Nama,MKKode,SKS from mk where MKID='".strfilter($_POST['MKID'])."'"));
+        $query = mysqli_query($koneksi, "UPDATE krs SET
 							 UAS 		='$uas',
 							 NilaiAkhir ='$nilai',
 							 GradeNilai	='$huruf',
 							 BobotNilai	='$bobot',
-							 LoginEdit  ='$_SESSION[id]',
+							 LoginEdit  ='$_SESSION[_Login]',
 							 TanggalEdit='".date('Y-m-d H:i:s')."'
-							 WHERE KRSID='".strfilter($_POST[KRSID])."'");
-        mysqli_query("INSERT into koreksinilai (Tanggal,TahunID,KRSID,MhswID,MKID,GradeLama,GradeNilai,LoginBuat,TglBuat)
+							 WHERE KRSID='".strfilter($_POST['KRSID'])."'");
+        mysqli_query($koneksi, "INSERT into koreksinilai (Tanggal,TahunID,KRSID,MhswID,MKID,GradeLama,GradeNilai,LoginBuat,TglBuat)
 								values('".date('Y-m-d')."',
-									   '".strfilter($_POST[tahun])."',
-									   '".strfilter($_POST[KRSID])."',
-									   '".strfilter($_POST[MhswID])."',
-									   '".strfilter($_POST[MKID])."',
-									   '".strfilter($_GET[GLama])."',
+									   '".strfilter($_POST['tahun'])."',
+									   '".strfilter($_POST['KRSID'])."',
+									   '".strfilter($_POST['MhswID'])."',
+									   '".strfilter($_POST['MKID'])."',
+									   '".strfilter($_GET['GLama'])."',
 									   '$huruf',
-									   '$_SESSION[id]',
+									   '$_SESSION[_Login]',
 									   '".date('Y-m-d H:i:s')."')");							 
         if ($query){
 			echo "<script>document.location='index.php?ndelox=dep/nilaitranskrip&tahun=$_POST[tahun]&MhswID=$_POST[MhswID]&prodi=$_POST[prodi]&sukses';</script>";
@@ -673,15 +673,15 @@ if (isset($_GET['sukses'])){
                     <tr><th scope='row'>Mata Kuliah</th>   <td><select class='form-control' name='MKID'> 
 						<option value='0' selected>- Pilih Mata Kuliah -</option>"; 
 						
-						if ($_GET[prodi]=='SI'){
-						    $mk = mysqli_query($koneksi, "SELECT MKID,MKKode,Nama,SKS FROM mk where ProdiID='".strfilter($_GET[prodi])."' AND NA='N' and KurikulumID='24' order by  Nama ASC"); //mid(MKKode,0,3)
+						if ($_GET['prodi']=='SI'){
+						    $mk = mysqli_query($koneksi, "SELECT MKID,MKKode,Nama,SKS FROM mk where ProdiID='".strfilter($_GET['prodi'])."' AND NA='N' and KurikulumID='24' order by  Nama ASC"); //mid(MKKode,0,3)
 						}
-						if ($_GET[prodi]=='TI'){						
-							$mk = mysqli_query($koneksi, "SELECT MKID,MKKode,Nama,SKS FROM mk where ProdiID='".strfilter($_GET[prodi])."' AND NA='N' and KurikulumID='25' order by  Nama ASC");
+						if ($_GET['prodi']=='TI'){						
+							$mk = mysqli_query($koneksi, "SELECT MKID,MKKode,Nama,SKS FROM mk where ProdiID='".strfilter($_GET['prodi'])."' AND NA='N' and KurikulumID='25' order by  Nama ASC");
 						}
 						//$mk = mysqli_query($koneksi, "SELECT * FROM mk where ProdiID='$_GET[prodi]' AND KurikulumID='24' order by Nama asc"); // where ProdiID='SI' not working
 						while($a = mysqli_fetch_array($mk)){
-						  if ($_GET[MKID]==$a[MKID]){
+						  if ($_GET['MKID']==$a['MKID']){
 							echo "<option value='$a[MKID]' selected>$a[Nama] - [ $a[MKKode] ]</option>";
 						  }else{
 							echo "<option value='$a[MKID]'>$a[Nama] - [ $a[MKKode] ]</option>";
@@ -705,7 +705,7 @@ if (isset($_GET['sukses'])){
 }
  //tutup atas
 
- else if ($_GET[act]=='transkripnilailulus'){     
+ else if ($_GET['act']=='transkripnilailulus'){     
 				
 																
 if (isset($_GET['sukses'])){
@@ -727,7 +727,7 @@ echo"<form method='POST' class='form-horizontal' action='' enctype='multipart/fo
   
    
   
-if (isset($_GET[MhswID])){ 
+if (isset($_GET['MhswID'])){ 
   echo"
   <div class='card'>
   <div class='card-header'> 
@@ -822,7 +822,7 @@ $tampil = mysqli_query($koneksi, "SELECT
 				FROM mhsw,krs,mk
 				WHERE krs.MhswID=mhsw.MhswID
 				AND krs.MKID=mk.MKID 
-				AND mhsw.MhswID='".strfilter($_GET[MhswID])."'
+				AND mhsw.MhswID='".strfilter($_GET['MhswID'])."'
 				AND krs.GradeNilai NOT IN ('-','TL','E','D')
 				ORDER BY mk.Sesi,mk.Nama ASC ");  								
 while($r=mysqli_fetch_array($tampil)){  
@@ -858,7 +858,7 @@ else{
   
   <a class='btn btn-success btn-xs' title='Edit Nilai' href='index.php?ndelox=dep/nilaitranskrip&act=editnilai&KRSID=$r[KRSID]&MhswID=$r[MhswID]&MKID=$r[MKID]&GLama=$r[GradeNilai]&prodi=$r[ProdiID]&tahun=$r[TahunID]'><i class='fa fa-edit'></i></a>
 								
-  <a class='btn btn-danger btn-xs' title='Delete' href='?ndelox=dep/nilaitranskrip&hapus=$r[KRSID]&JadwalID=".$_GET[JadwalID]."&tahun=".$_GET[tahun]."&MhswID=".$_GET[MhswID]."' 
+  <a class='btn btn-danger btn-xs' title='Delete' href='?ndelox=dep/nilaitranskrip&hapus=$r[KRSID]&JadwalID=".$_GET['JadwalID']."&tahun=".$_GET['tahun']."&MhswID=".$_GET['MhswID']."' 
   onclick=\"return confirm('Apa anda yakin akan menghapus Data ($r[MKKode]) $r[NamaMK] - Nilai $r[GradeNilai]?')\"><i class='fa fa-trash'></i></a>
   </center>
   </td>
@@ -868,7 +868,7 @@ else{
   onclick=\"return confirm('Apa anda yakin untuk hapus Data ini?')\"><i class='fa fa-trash'></i></a> */
 $no++;
 
-$huruf= $r[GradeNilai];
+$huruf= $r['GradeNilai'];
 if ($huruf=='A'){
   $bobot=4;
 }
@@ -899,7 +899,7 @@ elseif ($huruf=='D'){
 else{
   $bobot=0; 
 }
-$tsks 		 += $r[SKS];
+$tsks 		 += $r['SKS'];
 $total_bobot  = $r['SKS'] * $bobot;
 
 $bobot 		 += $bobot;
@@ -908,8 +908,8 @@ $bobot_total += $total_bobot;
 $ipk = number_format($bobot_total / $tsks,2);
 }
 
-if (isset($_GET[hapus])){
-  $data=mysqli_fetch_array(mysqli_query($koneksi, "SELECT * from krs where KRSID='".strfilter($_GET[hapus])."'"));
+if (isset($_GET['hapus'])){
+  $data=mysqli_fetch_array(mysqli_query($koneksi, "SELECT * from krs where KRSID='".strfilter($_GET['hapus'])."'"));
   mysqli_query("INSERT into krs_del (KRSID,
 												KHSID,
 												MhswID,
@@ -932,30 +932,30 @@ if (isset($_GET[hapus])){
 												BobotNilai,																						  
 												LoginBuat,
 												TanggalBuat)
-										VALUES('".strfilter($data[KRSID])."',
-												 '".strfilter($data[KHSID])."',
-											   '".strfilter($data[MhswID])."',
-											   '".strfilter($data[TahunID])."',  
-											   '".strfilter($data[JadwalID])."',												
-											   '".strfilter($data[MKID])."',
-											   '".strfilter($data[MKKode])."',
-											   '".strfilter($data[SKS])."',
-											   '".strfilter($data[Tugas1])."',
-											   '".strfilter($data[Tugas2])."',
-											   '".strfilter($data[Tugas3])."',
-											   '".strfilter($data[Tugas4])."',
-											   '".strfilter($data[Tugas5])."',
-											   '".strfilter($data[Presensi])."',
-											   '".strfilter($data[_Presensi])."',
-											   '".strfilter($data[UTS])."',
-											   '".strfilter($data[UAS])."',
-											   '".strfilter($data[NilaiAkhir])."',
-											   '".strfilter($data[GradeNilai])."',
-											   '".strfilter($data[BobotNilai])."',
-											   '$_SESSION[id]', 
+										VALUES('".strfilter($data['KRSID'])."',
+												 '".strfilter($data['KHSID'])."',
+											   '".strfilter($data['MhswID'])."',
+											   '".strfilter($data['TahunID'])."',  
+											   '".strfilter($data['JadwalID'])."',												
+											   '".strfilter($data['MKID'])."',
+											   '".strfilter($data['MKKode'])."',
+											   '".strfilter($data['SKS'])."',
+											   '".strfilter($data['Tugas1'])."',
+											   '".strfilter($data['Tugas2'])."',
+											   '".strfilter($data['Tugas3'])."',
+											   '".strfilter($data['Tugas4'])."',
+											   '".strfilter($data['Tugas5'])."',
+											   '".strfilter($data['Presensi'])."',
+											   '".strfilter($data['_Presensi'])."',
+											   '".strfilter($data['UTS'])."',
+											   '".strfilter($data['UAS'])."',
+											   '".strfilter($data['NilaiAkhir'])."',
+											   '".strfilter($data['GradeNilai'])."',
+											   '".strfilter($data['BobotNilai'])."',
+											   '$_SESSION[_Login]', 
 											   '".date('Y-m-d H:i:s')."')");
-  mysqli_query("DELETE FROM krs where KRSID='".strfilter($_GET[hapus])."'");//_offdulubro
-  echo "<script>document.location='index.php?ndelox=dep/nilaitranskrip&JadwalID=".$_GET[JadwalID]."&tahun=".$_GET[tahun]."&MhswID=".$_GET[MhswID]."&sukses';</script>";
+  mysqli_query("DELETE FROM krs where KRSID='".strfilter($_GET['hapus'])."'");//_offdulubro
+  echo "<script>document.location='index.php?ndelox=dep/nilaitranskrip&JadwalID=".$_GET['JadwalID']."&tahun=".$_GET['tahun']."&MhswID=".$_GET['MhswID']."&sukses';</script>";
 }
 echo"
 </tbody>

@@ -44,6 +44,7 @@ $pdf->Output();
 
 // *** Functions ***
 function CetakKursi($id, $pdf) {
+  global $koneksi;
   $jdwl = AmbilFieldx("jadwal j
     LEFT OUTER JOIN dosen d ON d.Login = j.DosenID AND d.KodeID = '".KodeID."'
     LEFT OUTER JOIN prodi prd ON prd.ProdiID = j.ProdiID AND prd.KodeID = '".KodeID."'
@@ -69,6 +70,7 @@ function CetakKursi($id, $pdf) {
   BuatIsinya($jdwl, $pdf);
 }
 function BuatIsinya($jdwl, $p) {
+  global $koneksi;
   $sudahbayar = "and (h.Biaya - h.Bayar + h.Tarik - h.Potongan) <= 0";
   $sudahpenuhiabsen = "and (select count(pm.PresensiMhswID) from presensimhsw pm left outer join jenispresensi jp on pm.JenisPresensiID=jp.JenisPresensiID where pm.KRSID=k.KRSID and jp.Nilai = 0) < $jdwl[MaxAbsen]";
   $s = "select k.MhswID, m.Nama, k._Presensi, k.KRSID

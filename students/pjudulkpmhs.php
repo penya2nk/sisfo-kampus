@@ -3,14 +3,14 @@
 
 <div class='box box-info'>
 <h3 class="box-title"><b style='color:green;font-size:20px'>Pengajuan Judul Kerja Praktek </b></h3>
-<a class='pull-right btn btn-primary btn-sm' href='index.php?ndelox=students/pjudulkpmhs&act=ajukanjudul&tahun=<?php echo $_SESSION[tahun_akademik]; ?>'>Ajukan Judul KP</a>       
+<a class='pull-right btn btn-primary btn-sm' href='index.php?ndelox=students/pjudulkpmhs&act=ajukanjudul&tahun=<?php echo $_SESSION['tahun_akademik']; ?>'>Ajukan Judul KP</a>       
 </div>
 
 </div>
 </div>
 
                 
-<?php if ($_GET[act]==''){ ?>         
+<?php if ($_GET['act']==''){ ?>         
 	  <?php 
         if (isset($_GET['sukses'])){
             echo "<div class='alert alert-success alert-dismissible fade in' role='alert'> 
@@ -43,10 +43,10 @@
 			  while ($h = mysqli_fetch_array($qrs)){
 			  $mhs = mysqli_fetch_array(mysqli_query($koneksi, "select MhswID,Nama,ProdiID from mhsw where MhswID='$h[MhswID]'"));
 			  $pmb = mysqli_fetch_array(mysqli_query($koneksi, "select Login,Nama,Gelar from dosen where Login='$h[DosenID]'"));			   
-				if ($h[Status]=='DITERIMA'){
+				if ($h['Status']=='DITERIMA'){
 				$c="style=color:green;font-size:20px";
 				}
-				else if ($h[Status]=='WAITING'){
+				else if ($h['Status']=='WAITING'){
 					$c="style=color:color:#FF8306;font-size:20px";
 				}
 				else{
@@ -101,13 +101,13 @@ echo "</tr>";
 		  }
 
 }//hari
-		  if (isset($_GET[hapus])){
-			mysqli_query($koneksi, "DELETE FROM jadwal_kp_anggota where MhswID='".strfilter($_GET[hapus])."'");
+		  if (isset($_GET['hapus'])){
+			mysqli_query($koneksi, "DELETE FROM jadwal_kp_anggota where MhswID='".strfilter($_GET['hapus'])."'");
 			echo "<script>document.location='index.php?ndelox=students/pjudulkpmhs&prodi=$_GET[prodi]&tahun=$_GET[tahun]';</script>";
 		  }
-		  if (isset($_GET[del])){
-			 mysqli_query($koneksi, "DELETE FROM jadwal_kp where JadwalID='".strfilter($_GET[del])."'");
-			 mysqli_query($koneksi, "DELETE FROM jadwal_kp_anggota where JadwalID='".strfilter($_GET[del])."''");
+		  if (isset($_GET['del'])){
+			 mysqli_query($koneksi, "DELETE FROM jadwal_kp where JadwalID='".strfilter($_GET['del'])."'");
+			 mysqli_query($koneksi, "DELETE FROM jadwal_kp_anggota where JadwalID='".strfilter($_GET['del'])."''");
 			echo "<script>document.location='index.php?ndelox=students/pjudulkpmhs&prodi=$_GET[prodi]&tahun=$_GET[tahun]';</script>";
 		  }
 	  ?>
@@ -119,7 +119,7 @@ echo "</tr>";
 </div>
 
 <?php 
-}elseif($_GET[act]=='ajukanjudul'){
+}elseif($_GET['act']=='ajukanjudul'){
     $dsks = mysqli_fetch_array(mysqli_query($koneksi, "SELECT SUM(krs.SKS) AS tSKS,
 			mhsw.ProgramID,
 			krs.MKID
@@ -127,20 +127,20 @@ echo "</tr>";
 			WHERE mhsw.MhswID=krs.MhswID
 			AND krs.MhswID='$_SESSION[_Login]' 
 			AND krs.GradeNilai NOT IN ('-','TL','E','D','C-','') ")); //AND krs.GradeNilai NOT IN ('-','TL','E','D','C-','')
-	if ($dsks[tSKS]<110 AND $dsks[ProgramID]=='REG A'){
+	if ($dsks['tSKS']<110 AND $dsks['ProgramID']=='REG A'){
 	    echo "<script language='javascript'>alert('Belum memenuhi syarat untuk mengajukan Kerja Praktek, Total SKS yang baru ditempuh $dsks[tSKS] SKS!, sedangkan syarat minimalnya adalah 110 SKS');
-			 window.location = 'index.php?ndelox=students/pjudulkpmhs&tahun=".$_GET[tahun]."&prodi=".$_GET[prodi]."&gagal'</script>";
+			 window.location = 'index.php?ndelox=students/pjudulkpmhs&tahun=".$_GET['tahun']."&prodi=".$_GET['prodi']."&gagal'</script>";
 		exit;
 	}		
     
-    if ($_SESSION[prodi]=='SI'){	
+    if ($_SESSION['prodi']=='SI'){	
     $sqq = mysqli_query($koneksi, "SELECT krs.MKID,krs.MhswID,krs.GradeNilai
 			FROM krs 
 			WHERE krs.MhswID='$_SESSION[_Login]' 
 			AND krs.MKID='1008'
 			AND krs.GradeNilai IN ('-','TL','E','D','C-','')"); 
 	}
-	if ($_SESSION[prodi]=='TI'){	
+	if ($_SESSION['prodi']=='TI'){	
     $sqq = mysqli_query($koneksi, "SELECT krs.MKID,krs.MhswID,krs.GradeNilai
 			FROM krs 
 			WHERE krs.MhswID='$_SESSION[_Login]' 
@@ -152,17 +152,17 @@ echo "</tr>";
 	$cekmetopel=mysqli_num_rows($sqq);		
 	if ($cekmetopel>0){
 	    echo "<script language='javascript'>alert('Belum memenuhi syarat untuk mengajukan Kerja Praktek, Nilai Metode Penelitian Anda [ $dt[GradeNilai] ] dan belum dinyatakan lulus!');
-			 window.location = 'index.php?ndelox=students/pjudulkpmhs&tahun=".$_GET[tahun]."&prodi=".$_GET[prodi]."&gagal'</script>";
+			 window.location = 'index.php?ndelox=students/pjudulkpmhs&tahun=".$_GET['tahun']."&prodi=".$_GET['prodi']."&gagal'</script>";
 		exit;
 	}		
 
 	$prodi = mysqli_fetch_array(mysqli_query($koneksi, "select MhswID,Nama,ProdiID from mhsw WHERE MhswID='$_SESSION[_Login]'"));
-	if ($prodi[ProdiID]=='SI'){$b='SI';}else{$b='TI';}
+	if ($prodi['ProdiID']=='SI'){$b='SI';}else{$b='TI';}
 	
 	//$sqNo = mysqli_fetch_array(mysqli_query($koneksi, "SELECT KelompokID,ProdiID FROM jadwal_kp WHERE ProdiID='$prodi[ProdiID]' ORDER BY JadwalID DESC LIMIT 1"));
 	//$ex = explode('-', $sqNo[KelompokID]);
 	$w = mysqli_fetch_array(mysqli_query($koneksi, "SELECT JadwalID,KelompokID,ProdiID,TahunID FROM jadwal_kp ORDER BY JadwalID DESC LIMIT 1"));
-	$ex = explode('-', $w[JadwalID]); 
+	$ex = explode('-', $w['JadwalID']); 
 	
 	if (date('d')=='01'){ $a = '01'; }
 	else{ $a = $ex[0]+1; }	 	
@@ -170,7 +170,7 @@ echo "</tr>";
 	$d = date('y');
 	//$KodeAuto = $a.'/'.$b.'/'.$c[date('n')].'/'.$d;
 	$KodeAuto = $a.'-'.$d.$b; //$a ditarok belakang tidak jalan
-	if (isset($_POST[tambah])){	
+	if (isset($_POST['tambah'])){	
 	    $tglnow =date('Y-m-d H:i:s');		   
 		/*$cek = mysqli_num_rows(mysqli_query($koneksi, "select * from jadwal_kp 
 											WHERE MhswID='$_SESSION[_Login]'
@@ -196,20 +196,20 @@ echo "</tr>";
 							  Ke,
 							  URLX) 
 					 VALUES(
-							'".strfilter($_POST[tahun])."',
-							'".strfilter($_POST[KelompokID])."',
+							'".strfilter($_POST['tahun'])."',
+							'".strfilter($_POST['KelompokID'])."',
 							'$_SESSION[_Login]',
-							'".strfilter($_POST[DosenID])."',
-							'".strfilter($_POST[Judul])."',
-							'".strfilter($_POST[TempatPenelitian])."',					
-							'".strfilter($prodi[ProdiID])."',
+							'".strfilter($_POST['DosenID'])."',
+							'".strfilter($_POST['Judul'])."',
+							'".strfilter($_POST['TempatPenelitian'])."',					
+							'".strfilter($prodi['ProdiID'])."',
 							'".date('Y-m-d')."',
 							'$_SESSION[_Login]',              
 							'N',
-							'".strfilter($_POST[Deskripsi])."',
-							'".strfilter($_POST[Kota])."',
-							'".strfilter($_POST[Ke])."',
-							'".strfilter($_POST[URLX])."')");
+							'".strfilter($_POST['Deskripsi'])."',
+							'".strfilter($_POST['Kota'])."',
+							'".strfilter($_POST['Ke'])."',
+							'".strfilter($_POST['URLX'])."')");
 		
         if ($query){
 			echo "<script>document.location='index.php?ndelox=students/pjudulkpmhs&tahun=$_POST[tahun]&prodi=$_POST[prodi]&sukses';</script>";
@@ -272,16 +272,16 @@ echo "</tr>";
 				  
               </form>
             </div>";
-}elseif($_GET[act]=='edit'){
-    if (isset($_POST[update])){			
+}elseif($_GET['act']=='edit'){
+    if (isset($_POST['update'])){			
 		$query = mysqli_query($koneksi, "UPDATE jadwal_kp SET 							
-							 Judul 				= '".strfilter($_POST[Judul])."',
-							 TempatPenelitian   = '".strfilter($_POST[TempatPenelitian])."',
-							 Deskripsi   		= '".strfilter($_POST[Deskripsi])."',
-							 Kota   			= '".strfilter($_POST[Kota])."',
-							 Ke   				= '".strfilter($_POST[Ke])."',
-							 URLX				= '".strfilter($_POST[URLX])."'
-							 where JadwalID		= '".strfilter($_POST[JadwalID])."'");
+							 Judul 				= '".strfilter($_POST['Judul'])."',
+							 TempatPenelitian   = '".strfilter($_POST['TempatPenelitian'])."',
+							 Deskripsi   		= '".strfilter($_POST['Deskripsi'])."',
+							 Kota   			= '".strfilter($_POST['Kota'])."',
+							 Ke   				= '".strfilter($_POST['Ke'])."',
+							 URLX				= '".strfilter($_POST['URLX'])."'
+							 where JadwalID		= '".strfilter($_POST['JadwalID'])."'");
         if ($query){
           echo "<script>document.location='index.php?ndelox=students/pjudulkpmhs&tahun=$_POST[tahun]&prodi=$_POST[prodi]&JadwalID=$_POST[JadwalID]&sukses';</script>";
         }else{
@@ -289,7 +289,7 @@ echo "</tr>";
         }
     }
     
-    $tg = mysqli_fetch_array(mysqli_query($koneksi, "SELECT * FROM jadwal_kp where JadwalID='".strfilter($_GET[JadwalID])."'"));
+    $tg = mysqli_fetch_array(mysqli_query($koneksi, "SELECT * FROM jadwal_kp where JadwalID='".strfilter($_GET['JadwalID'])."'"));
     echo "
              
               <form method='POST' class='form-horizontal' action='' enctype='multipart/form-data'>
@@ -327,32 +327,32 @@ echo "</tr>";
               </div>
 
               </form>";
-}elseif($_GET[act]=='tambahanggota'){
+}elseif($_GET['act']=='tambahanggota'){
 
     $dsks = mysqli_fetch_array(mysqli_query($koneksi, "SELECT SUM(krs.SKS) AS tSKS,
 			mhsw.ProgramID,
 			krs.MKID
 			FROM krs,mhsw 
 			WHERE mhsw.MhswID=krs.MhswID
-			AND krs.MhswID='".strfilter($_POST[MhswID])."' 
+			AND krs.MhswID='".strfilter($_POST['MhswID'])."' 
 			AND krs.GradeNilai NOT IN ('-','TL','E','D','C-','') ")); //AND krs.GradeNilai NOT IN ('-','TL','E','D','C-','')
-	if ($dsks[tSKS]<110 AND $dsks[ProgramID]=='REG A'){
+	if ($dsks['tSKS']<110 AND $dsks['ProgramID']=='REG A'){
 	    echo "<script language='javascript'>alert('Belum memenuhi syarat untuk mengajukan Kerja Praktek, Total SKS yang baru ditempuh $dsks[tSKS] SKS!, sedangkan syarat minimalnya adalah 110 SKS');
-			 window.location = 'index.php?ndelox=students/pjudulkpmhs&tahun=".$_GET[tahun]."&prodi=".$_GET[prodi]."&sukses'</script>";
+			 window.location = 'index.php?ndelox=students/pjudulkpmhs&tahun=".$_GET['tahun']."&prodi=".$_GET['prodi']."&sukses'</script>";
 		exit;
 	}		
     
-    if ($_SESSION[prodi]=='SI'){	
+    if ($_SESSION['prodi']=='SI'){	
     $sqq = mysqli_query($koneksi, "SELECT krs.MKID,krs.MhswID,krs.GradeNilai
 			FROM krs 
-			WHERE krs.MhswID='".strfilter($_POST[MhswID])."' 
+			WHERE krs.MhswID='".strfilter($_POST['MhswID'])."' 
 			AND krs.MKID='1008'
 			AND krs.GradeNilai IN ('-','TL','E','D','C-','')"); 
 	}
-	if ($_SESSION[prodi]=='TI'){	
+	if ($_SESSION['prodi']=='TI'){	
     $sqq = mysqli_query($koneksi, "SELECT krs.MKID,krs.MhswID,krs.GradeNilai
 			FROM krs 
-			WHERE krs.MhswID='".strfilter($_POST[MhswID])."' 
+			WHERE krs.MhswID='".strfilter($_POST['MhswID'])."' 
 			AND krs.MKID='1071'
 			AND krs.GradeNilai IN ('-','TL','E','D','C-','')"); 
 	}
@@ -361,35 +361,35 @@ echo "</tr>";
 	$cekmetopel=mysqli_num_rows($sqq);		
 	if ($cekmetopel>0){
 	    echo "<script language='javascript'>alert('Belum memenuhi syarat untuk mengajukan Kerja Praktek, Nilai Metode Penelitian Anda [ $dt[GradeNilai] ] dan belum dinyatakan lulus!');
-			 window.location = 'index.php?ndelox=students/pjudulkpmhs&tahun=".$_GET[tahun]."&prodi=".$_GET[prodi]."&sukses'</script>";
+			 window.location = 'index.php?ndelox=students/pjudulkpmhs&tahun=".$_GET['tahun']."&prodi=".$_GET['prodi']."&sukses'</script>";
 		exit;
 	}		
 
 
-    if (isset($_POST[tambah])){	
+    if (isset($_POST['tambah'])){	
 	    $tglnow =date('Y-m-d H:i:s');	
 	    //echo"coba";
-		$cek1 = mysqli_num_rows(mysqli_query($koneksi, "select * from mhsw where MhswID='".strfilter($_POST[MhswID])."'"));
+		$cek1 = mysqli_num_rows(mysqli_query($koneksi, "select * from mhsw where MhswID='".strfilter($_POST['MhswID'])."'"));
 		if ($cek1==0){
 			 echo "<a href='index.php?ndelox=students/pjudulkpmhs&act=tambahanggota&JadwalID=$_GET[JadwalID]&prodi=$_GET[prodi]&tahun=$_GET[tahun]&KelompokID=$_POST[KelompokID]'> Data tidak ketemu!</a>";		
 			exit;
 		}
 		
-		$cek2 = mysqli_num_rows(mysqli_query($koneksi, "select * from jadwal_kp_anggota where MhswID='".strfilter($_POST[MhswID])."'"));
+		$cek2 = mysqli_num_rows(mysqli_query($koneksi, "select * from jadwal_kp_anggota where MhswID='".strfilter($_POST['MhswID'])."'"));
 		if ($cek2>0){
 			 echo "<script>document.location='index.php?ndelox=students/pjudulkpmhs&act=tambahanggota&JadwalID=$_GET[JadwalID]&prodi=$_GET[prodi]&tahun=$_GET[tahun]&KelompokID=$_POST[KelompokID]&gagal';</script>";
 			exit;
 		}
 	  
 	    $query = mysqli_query($koneksi, "INSERT INTO jadwal_kp_anggota(JadwalID,KelompokID,MhswID)
-										VALUES('".strfilter($_POST[JadwalID])."','".strfilter($_POST[KelompokID])."','".strfilter($_POST[MhswID])."')");		
+										VALUES('".strfilter($_POST['JadwalID'])."','".strfilter($_POST['KelompokID'])."','".strfilter($_POST['MhswID'])."')");		
         if ($query){
 			echo "<script>document.location='index.php?ndelox=students/pjudulkpmhs&tahun=$_POST[tahun]&prodi=$_POST[prodi]&sukses';</script>";
         }else{
             echo "<script>document.location='index.php?ndelox=students/pjudulkpmhs&tahun=$_POST[tahun]&prodi=$_POST[prodi]&gagal';</script>";
         }		
     }
-    $tg = mysqli_fetch_array(mysqli_query($koneksi, "SELECT * FROM jadwal_kp where JadwalID='".strfilter($_GET[JadwalID])."'"));
+    $tg = mysqli_fetch_array(mysqli_query($koneksi, "SELECT * FROM jadwal_kp where JadwalID='".strfilter($_GET['JadwalID'])."'"));
 	$x   = mysqli_fetch_array(mysqli_query($koneksi, "SELECT Login,Nama,Gelar FROM dosen where Login='$tg[DosenID]'"));
     echo "
 
@@ -426,8 +426,8 @@ echo "</tr>";
 			  </div>
 			  </div>";
 }
-elseif($_GET[act]=='viewkomentar'){
-    $dj = mysqli_fetch_array(mysqli_query($koneksi, "SELECT * FROM jadwal_kp where JadwalID='".strfilter($_GET[JadwalID])."'"));
+elseif($_GET['act']=='viewkomentar'){
+    $dj = mysqli_fetch_array(mysqli_query($koneksi, "SELECT * FROM jadwal_kp where JadwalID='".strfilter($_GET['JadwalID'])."'"));
 	$mhs = mysqli_fetch_array(mysqli_query($koneksi, "SELECT MhswID,Nama FROM mhsw where MhswID='$dj[MhswID]'"));
     echo "
               <div class='card'>
@@ -460,31 +460,31 @@ elseif($_GET[act]=='viewkomentar'){
             </div>";
 }
 
-elseif($_GET[act]=='jadwalprokpmhs'){ 
+elseif($_GET['act']=='jadwalprokpmhs'){ 
 
 $r = mysqli_fetch_array(mysqli_query($koneksi, "SELECT * from vw_jadwalkp where MhswID='$_SESSION[_Login]'"));			   
 	$p1 = mysqli_fetch_array(mysqli_query($koneksi, "select Login,Nama,Gelar from dosen where Login='$r[DosenID]'"));
-	$PembimbingPro1x   = strtolower($p1[Nama]);
+	$PembimbingPro1x   = strtolower($p1['Nama']);
 	$PembimbingPro1	  = ucwords($PembimbingPro1x);
 
 	
 	$DTPengujiPro1   = mysqli_fetch_array(mysqli_query($koneksi, "select Login,Nama,Gelar from dosen where Login='$r[Penguji1]'"));
-	$PengujiPro1x   = strtolower($DTPengujiPro1[Nama]);
+	$PengujiPro1x   = strtolower($DTPengujiPro1['Nama']);
 	$PengujiPro1	= ucwords($PengujiPro1x);
 	
 	$DTPengujiPro2 = mysqli_fetch_array(mysqli_query($koneksi, "select Login,Nama,Gelar from dosen where Login='$r[Penguji2]'"));
-	$PengujiPro2x   = strtolower($DTPengujiPro2[Nama]);
+	$PengujiPro2x   = strtolower($DTPengujiPro2['Nama']);
 	$PengujiPro2	  = ucwords($PengujiPro2x);
 	
 	$DTPengujiPro3 = mysqli_fetch_array(mysqli_query($koneksi, "select Login,Nama,Gelar from dosen where Login='$r[Penguji3]'"));		    
-	$PengujiPro3x   = strtolower($DTPengujiPro3[Nama]);
+	$PengujiPro3x   = strtolower($DTPengujiPro3['Nama']);
 	$PengujiPro3	  = ucwords($PengujiPro3x);
 	
 	$Judulx   = strtolower($r[Judul]);
 	$Judul	  = ucwords($Judulx);		
 	$ruang    = mysqli_fetch_array(mysqli_query($koneksi, "select RuangID,Nama from ruang where RuangID='$r[TempatUjian]'"));		  
-	$tanggal  = $r[TglMulaiSidang];
-	$tglx     = tgl_indo($r[TglMulaiSidang]);
+	$tanggal  = $r['TglMulaiSidang'];
+	$tglx     = tgl_indo($r['TglMulaiSidang']);
 	$day      = date('D', strtotime($tanggal));
 $dayList = array(
 	'Sun' => 'Minggu',
@@ -531,7 +531,7 @@ echo"<div class='card'>
 <tr>
 <th scope='row'>Waktu  dan Tanggal</th>
 <td>$dayList[$day], $tglx<br>
-						".substr($r[JamMulai],0,5)."- ".substr($r[JamSelesai],0,5)."  WIB<br>
+						".substr($r['JamMulai'],0,5)."- ".substr($r['JamSelesai'],0,5)."  WIB<br>
 						$ruang[Nama]
 </td>
 </tr>";
@@ -540,26 +540,26 @@ echo"<div class='card'>
 //SEMINAR HASIL KERJA PRAKTEK ===================================================================================================================================================
 $r = mysqli_fetch_array(mysqli_query($koneksi, "SELECT * from vw_jadwalkp_seminarhasil where MhswID='$_SESSION[_Login]'"));
 $p1 = mysqli_fetch_array(mysqli_query($koneksi, "select Login,Nama,Gelar from dosen where Login='$r[DosenID]'"));
-		   $Pembimbing1x 	= strtolower($p1[Nama]);
+		   $Pembimbing1x 	= strtolower($p1['Nama']);
 		   $Pembimbing1		= ucwords($Pembimbing1x);
 		   
 			
 		   $penguji1Bro		= mysqli_fetch_array(mysqli_query($koneksi, "select Login,Nama,Gelar from dosen where Login='$r[PengujiSeminarHasil1]'"));
-		   $Penguji1x 		= strtolower($penguji1Bro[Nama]);
+		   $Penguji1x 		= strtolower($penguji1Bro['Nama']);
 		   $Penguji1		= ucwords($Penguji1x);
 		   
 		   $penguji2Bro = mysqli_fetch_array(mysqli_query($koneksi, "select Login,Nama,Gelar from dosen where Login='$r[PengujiSeminarHasil2]'"));
-		   $Penguji2x 		= strtolower($penguji2Bro[Nama]);
+		   $Penguji2x 		= strtolower($penguji2Bro['Nama']);
 		   $Penguji2		= ucwords($Penguji2x);
 		   
 		   $penguji3Bro = mysqli_fetch_array(mysqli_query($koneksi, "select Login,Nama,Gelar from dosen where Login='$r[PengujiSeminarHasil3]'"));
-		   $Penguji3x 		= strtolower($penguji3Bro[Nama]);
+		   $Penguji3x 		= strtolower($penguji3Bro['Nama']);
 		   $Penguji3		= ucwords($Penguji3x);
 		
 		   $ruang  = mysqli_fetch_array(mysqli_query($koneksi, "select RuangID,Nama from ruang where RuangID='$r[TempatUjian]'"));
 			 
-			$tanggal = $r[TglSeminarHasil];
-			$tglUjian =tgl_indo($r[TglSeminarHasil]);
+			$tanggal = $r['TglSeminarHasil'];
+			$tglUjian =tgl_indo($r['TglSeminarHasil']);
 			$day = date('D', strtotime($tanggal));
 			$dayList = array(
 				'Sun' => 'Minggu',
@@ -597,7 +597,7 @@ echo"<tr style='text-align:left;font-size:15px;color:#FFFFFF;font-weight:bold;ba
 <tr>
 <th scope='row'>Waktu  dan Tanggal</th>
 <td>$dayList[$day], $tglUjian<br>
-						".substr($r[JamMulaiSeminarHasil],0,5)."- ".substr($r[JamSelesaiSeminarHasil],0,5)." WIB<br>
+						".substr($r['JamMulaiSeminarHasil'],0,5)."- ".substr($r['JamSelesaiSeminarHasil'],0,5)." WIB<br>
 						$ruang[Nama]
 </td>
 </tr>

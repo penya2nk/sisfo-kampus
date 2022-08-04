@@ -212,15 +212,15 @@ function EditRem($md, $jid, $pid) {
   $jdwl = AmbilFieldx('jadwalremedial', 'JadwalRemedialID', $jid, '*');
   if ($md == 0) {
     $w = AmbilFieldx('presensi', 'PresensiID', $pid, "*, date_format(Tanggal, '%w') as HR");
-  $w['JamMulai'] = $_REQUEST[JamMulai];
-  $w['JamSelesai'] = $_REQUEST[JamSelesai];
+  $w['JamMulai'] = $_REQUEST['JamMulai'];
+  $w['JamSelesai'] = $_REQUEST['JamSelesai'];
 	$hr = $w[HR];
   }
   elseif ($md == 1) {
     $w = array();
     $w['Pertemuan'] = AmbilOneField('presensi', "JadwalRemedialID", $jid, "max(Pertemuan)")+1;
-  $w['JamMulai'] = $_REQUEST[JamMulai];
-  $w['JamSelesai'] = $_REQUEST[JamSelesai];
+  $w['JamMulai'] = $_REQUEST['JamMulai'];
+  $w['JamSelesai'] = $_REQUEST['JamSelesai'];
     $w['Tanggal'] = date('Y-m-d');
     $w['DosenID'] = $jdwl['DosenID'];
   }

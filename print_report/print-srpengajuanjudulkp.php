@@ -6,36 +6,36 @@ include_once "../konfigurasi.mysql.php";
 include_once "../sambungandb.php";
 include_once "../setting_awal.php";
 include_once "../check_setting.php";
-require ("../punksi/html2pdf/html2pdf.class.php");
-$filename="namafile.pdf";
-
-
+require_once ("../punksi/html2pdf/vendor/autoload.php");
+use Spipu\Html2Pdf\Html2Pdf;
+use Spipu\Html2Pdf\Exception\Html2PdfException;
+use Spipu\Html2Pdf\Exception\ExceptionFormatter;
 
 if (empty($_SESSION['_Login']) && empty($_SESSION['_LevelID'])){
 	header("Location: ../login.php");
 }
 else{
 
-include "headerx-rpt.php"; $content = ob_get_clean();
-$tgl 	   = tgl_indo(date('Y-m-d'));
+include "headerx-rpt.php"; 	
 
-$dt  		= mysqli_fetch_array(mysqli_query($koneksi, "SELECT MhswID,Nama,ProdiID,Handphone FROM mhsw WHERE MhswID='".strfilter($_GET[MhswID])."'"));
-if ($dt[Handphone]==''){$hp='-';}else{$hp=$dt[Handphone];}
-$namamhsx 	= strtolower($dt[Nama]);
+$jdw  	= mysqli_fetch_array(mysqli_query($koneksi, "SELECT * FROM jadwal_kp WHERE JadwalID='".strfilter($_GET['JadwalID'])."'"));
+$dt  		= mysqli_fetch_array(mysqli_query($koneksi, "SELECT MhswID,Nama,ProdiID,Handphone FROM mhsw WHERE MhswID='".$jdw['MhswID']."'"));
+if ($dt['Handphone']==''){$hp='-';}else{$hp=$dt['Handphone'];}
+$namamhsx 	= strtolower($dt['Nama']);
 $namamhs	= ucwords($namamhsx);	
 
-$p  		= mysqli_fetch_array(mysqli_query($koneksi, "SELECT * FROM jadwal_kp WHERE JadwalID='".strfilter($_GET[JadwalID])."'"));
-$judulx 	= strtolower($p[Judul]);
+$p  		= mysqli_fetch_array(mysqli_query($koneksi, "SELECT * FROM jadwal_kp WHERE JadwalID='".strfilter($_GET['JadwalID'])."'"));
+$judulx 	= strtolower($p['Judul']);
 $Judul		= ucwords($judulx);
 
-$isi_judul 		= strip_tags($Judul); 
-$isijudulawal 	= substr($isi_judul,0,79); 
-$isijudulawal 	= substr($isi_judul,0,strrpos($isijudulawal," "));
-$judulberikutnya1= substr($isi_judul,-40,65);
+// $isi_judul 		= strip_tags($Judul); 
+// $isijudulawal 	= substr($isi_judul,0,79); 
+// $isijudulawal 	= substr($isi_judul,0,strrpos($isijudulawal," "));
+// $judulberikutnya1= substr($isi_judul,-40,65);
 
 
 //08/Prodi-TI/STMIK-HTP/III/2016/
-$ProdiID   	= $dt[ProdiID];
+$ProdiID   	= $dt['ProdiID'];
 if ($ProdiID=='SI'){ 
 	$prod	="Sistem Informasi"; 
 	$kaprodi="Herianto, S.Kom, M.Kom"; 
@@ -86,14 +86,15 @@ $content .= "
     <td width='879'>$p[KelompokID]</td>
   </tr>
   ";
+  $a=0;
   	$mhs = mysqli_query($koneksi, "SELECT
 			jadwal_kp_anggota.JadwalID,jadwal_kp_anggota.MhswID,jadwal_kp_anggota.KelompokID,
 			mhsw.Nama FROM mhsw,jadwal_kp_anggota 
 			WHERE mhsw.MhswID=jadwal_kp_anggota.MhswID 
-			AND jadwal_kp_anggota.JadwalID='".strfilter($_GET[JadwalID])."'");	
+			AND jadwal_kp_anggota.JadwalID='".strfilter($_GET['JadwalID'])."'");	
 	while($m=mysqli_fetch_array($mhs)){
 	$a++;
-	$Namag 		= strtolower($m[Nama]);
+	$Namag 		= strtolower($m['Nama']);
 	$NamaMhs	= ucwords($Namag);
 	$content .=" <tr class='batas2' align='left'>
 	<td align=right></td>
@@ -181,7 +182,7 @@ $content .= "
 <tr>
   <td align='left' >NIDN: $nidn</td>
   <td align='left' ></td>
-  <td align='left' >$_GET[MhswID]</td>
+  <td align='left' ></td>
   </tr>
 <tr>
   <td align='left' ></td>
@@ -215,25 +216,28 @@ $content .= "
 <tr>
   <td  align='left' >Catatan Perbaikan: </td>
 </tr>
-<tr>  
-  <td><textarea cols=73 rows=3></textarea></td>
+
+<tr>
+  <td  align='left' > _________________________________________________ </td>
 </tr>
+
 
 </table>
 
 
 <font style='font-size:8px'>Login by: $_SESSION[_Login] ".tgl_indo(date('Y-m-d'))." ".date('H:i:s') . " WIB - Univ Tekno Indo Support System</font>";
 
+try {
+  ob_start();
+  $html2pdf = new Html2Pdf('P','Legal','fr', true, 'UTF-8', array(15, 15, 15, 15), false); 
+  $html2pdf->writeHTML($content);
+  $html2pdf->output();
+} catch (Html2PdfException $e) {
+  $html2pdf->clean();
 
-try
-	{
-		$html2pdf = new HTML2PDF('P','Letter','en', false, 'ISO-8859-15',array(25, 10, 25, 10)); //setting ukuran kertas dan margin pada dokumen anda
-		// $html2pdf->setModeDebug();
-		$html2pdf->setDefaultFont('Arial');
-		$html2pdf->writeHTML($content, isset($_GET['vuehtml']));
-		$html2pdf->Output($filename);
-	}
-	catch(HTML2PDF_exception $e) { echo $e; }
-	
+  $formatter = new ExceptionFormatter($e);
+  echo $formatter->getHtmlMessage();
 }
+
+}	
 ?>	

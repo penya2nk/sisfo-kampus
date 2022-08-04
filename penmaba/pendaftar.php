@@ -1,5 +1,5 @@
 <?php
-error_reporting(0);
+// error_reporting(0);
 $gelombang = AmbilOneField('pmbperiod', "KodeID='".KodeID."' and NA", 'N', "PMBPeriodID");
 $_apliNama = GainVariabelx('_apliNama');
 $_apliPage = GainVariabelx('_apliPage');

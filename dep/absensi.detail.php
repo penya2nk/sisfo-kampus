@@ -21,7 +21,7 @@ $lbr = 190;
 ob_start();
 //end leweh add
 
-$pdf = new PDF('P', 'mm', 'A4');
+$pdf = new FPDF('P', 'mm', 'A4');
 $pdf->SetTitle("Detail Kehadiran Kuliah - $TahunID");
 $pdf->AddPage('P');
 
