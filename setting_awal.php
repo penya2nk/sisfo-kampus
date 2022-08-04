@@ -1,6 +1,6 @@
 <?php
 $AppNamex      = "SISFO_UTI";
-$Organisasix   = 'TEKNOKRAT INDONESIAx';
+$Organisasix   = 'TEKNOKRAT INDONESIA';
 $Inisial       = "SISFO";
 $Developerx    = "SISFO CAMP";
 $DeveoperEmail = "admin@uti.ac.id";
