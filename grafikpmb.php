@@ -79,19 +79,20 @@ echo "<select name='tahun' class='form-control form-control-sm' style='padding:4
 <thead>
 <tr>
 <th></th>
-<th>IKM A</th>
-<th>IKM B</th>
-<th>PSIK</th>
-<th>PIKES</th>	
-<th>MKES</th>	
-<th>NERS</th>	
-<th>PBD</th>	
-<th>BID</th>	
-<th>SIBID</th>	
-<th>SI</th>	
-<th>TI</th>	
-<th>HKM</th>
-<th>KMN</th>		
+<th>312</th>
+<th>313</th>
+<th>314</th>
+<th>315</th>	
+<th>233</th>	
+<th>112</th>	
+<th>232</th>	
+<th>114</th>	
+<th>111</th>	
+<th>316</th>	
+<th>412</th>	
+<th>411</th>
+<th>113</th>
+<th>311</th>		
 <th>Total</th>
 </tr>
 </thead>
