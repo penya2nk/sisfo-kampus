@@ -93,7 +93,7 @@ echo "<select name='tahun' class='form-control form-control-sm' style='padding:4
 <th>411</th>
 <th>113</th>
 <th>311</th>		
-<th>Total</th>
+<th>Total.</th>
 </tr>
 </thead>
 <tbody>
